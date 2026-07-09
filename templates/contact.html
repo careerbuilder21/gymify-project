@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - GYMIFY</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}" defer></script>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="nav-logo">GYM<span>IFY</span></div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About Us</a></li>
+            <li><a href="{% url 'public_store' %}">Store</a></li>
+            <li><a href="{% url 'public_courses' %}">Workout Courses</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <a href="{% url 'login' %}" class="btn-outline">Login</a>
+            <a href="{% url 'register' %}" class="btn-solid">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <h1>Contact Us</h1>
+        <p>Have any questions? We are here to help.</p>
+    </div>
+
+    <!-- CONTACT CONTENT -->
+    <div class="contact-section">
+
+        <h2>Get In Touch</h2>
+        <p>Feel free to reach out for any queries about membership, trainers, or the system.</p>
+
+        <!-- Contact Info -->
+        <div class="contact-info">
+            <div class="contact-info-item">
+                <span class="icon">📍</span>
+                <p><strong>Address:</strong> Govt. MAO Graduate College, Lahore, Pakistan</p>
+            </div>
+            <div class="contact-info-item">
+                <span class="icon">📧</span>
+                <p><strong>Email:</strong> admin@gymify.pk</p>
+            </div>
+            <div class="contact-info-item">
+                <span class="icon">📞</span>
+                <p><strong>Phone:</strong> +92-300-0000000</p>
+            </div>
+            <div class="contact-info-item">
+                <span class="icon">🕐</span>
+                <p><strong>Hours:</strong> Monday - Saturday: 6:00 AM - 10:00 PM</p>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="form-box">
+            <h2>Send a Message</h2>
+
+            <div class="form-group">
+                <label for="contact-name">Your Name</label>
+                <input type="text" id="contact-name" placeholder="Enter your name">
+            </div>
+
+            <div class="form-group">
+                <label for="contact-email">Email Address</label>
+                <input type="email" id="contact-email" placeholder="Enter your email">
+            </div>
+
+            <div class="form-group">
+                <label for="contact-subject">Subject</label>
+                <input type="text" id="contact-subject" placeholder="What is this about?">
+            </div>
+
+            <div class="form-group">
+                <label for="contact-message">Message</label>
+                <textarea id="contact-message" placeholder="Write your message here..."></textarea>
+            </div>
+
+            <button class="form-btn" onclick="submitContact()">Send Message</button>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h3>GYM<span>IFY</span></h3>
+                <p>Complete Gym Management System</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a href="{% url 'public_store' %}">Store</a></li>
+                    <li><a href="{% url 'public_courses' %}">Courses</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Account</h4>
+                <ul>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 GYMIFY. All rights reserved. | By Ashar Waseem & Samiullah Khalid</p>
+        </div>
+    </footer>
+
+</body>
+</html>

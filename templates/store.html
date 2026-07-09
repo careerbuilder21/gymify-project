@@ -1,0 +1,274 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store - GYMIFY</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="nav-logo">GYM<span>IFY</span></div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About Us</a></li>
+            <li><a href="{% url 'public_store' %}">Store</a></li>
+            <li><a href="{% url 'public_courses' %}">Workout Courses</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <a href="{% url 'login' %}" class="btn-outline">Login</a>
+            <a href="{% url 'register' %}" class="btn-solid">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <h1>⚡ Energy Drinks Store</h1>
+        <p>Top gym energy drinks and supplements. Login to purchase.</p>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="store-section">
+        <h2>Available Products</h2>
+        <p>All gym-grade quality products. Login to order online.</p>
+
+        <div class="products-grid">
+
+            <!-- 1. Monster Energy -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="{% static 'images/monster.jpg' %}"
+                         alt="Monster Energy Original">
+                </div>
+                <div class="product-info">
+                    <h3>Monster Energy Original</h3>
+                    <p class="product-desc">
+                        Classic energy drink. Caffeine,
+                        B-vitamins & taurine. 500ml.
+                    </p>
+                    <p class="product-price">PKR 350</p>
+                    <a href="{% url 'login' %}"
+                       class="add-to-cart-btn">
+                        🔒 Login to Order
+                    </a>
+                </div>
+            </div>
+
+            <!-- 2. Red Bull -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="{% static 'images/redbull.jpg' %}"
+                         alt="Red Bull Energy Drink">
+                </div>
+                <div class="product-info">
+                    <h3>Red Bull Energy Drink</h3>
+                    <p class="product-desc">
+                        Popular energy drink.
+                        Caffeine & taurine blend. 250ml.
+                    </p>
+                    <p class="product-price">PKR 320</p>
+                    <a href="{% url 'login' %}"
+                       class="add-to-cart-btn">
+                        🔒 Login to Order
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. C4 -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="{% static 'images/c4.jpg' %}"
+                         alt="C4 Pre-Workout Drink">
+                </div>
+                <div class="product-info">
+                    <h3>C4 Pre-Workout Drink</h3>
+                    <p class="product-desc">
+                        Explosive pre-workout formula
+                        for max gym performance. 473ml.
+                    </p>
+                    <p class="product-price">PKR 850</p>
+                    <a href="{% url 'login' %}"
+                       class="add-to-cart-btn">
+                        🔒 Login to Order
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4. Reign -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="{% static 'images/reign.jpg' %}"
+                         alt="Reign Total Body Fuel">
+                </div>
+                <div class="product-info">
+                    <h3>Reign Total Body Fuel</h3>
+                    <p class="product-desc">
+                        300mg natural caffeine,
+                        BCAAs & CoQ10. Zero sugar. 500ml.
+                    </p>
+                    <p class="product-price">PKR 750</p>
+                    <a href="{% url 'login' %}"
+                       class="add-to-cart-btn">
+                        🔒 Login to Order
+                    </a>
+                </div>
+            </div>
+
+            <!-- 5. Ghost -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="{% static 'images/ghost.jpg' %}"
+                         alt="Ghost Energy Drink">
+                </div>
+                <div class="product-info">
+                    <h3>Ghost Energy Drink</h3>
+                    <p class="product-desc">
+                        Transparent formula.
+                        Natural caffeine & amino acids. 473ml.
+                    </p>
+                    <p class="product-price">PKR 900</p>
+                    <a href="{% url 'login' %}"
+                       class="add-to-cart-btn">
+                        🔒 Login to Order
+                    </a>
+                </div>
+            </div>
+
+            <!-- 6. Celsius -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="{% static 'images/celsius.jpg' %}"
+                         alt="Celsius Energy Drink">
+                </div>
+                <div class="product-info">
+                    <h3>Celsius Energy Drink</h3>
+                    <p class="product-desc">
+                        Thermogenic fitness drink.
+                        Burns calories. 7 vitamins. 355ml.
+                    </p>
+                    <p class="product-price">PKR 600</p>
+                    <a href="{% url 'login' %}"
+                       class="add-to-cart-btn">
+                        🔒 Login to Order
+                    </a>
+                </div>
+            </div>
+
+            <!-- 7. Rockstar -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="{% static 'images/rockstar.jpg' %}"
+                         alt="Rockstar Energy Drink">
+                </div>
+                <div class="product-info">
+                    <h3>Rockstar Energy Drink</h3>
+                    <p class="product-desc">
+                        B-vitamins, taurine & herbal blend.
+                        160mg caffeine. 500ml.
+                    </p>
+                    <p class="product-price">PKR 380</p>
+                    <a href="{% url 'login' %}"
+                       class="add-to-cart-btn">
+                        🔒 Login to Order
+                    </a>
+                </div>
+            </div>
+
+            <!-- 8. Bang -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="{% static 'images/bang.jpg' %}"
+                         alt="Bang Energy Drink">
+                </div>
+                <div class="product-info">
+                    <h3>Bang Energy Drink</h3>
+                    <p class="product-desc">
+                        Super creatine & 300mg caffeine.
+                        Zero sugar & calories. 473ml.
+                    </p>
+                    <p class="product-price">PKR 820</p>
+                    <a href="{% url 'login' %}"
+                       class="add-to-cart-btn">
+                        🔒 Login to Order
+                    </a>
+                </div>
+            </div>
+
+            <!-- 9. Xtend -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="{% static 'images/xtend.jpg' %}"
+                         alt="Xtend BCAA Energy">
+                </div>
+                <div class="product-info">
+                    <h3>Xtend BCAA Energy</h3>
+                    <p class="product-desc">
+                        7g BCAAs with caffeine for
+                        workout recovery & energy. 500ml.
+                    </p>
+                    <p class="product-price">PKR 950</p>
+                    <a href="{% url 'login' %}"
+                       class="add-to-cart-btn">
+                        🔒 Login to Order
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- LOGIN PROMPT -->
+        <div class="login-prompt">
+            <h3>Want to Order?</h3>
+            <p>
+                Login as a member to add products to cart
+                and complete bank transfer payment.
+            </p>
+            <a href="{% url 'login' %}" class="btn-solid">
+                Login to Order
+            </a>
+            <a href="{% url 'register' %}" class="btn-outline"
+               style="margin-left:10px;">
+                Register Now
+            </a>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h3>GYM<span>IFY</span></h3>
+                <p>Complete Gym Management System</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a href="{% url 'public_store' %}">Store</a></li>
+                    <li><a href="{% url 'public_courses' %}">Courses</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Account</h4>
+                <ul>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>
+                &copy; 2025 GYMIFY. All rights reserved. |
+                By Ashar Waseem & Samiullah Khalid
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

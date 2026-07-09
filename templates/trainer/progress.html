@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Progress - GYMIFY</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-logo">GYM<span>IFY</span></div>
+        <div class="sidebar-user">
+            <strong>{{ request.user.get_full_name }}</strong>
+            {{ request.user.email }}
+        </div>
+        <p class="sidebar-title">Trainer Panel</p>
+        <nav class="sidebar-nav">
+            <a href="/trainer/dashboard/">🏠 Dashboard</a>
+            <a href="/trainer/members/">👥 Assigned Members</a>
+            <a href="/trainer/attendance/">📋 Mark Attendance</a>
+            <a href="/trainer/workout/">🏋️ Workout Plans</a>
+            <a href="/trainer/upload/">📤 Upload Content</a>
+            <a href="/trainer/progress/" class="active">📈 Member Progress</a>
+        </nav>
+        <div class="logout-btn">
+            <a href="/logout/"
+               style="display:block;width:100%;padding:12px;
+                      background:#E63946;color:white;
+                      text-align:center;border-radius:6px;
+                      text-decoration:none;font-size:14px;">
+                🚪 Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <h1>Member Progress</h1>
+
+        <div class="table-section">
+            <h3>This Month Progress</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Member</th>
+                        <th>Present Days</th>
+                        <th>Total Days</th>
+                        <th>Attendance %</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in members_data %}
+                    <tr>
+                        <td>{{ data.member.user.get_full_name }}</td>
+                        <td>{{ data.present }}</td>
+                        <td>{{ data.total }}</td>
+                        <td>{{ data.percent }}%</td>
+                        <td>
+                            {% if data.percent >= 80 %}
+                            <span class="status-badge status-paid">
+                                Good
+                            </span>
+                            {% elif data.percent >= 50 %}
+                            <span class="status-badge status-pending">
+                                Average
+                            </span>
+                            {% else %}
+                            <span class="status-badge status-absent">
+                                Poor
+                            </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5"
+                            style="text-align:center;
+                                   color:#858685;padding:20px;">
+                           There is no data here
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

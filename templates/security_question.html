@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Security Question - GYMIFY</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">GYM<span>IFY</span></div>
+        <div class="nav-buttons">
+            <a href="{% url 'login' %}" class="btn-solid">Login</a>
+        </div>
+    </nav>
+
+    <div class="form-section">
+        <div class="form-box">
+
+            <div style="text-align:center;margin-bottom:20px;">
+                <div style="font-size:28px;font-weight:800;">
+                    GYM<span style="color:#E63946;">IFY</span>
+                </div>
+            </div>
+
+            {% if error %}
+            <p style="color:red;text-align:center;
+                      font-size:14px;margin-bottom:15px;">
+                {{ error }}
+            </p>
+            {% endif %}
+
+            <h2 style="font-size:22px;text-align:center;
+                       margin-bottom:20px;">
+                Security Question
+            </h2>
+            <p style="color:#858685;text-align:center;
+                      font-size:14px;margin-bottom:20px;">
+                🔐 What is your Mother Name?
+            </p>
+            <form method="POST" action="/security-question/"
+                  autocomplete="off">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Answer</label>
+                    <input type="text" name="answer" placeholder="Type Your Answer" autocomplete="off">
+                </div>
+                <button type="submit" class="form-btn">Verify →</button>
+            </form>
+            <div class="form-footer">
+                <p>
+                    <a href="/forgot-password/">← Go back</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

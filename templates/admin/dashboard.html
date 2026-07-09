@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - GYMIFY</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-logo">GYM<span>IFY</span></div>
+        <div class="sidebar-user">
+            <strong>{{ request.user.get_full_name }}</strong>
+            {{ request.user.email }}
+        </div>
+
+        <p class="sidebar-title">Overview</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/dashboard/" class="active">🏠 Dashboard</a>
+        </nav>
+
+        <p class="sidebar-title">Management</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/members/">👥 Manage Members</a>
+            <a href="/admin-panel/trainers/">💪 Manage Trainers</a>
+            <a href="/admin-panel/attendance/">📋 Attendance</a>
+            <a href="/admin-panel/payments/">💳 Payments</a>
+        </nav>
+
+        <p class="sidebar-title">Content</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/courses/">🏋️ Workout Courses</a>
+            <a href="/admin-panel/products/">⚡ Products Store</a>
+        </nav>
+
+        <p class="sidebar-title">Insights</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/reports/">📊 Reports</a>
+        </nav>
+
+        <div class="logout-btn">
+            <a href="/logout/"
+               style="display:block;width:100%;padding:12px;
+                      background:#E63946;color:white;
+                      text-align:center;border-radius:6px;
+                      text-decoration:none;font-size:14px;">
+                🚪 Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <h1>Admin Dashboard</h1>
+
+        <!-- STATS — Real Database Se -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number">{{ total_members }}</div>
+                <div class="stat-label">Total Members</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💪</div>
+                <div class="stat-number">{{ total_trainers }}</div>
+                <div class="stat-label">Trainers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-number">{{ present_today }}</div>
+                <div class="stat-label">Present Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-number">PKR {{ total_revenue }}</div>
+                <div class="stat-label">Total Revenue</div>
+            </div>
+        </div>
+
+        <!-- RECENT MEMBERS -->
+        <div class="table-section">
+            <h3>
+                Recent Members
+                <a href="/admin-panel/members/"
+                   class="btn-solid"
+                   style="font-size:12px;padding:6px 14px;">
+                   View All
+                </a>
+            </h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Plan</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in recent_members %}
+                    <tr>
+                        <td>#{{ member.id }}</td>
+                        <td>{{ member.user.get_full_name }}</td>
+                        <td>{{ member.user.phone }}</td>
+                        <td>{{ member.get_membership_plan_display }}</td>
+                        <td>
+                            {% if member.is_active %}
+                            <span class="status-badge status-paid">Active</span>
+                            {% else %}
+                            <span class="status-badge status-pending">Inactive</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" style="text-align:center;color:#858685;">
+                            There is no member, add member first
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- RECENT PAYMENTS -->
+        <div class="table-section">
+            <h3>
+                Recent Payments
+                <a href="/admin-panel/payments/"
+                   class="btn-solid"
+                   style="font-size:12px;padding:6px 14px;">
+                   View All
+                </a>
+            </h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Member</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in recent_payments %}
+                    <tr>
+                        <td>{{ payment.member.user.get_full_name }}</td>
+                        <td>PKR {{ payment.amount }}</td>
+                        <td>{{ payment.payment_date }}</td>
+                        <td>
+                            {% if payment.status == 'paid' %}
+                            <span class="status-badge status-paid">Paid</span>
+                            {% else %}
+                            <span class="status-badge status-pending">Pending</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align:center;color:#858685;">
+                            No record payment
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

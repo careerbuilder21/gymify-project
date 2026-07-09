@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMIFY - Gym Management System</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="nav-logo">GYM<span>IFY</span></div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About Us</a></li>
+            <li><a href="{% url 'public_store' %}">Store</a></li>
+            <li><a href="{% url 'public_courses' %}">Workout Courses</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <a href="{% url 'login' %}" class="btn-outline">Login</a>
+            <a href="{% url 'register' %}" class="btn-solid">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to <span>GYMIFY</span></h1>
+            <p>A complete gym management system for admins, trainers, and members.</p>
+            <div class="hero-btns">
+                <a href="{% url 'register' %}" class="btn-solid">Join Now</a>
+                <a href="{% url 'about' %}" class="btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features">
+        <h2>What We Offer</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">👤</div>
+                <h3>Member Management</h3>
+                <p>Track all members, their attendance, payments and progress in one place.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏋️</div>
+                <h3>Workout Courses</h3>
+                <p>Access online workout courses created by certified trainers.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Energy Store</h3>
+                <p>Shop top gym energy drinks and supplements directly from our store.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Reports</h3>
+                <p>Admin can generate attendance, payment and sales reports easily.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- USER ROLES SECTION -->
+    <section class="roles">
+        <h2>Who Uses GYMIFY?</h2>
+        <div class="roles-grid">
+            <div class="role-card">
+                <h3>🔧 Admin</h3>
+                <p>Manage trainers, members, payments, attendance, products and generate reports.</p>
+                <a href="{% url 'login' %}" class="btn-solid">Admin Login</a>
+            </div>
+            <div class="role-card">
+                <h3>💪 Trainer</h3>
+                <p>View assigned members, mark attendance, create workout plans and upload content.</p>
+                <a href="{% url 'login' %}" class="btn-solid">Trainer Login</a>
+            </div>
+            <div class="role-card">
+                <h3>🏃 Member</h3>
+                <p>View attendance, payment history, access workout courses and purchase products.</p>
+                <a href="{% url 'register' %}" class="btn-solid">Member Register</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h3>GYM<span>IFY</span></h3>
+                <p>Complete Gym Management System</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a href="{% url 'public_store' %}">Store</a></li>
+                    <li><a href="{% url 'public_courses' %}">Courses</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Account</h4>
+                <ul>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 GYMIFY. All rights reserved. | By Ashar Waseem & Samiullah Khalid</p>
+        </div>
+    </footer>
+
+</body>
+</html>

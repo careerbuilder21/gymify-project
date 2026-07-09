@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Courses - GYMIFY</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="nav-logo">GYM<span>IFY</span></div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About Us</a></li>
+            <li><a href="{% url 'public_store' %}">Store</a></li>
+            <li><a href="{% url 'public_courses' %}">Workout Courses</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <a href="{% url 'login' %}" class="btn-outline">Login</a>
+            <a href="{% url 'register' %}" class="btn-solid">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <h1>🏋️ Workout Courses</h1>
+        <p>Professional workout plans created by certified trainers. Login to access full content.</p>
+    </div>
+
+    <!-- COURSES SECTION -->
+    <div class="courses-section">
+        <h2>Available Courses</h2>
+        <p>Browse our workout courses. Members can access full course content after login.</p>
+
+        <div class="courses-grid">
+            {% for course in courses %}
+            <div class="course-card">
+                <div class="course-thumb" style="overflow:hidden;padding:0;height:250px;">
+                    {% if course.image %}
+                    <img src="{{ course.image.url }}"
+                         style="width:100%;height:100%;object-fit:cover;">
+                    {% else %}
+                    <span style="font-size:50px;display:flex;
+                                  align-items:center;justify-content:center;
+                                  height:100%;"></span>
+                    {% endif %}
+                </div>
+                <div class="course-body">
+                    <h3>{{ course.title }}</h3>
+                    <p>{{ course.description }}</p>
+                    <div class="course-meta">
+                        <span class="badge">
+                            {{ course.get_level_display }}
+                        </span>
+                        <span class="badge">
+                            {{ course.duration }}
+                        </span>
+                    </div>
+                    <a href="{% url 'login' %}" class="btn-solid"
+                       style="font-size:13px;padding:8px 16px;">
+                        Access Course
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div style="text-align:center;color:#858685;
+                        padding:40px;grid-column:1/-1;
+                        background:#fff;border:1px solid #ddd;
+                        border-radius:10px;">
+                <p style="font-size:16px;">
+                    There is no course here
+                </p>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- Login Prompt -->
+        <div style="text-align:center;margin-top:50px;padding:30px;background:#fff;border:1px solid #ddd;border-radius:10px;">
+            <h3 style="font-size:20px;color:#0C0C0C;margin-bottom:10px;">Want Full Access?</h3>
+            <p style="color:#858685;font-size:14px;margin-bottom:20px;">Login as a member to access full course content, videos, and detailed workout plans.</p>
+            <a href="{% url 'login' %}" class="btn-solid" style="margin-right:10px;">Login</a>
+            <a href="{% url 'register' %}" class="btn-outline">Register Now</a>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h3>GYM<span>IFY</span></h3>
+                <p>Complete Gym Management System</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a href="{% url 'public_store' %}">Store</a></li>
+                    <li><a href="{% url 'public_courses' %}">Courses</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Account</h4>
+                <ul>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 GYMIFY. All rights reserved. | By Ashar Waseem & Samiullah Khalid</p>
+        </div>
+    </footer>
+</body>
+</html>

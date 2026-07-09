@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance - GYMIFY</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-logo">GYM<span>IFY</span></div>
+        <div class="sidebar-user">
+            <strong>{{ request.user.get_full_name }}</strong>
+            {{ request.user.email }}
+        </div>
+        <p class="sidebar-title">Overview</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/dashboard/">🏠 Dashboard</a>
+        </nav>
+        <p class="sidebar-title">Management</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/members/">👥 Manage Members</a>
+            <a href="/admin-panel/trainers/">💪 Manage Trainers</a>
+            <a href="/admin-panel/attendance/" class="active">📋 Attendance</a>
+            <a href="/admin-panel/payments/">💳 Payments</a>
+        </nav>
+        <p class="sidebar-title">Content</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/courses/">🏋️ Workout Courses</a>
+            <a href="/admin-panel/products/">⚡ Products Store</a>
+        </nav>
+        <p class="sidebar-title">Insights</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/reports/">📊 Reports</a>
+        </nav>
+        <div class="logout-btn">
+            <a href="/logout/"
+               style="display:block;width:100%;padding:12px;
+                      background:#E63946;color:white;
+                      text-align:center;border-radius:6px;
+                      text-decoration:none;font-size:14px;">
+                🚪 Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <h1>Attendance Management</h1>
+
+        <!-- STATS -->
+        <div class="stats-grid"
+             style="grid-template-columns:repeat(3,1fr);">
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-number">{{ present_count }}</div>
+                <div class="stat-label">Present Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">❌</div>
+                <div class="stat-number">{{ absent_count }}</div>
+                <div class="stat-label">Absent Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-number">{{ today }}</div>
+                <div class="stat-label">Today's Date</div>
+            </div>
+        </div>
+
+        <!-- ATTENDANCE TABLE -->
+        <div class="table-section">
+            <h3>Today's Attendance, {{ today }}</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Member</th>
+                        <th>Trainer</th>
+                        <th>Check-in Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td>{{ record.member.user.get_full_name }}</td>
+                        <td>
+                            {% if record.marked_by %}
+                            {{ record.marked_by.user.get_full_name }}
+                            {% else %}
+                            <span style="color:#858685;">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if record.checkin_time %}
+                            {{ record.checkin_time }}
+                            {% else %}
+                            <span style="color:#858685;">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if record.status == 'present' %}
+                            <span class="status-badge status-present">
+                                Present
+                            </span>
+                            {% elif record.status == 'absent' %}
+                            <span class="status-badge status-absent">
+                                Absent
+                            </span>
+                            {% else %}
+                            <span class="status-badge status-pending">
+                                Late
+                            </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4"
+                            style="text-align:center;
+                                   color:#858685;padding:20px;">
+                            There is no attendance today, mark your attendance
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

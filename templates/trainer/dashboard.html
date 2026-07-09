@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trainer Dashboard - GYMIFY</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+<body>
+
+<div class="dashboard-layout">
+    <div class="sidebar">
+        <div class="sidebar-logo">GYM<span>IFY</span></div>
+        <div class="sidebar-user">
+            <strong>{{ request.user.get_full_name }}</strong>
+            {{ request.user.email }}
+        </div>
+        <p class="sidebar-title">Trainer Panel</p>
+        <nav class="sidebar-nav">
+            <a href="/trainer/dashboard/" class="active">🏠 Dashboard</a>
+            <a href="/trainer/members/">👥 Assigned Members</a>
+            <a href="/trainer/attendance/">📋 Mark Attendance</a>
+            <a href="/trainer/workout/">🏋️ Workout Plans</a>
+            <a href="/trainer/upload/">📤 Upload Content</a>
+            <a href="/trainer/progress/">📈 Member Progress</a>
+        </nav>
+        <div class="logout-btn">
+            <a href="/logout/" class="logout-link">
+                🚪 Logout
+            </a>
+        </div>
+    </div>
+    <div class="main-content">
+        <h1>Trainer Dashboard</h1>
+        <!-- STATS -->
+        <div class="stats-grid stats-grid-3">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number">{{ total_members }}</div>
+                <div class="stat-label">Assigned Members</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-number">{{ present_today }}</div>
+                <div class="stat-label">Present Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👤</div>
+                <div class="stat-number">
+                    {{ trainer.get_specialization_display }}
+                </div>
+                <div class="stat-label">Specialization</div>
+            </div>
+        </div>
+
+        <!-- AAJ KI ATTENDANCE -->
+        <div class="table-section">
+            <h3>
+                Today's Attendance, {{ today }}
+                <a href="/trainer/attendance/"
+                   class="btn-solid table-header-btn">
+                    Mark Attendance
+                </a>
+            </h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Member</th>
+                        <th>Check-in Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in today_records %}
+                    <tr>
+                        <td>{{ record.member.user.get_full_name }}</td>
+                        <td>
+                            {% if record.checkin_time %}
+                            {{ record.checkin_time }}
+                            {% else %}
+                            <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if record.status == 'present' %}
+                            <span class="status-badge status-present">
+                                Present
+                            </span>
+                            {% elif record.status == 'absent' %}
+                            <span class="status-badge status-absent">
+                                Absent
+                            </span>
+                            {% else %}
+                            <span class="status-badge status-pending">
+                                Late
+                            </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="table-empty-msg">
+                            Today there is no Attendance, Click on Mark Attendance
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- MY MEMBERS -->
+        <div class="table-section">
+            <h3>
+                My Members
+                <a href="/trainer/members/"
+                   class="btn-solid table-header-btn">
+                    View All
+                </a>
+            </h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Plan</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in my_members %}
+                    <tr>
+                        <td>{{ member.user.get_full_name }}</td>
+                        <td>{{ member.get_membership_plan_display }}</td>
+                        <td>{{ member.user.phone }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="table-empty-msg">There in No Member assign, Request to Admin</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance - GYMIFY</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+    <div class="sidebar">
+        <div class="sidebar-logo">GYM<span>IFY</span></div>
+        <div class="sidebar-user">
+            <strong>{{ request.user.get_full_name }}</strong>
+            {{ request.user.email }}
+        </div>
+        <p class="sidebar-title">Member Area</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/my-dashboard/">🏠 Dashboard</a>
+            <a href="/admin-panel/my-profile/">👤 My Profile</a>
+            <a href="/admin-panel/my-attendance/" class="active">📋 Attendance</a>
+            <a href="/admin-panel/my-payments/">💳 Payment History</a>
+            <a href="/admin-panel/my-courses/">🏋️ Workout Courses</a>
+            <a href="/admin-panel/my-store/">⚡ Store</a>
+        </nav>
+        <div class="logout-btn">
+            <a href="/logout/"
+               style="display:block;width:100%;padding:12px;
+                      background:#E63946;color:white;
+                      text-align:center;border-radius:6px;
+                      text-decoration:none;font-size:14px;">
+                🚪 Logout
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>Attendance History</h1>
+
+        <!-- STATS -->
+        <div class="stats-grid"
+             style="grid-template-columns:repeat(3,1fr);">
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-number">{{ present_count }}</div>
+                <div class="stat-label">Days Present</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">❌</div>
+                <div class="stat-number">{{ absent_count }}</div>
+                <div class="stat-label">Days Absent</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-number">{{ attendance_percent }}%</div>
+                <div class="stat-label">Attendance Rate</div>
+            </div>
+        </div>
+
+        <!-- ATTENDANCE TABLE -->
+        <div class="table-section">
+            <h3>All Attendance Records</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Check-in Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td>{{ record.date }}</td>
+                        <td>
+                            {% if record.checkin_time %}
+                            {{ record.checkin_time }}
+                            {% else %}
+                            <span style="color:#858685;">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if record.status == 'present' %}
+                            <span class="status-badge status-present">
+                                Present
+                            </span>
+                            {% elif record.status == 'absent' %}
+                            <span class="status-badge status-absent">
+                                Absent
+                            </span>
+                            {% else %}
+                            <span class="status-badge status-pending">
+                                Late
+                            </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3"
+                            style="text-align:center;
+                                   color:#858685;padding:20px;">
+                            No Attendance Recorded
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

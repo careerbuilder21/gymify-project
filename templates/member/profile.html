@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile - GYMIFY</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+    <div class="sidebar">
+        <div class="sidebar-logo">GYM<span>IFY</span></div>
+        <div class="sidebar-user">
+            <strong>{{ request.user.get_full_name }}</strong>
+            {{ request.user.email }}
+        </div>
+        <p class="sidebar-title">Member Area</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/my-dashboard/">🏠 Dashboard</a>
+            <a href="/admin-panel/my-profile/" class="active">👤 My Profile</a>
+            <a href="/admin-panel/my-attendance/">📋 Attendance</a>
+            <a href="/admin-panel/my-payments/">💳 Payment History</a>
+            <a href="/admin-panel/my-courses/">🏋️ Workout Courses</a>
+            <a href="/admin-panel/my-store/">⚡ Store</a>
+        </nav>
+        <div class="logout-btn">
+            <a href="/logout/"
+               style="display:block;width:100%;padding:12px;
+                      background:#E63946;color:white;
+                      text-align:center;border-radius:6px;
+                      text-decoration:none;font-size:14px;">
+                🚪 Logout
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>My Profile</h1>
+
+        <!-- VIEW PROFILE -->
+        <div class="profile-box">
+            <h3>Profile Information</h3>
+            <div class="profile-row">
+                <span>Full Name</span>
+                <span>{{ member.user.get_full_name }}</span>
+            </div>
+            <div class="profile-row">
+                <span>Email</span>
+                <span>{{ member.user.email }}</span>
+            </div>
+            <div class="profile-row">
+                <span>Phone</span>
+                <span>{{ member.user.phone }}</span>
+            </div>
+            <div class="profile-row">
+                <span>Age</span>
+                <span>{{ member.age }}</span>
+            </div>
+            <div class="profile-row">
+                <span>Weight</span>
+                <span>{{ member.weight }} kg</span>
+            </div>
+            <div class="profile-row">
+                <span>Membership Plan</span>
+                <span>{{ member.get_membership_plan_display }}</span>
+            </div>
+            <div class="profile-row">
+                <span>Trainer</span>
+                <span>
+                    {% if member.assigned_trainer %}
+                    {{ member.assigned_trainer.user.get_full_name }}
+                    {% else %}
+                    Not Assigned
+                    {% endif %}
+                </span>
+            </div>
+            <div class="profile-row">
+                <span>Join Date</span>
+                <span>{{ member.join_date }}</span>
+            </div>
+        </div>
+
+        <!-- UPDATE PROFILE -->
+        <div class="dash-form">
+            <h3>Update Profile</h3>
+            <form method="POST" action="/admin-panel/my-profile/">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" name="name"
+                               value="{{ member.user.get_full_name }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" name="phone"
+                               value="{{ member.user.phone }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" name="age"
+                               value="{{ member.age }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Weight (kg)</label>
+                        <input type="number" name="weight"
+                               value="{{ member.weight }}">
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn-solid">
+                    Update Profile
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

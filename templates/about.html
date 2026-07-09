@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - GYMIFY</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-logo">GYM<span>IFY</span></div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About Us</a></li>
+            <li><a href="{% url 'public_store' %}">Store</a></li>
+            <li><a href="{% url 'public_courses' %}">Workout Courses</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <a href="{% url 'login' %}" class="btn-outline">Login</a>
+            <a href="{% url 'register' %}" class="btn-solid">Sign Up</a>
+        </div>
+    </nav>
+    <div class="page-header">
+        <h1>About GYMIFY</h1>
+        <p>Learn about our gym management system and the team behind it.</p>
+    </div>
+    <div class="about-section">
+
+        <h2>What is GYMIFY?</h2>
+        <p>
+            GYMIFY is a web-based Gym Management System designed to automate daily gym operations. It replaces
+            traditional manual methods with a modern, efficient digital platform. The system provides separate
+            dashboards for gym owners (admins), trainers, and members — each with features suited to their role.
+        </p>
+
+        <h2>Our Mission</h2>
+        <p>
+            Our mission is to simplify gym management by providing an all-in-one system that handles member
+            registration, attendance tracking, payment management, workout courses, and an integrated store
+            for gym products like energy drinks and supplements. We aim to save time, reduce errors, and
+            improve communication between gym staff and members.
+        </p>
+
+        <h2>Key Features</h2>
+        <p>
+            GYMIFY offers role-based access for Admin, Trainer, and Member. The Admin can manage the entire
+            system, including adding trainers and members, tracking payments and attendance, managing workout
+            courses and products, and generating reports. Trainers can view assigned members, mark attendance,
+            create workout plans, and upload content. Members can view their attendance history, payment records,
+            access workout courses, and purchase gym products from the store.
+        </p>
+
+        <h2>Project Background</h2>
+        <p>
+            This system was developed as a Final Year Project for the Bachelor of Science in Information
+            Technology (2022-2026) at Govt. MAO Graduate College, Lahore, under the supervision of
+            Prof. Irfan Shabbir.
+        </p>
+
+        <!-- ===========================
+             TEAM SECTION
+        =========================== -->
+        <h2>Meet the Team</h2>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-photo">
+                    <img
+                        src="{% static 'images/ashar.jpg' %}"alt="Ashar Waseem">
+                </div>
+                <h3>Ashar Waseem</h3>
+                <p class="dept-info">BSIT Student (2022-2026)<br>Govt. MAO College, Lahore</p>
+            </div>
+            <div class="team-card">
+                <div class="team-photo">
+                    <img
+                        src="{% static 'images/sami.jpg' %}"alt="Samiullah Khalid">
+                </div>
+                <h3>Samiullah Khalid</h3>
+                <p class="dept-info">BSIT Student (2022-2026)<br>Govt. MAO College, Lahore</p>
+            </div>
+        </div>
+        <!-- SUPERVISOR -->
+        <div class="supervisor">
+            <p class="super-p">Supervised by</p>
+            <h3 class="super-h3">Prof. Irfan Shabbir</h3>
+            <p class="super-p">Department of Information Technology<br>Govt. MAO Graduate College, Lahore</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h3>GYM<span>IFY</span></h3>
+                <p>Complete Gym Management System</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a href="{% url 'public_store' %}">Store</a></li>
+                    <li><a href="{% url 'public_courses' %}">Courses</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Account</h4>
+                <ul>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 GYMIFY. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

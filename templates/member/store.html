@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Store - GYMIFY</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+<body>
+
+<div class="dashboard-layout">
+    <div class="sidebar">
+        <div class="sidebar-logo">GYM<span>IFY</span></div>
+        <div class="sidebar-user">
+            <strong>{{ request.user.get_full_name }}</strong>
+            {{ request.user.email }}
+        </div>
+        <p class="sidebar-title">Member Area</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/my-dashboard/">🏠 Dashboard</a>
+            <a href="/admin-panel/my-profile/">👤 My Profile</a>
+            <a href="/admin-panel/my-attendance/">📋 Attendance</a>
+            <a href="/admin-panel/my-payments/">💳 Payment History</a>
+            <a href="/admin-panel/my-courses/">🏋️ Workout Courses</a>
+            <a href="/admin-panel/my-store/" class="active">⚡ Store</a>
+        </nav>
+        <div class="logout-btn">
+            <a href="/logout/" class="logout-link">
+                🚪 Logout
+            </a>
+        </div>
+    </div>
+    <div class="main-content">
+        <h1>⚡ Energy Drinks Store</h1>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="success-msg">✅ {{ message }}</div>
+        {% endfor %}
+        {% endif %}
+
+        <!-- CART BAR -->
+        <div class="cart-bar">
+            <span>🛒 Cart Items:
+                <strong class="cart-count">
+                    {{ cart_count }}
+                </strong>
+            </span>
+        </div>
+       <!-- CART ITEMS LIST -->
+{% if cart_items %}
+<div class="dash-form" style="margin-bottom:25px;">
+    <h3>🛒 Cart Items</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>PKR {{ item.product.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>PKR {{ item.subtotal }}</td>
+                <td>
+                    <a href="/admin-panel/cart/remove/{{ item.product.id }}/"
+                       class="btn-delete"
+                       style="text-decoration:none;font-size:12px;"
+                       onclick="return confirm('Remove this item?')">
+                        Remove
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3"
+                    style="text-align:right;
+                           font-weight:700;">
+                    Total:
+                </td>
+                <td style="font-weight:700;color:#E63946;">
+                    PKR {{ cart_total }}
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endif %}
+        <!-- PRODUCTS GRID -->
+        {% if products %}
+        <div class="products-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <div class="product-img-box">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}"
+                         class="product-img">
+                    {% else %}
+                    <span class="product-no-img">⚡</span>
+                    {% endif %}
+                </div>
+                <div class="product-info">
+                    <h3>{{ product.name }}</h3>
+                    <p class="product-desc">
+                        {{ product.description }}
+                    </p>
+                    <p class="product-price">
+                        PKR {{ product.price }}
+                    </p>
+                    <p class="product-stock">
+                        Stock: {{ product.stock }} units
+                    </p>
+                    <a href="/admin-panel/cart/add/{{ product.id }}/"
+                       class="add-to-cart-btn">
+                        + Add to Cart
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- CHECKOUT FORM -->
+        {% if cart_count > 0 %}
+        <div class="dash-form checkout-form-box">
+            <h3>🏦 Bank Transfer Checkout</h3>
+            <p class="bank-info-note">
+             Confirm your payment through bank details below
+            Order will be complete after admin's verification
+            </p>
+
+            <!-- GYM BANK DETAILS -->
+            <div class="gym-bank-box">
+                <p class="gym-bank-title">
+                    🏦 Gym Bank Account Details
+                </p>
+                <p class="gym-bank-detail">
+                    Bank: <strong>HBL (Habib Bank Limited)</strong>
+                </p>
+                <p class="gym-bank-detail">
+                    Account Title:
+                    <strong>GYMIFY FITNESS CENTER</strong>
+                </p>
+                <p class="gym-bank-detail">
+                    Account Number:
+                    <strong>1234-5678-9012-3456</strong>
+                </p>
+                <p class="gym-bank-detail">
+                    IBAN:
+                    <strong>PK36HABB0000001234567890</strong>
+                </p>
+            </div>
+
+            <form method="POST"
+                  action="/admin-panel/checkout/"
+                  id="checkout-form"
+                  onsubmit="processPayment(event)">
+                {% csrf_token %}
+                <input type="hidden"
+                       name="payment_method"
+                       value="bank_transfer">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Your Bank Name</label>
+                        <select name="bank_name" required>
+                            <option value="">Select Your bank</option>
+                            <option value="HBL">HBL</option>
+                            <option value="MCB">MCB</option>
+                            <option value="UBL">UBL</option>
+                            <option value="Meezan">Meezan Bank</option>
+                            <option value="Allied">Allied Bank</option>
+                            <option value="Askari">Askari Bank</option>
+                            <option value="Faysal">Faysal Bank</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Account Title</label>
+                        <input type="text"
+                               name="account_title"
+                               placeholder="Your Account Title"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label>Account Number / IBAN</label>
+                        <input type="text"
+                               name="account_number"
+                               placeholder="Account Number or IBAN"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label>Transfer Amount (PKR)</label>
+                        <input type="number"
+                               name="transfer_amount"
+                               placeholder="Amount which you transfer"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label>Transaction Reference</label>
+                        <input type="text"
+                               name="transaction_ref"
+                               placeholder="Bank transaction reference number">
+                    </div>
+                </div>
+
+                <br>
+                <button type="submit"
+                        class="btn-solid confirm-pay-btn">
+                    ✅ Confirm Bank Transfer
+                </button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% else %}
+        <div class="no-product-msg">
+            <p>No Product Available</p>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+<!-- PAYMENT PROCESSING OVERLAY -->
+<div id="payment-overlay"
+     style="display:none;position:fixed;
+            top:0;left:0;width:100%;height:100%;
+            background:rgba(0,0,0,0.85);
+            z-index:9999;justify-content:center;
+            align-items:center;">
+    <div class="payment-modal">
+        <div id="processing-screen">
+            <div class="payment-spinner"></div>
+            <h3 class="payment-status-title">
+                Verifying Transfer...
+            </h3>
+            <p class="payment-status-msg">
+                Please wait, do not close this page
+            </p>
+        </div>
+        <div id="success-screen" style="display:none;">
+            <div class="payment-success-icon">✅</div>
+            <h3 class="payment-status-title">
+                Transfer Confirmed!
+            </h3>
+            <p class="payment-status-msg">
+                Your order has been placed successfully.
+            </p>
+            <p class="payment-method-confirmed">
+                🏦 Bank Transfer — Admin will verify shortly
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
