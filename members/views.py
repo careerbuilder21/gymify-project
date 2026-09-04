@@ -540,7 +540,7 @@ def checkout(request):
             return redirect('member_store')
 
         try:
-            # Order banao
+            # Create Order
             order = Order.objects.create(
                 member=member,
                 payment_method=payment_method,

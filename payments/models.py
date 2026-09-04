@@ -8,8 +8,6 @@ class Payment(models.Model):
     ]
     METHOD_CHOICES = [
         ('cash',      'Cash'),
-        ('easypaisa', 'EasyPaisa'),
-        ('jazzcash',  'JazzCash'),
         ('bank',      'Bank Transfer'),
     ]
     member       = models.ForeignKey(

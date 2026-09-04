@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from accounts.models import User
 from members.models import Member
+import re
 
 def home(request):
     return render(request, 'index.html')
@@ -59,7 +60,7 @@ def login_view(request):
             if user.role != role:
                 return render(request, 'login.html', {
                     'error': True,
-                    'error_msg': f'This account is for {user.role} — Select correct tab!'
+                    'error_msg': f'This account is for {user.role} Select correct tab!'
                 })
             login(request, user)
             if user.role == 'admin':
@@ -101,10 +102,10 @@ def register_view(request):
             return render(request, 'register.html', {
                 'error': 'Email did not empty!'
             })
-
+        
         if '@' not in email or '.' not in email:
             return render(request, 'register.html', {
-                'error': 'Enter valid email address!'
+                'error': 'Enter valid email address!(example@gmail.com)'
             })
 
         if not phone:
