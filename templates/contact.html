@@ -34,57 +34,90 @@
 
     <!-- CONTACT CONTENT -->
     <div class="contact-section">
+        <div class="contact-layout">
 
-        <h2>Get In Touch</h2>
-        <p>Feel free to reach out for any queries about membership, trainers, or the system.</p>
+            <!-- GET IN TOUCH -->
+            <div class="contact-info-box">
+                <h2>Get In Touch</h2>
+                <p class="contact-subtitle">
+                    Feel free to reach out for any queries
+                    about membership, trainers, or the system.
+                </p>
 
-        <!-- Contact Info -->
-        <div class="contact-info">
-            <div class="contact-info-item">
-                <span class="icon">📍</span>
-                <p><strong>Address:</strong> Govt. MAO Graduate College, Lahore, Pakistan</p>
+                <div class="contact-info-item">
+                    <span class="contact-icon">📍</span>
+                    <div>
+                        <strong>Address</strong>
+                        <p>Govt. MAO Graduate College,
+                           Lahore, Pakistan</p>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <span class="contact-icon">📧</span>
+                    <div>
+                        <strong>Email</strong>
+                        <p>admin@gymify.pk</p>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <span class="contact-icon">📞</span>
+                    <div>
+                        <strong>Phone</strong>
+                        <p>+92-300-0000000</p>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <span class="contact-icon">🕐</span>
+                    <div>
+                        <strong>Hours</strong>
+                        <p>Monday - Saturday:
+                           6:00 AM - 10:00 PM</p>
+                    </div>
+                </div>
             </div>
-            <div class="contact-info-item">
-                <span class="icon">📧</span>
-                <p><strong>Email:</strong> admin@gymify.pk</p>
+
+            <!-- RIGHT — SEND MESSAGE -->
+            <div class="contact-form-box">
+                <h2>Send a Message</h2>
+
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text"
+                           id="contact-name"
+                           placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email"
+                           id="contact-email"
+                           placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text"
+                           id="contact-subject"
+                           placeholder="What is this about?">
+                </div>
+
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea id="contact-message"
+                              placeholder="Write your message here...">
+                    </textarea>
+                </div>
+
+                <button class="form-btn"
+                        onclick="submitContact()">
+                    Send Message
+                </button>
             </div>
-            <div class="contact-info-item">
-                <span class="icon">📞</span>
-                <p><strong>Phone:</strong> +92-300-0000000</p>
-            </div>
-            <div class="contact-info-item">
-                <span class="icon">🕐</span>
-                <p><strong>Hours:</strong> Monday - Saturday: 6:00 AM - 10:00 PM</p>
-            </div>
+
         </div>
-
-        <!-- Contact Form -->
-        <div class="form-box">
-            <h2>Send a Message</h2>
-
-            <div class="form-group">
-                <label for="contact-name">Your Name</label>
-                <input type="text" id="contact-name" placeholder="Enter your name">
-            </div>
-
-            <div class="form-group">
-                <label for="contact-email">Email Address</label>
-                <input type="email" id="contact-email" placeholder="Enter your email">
-            </div>
-
-            <div class="form-group">
-                <label for="contact-subject">Subject</label>
-                <input type="text" id="contact-subject" placeholder="What is this about?">
-            </div>
-
-            <div class="form-group">
-                <label for="contact-message">Message</label>
-                <textarea id="contact-message" placeholder="Write your message here..."></textarea>
-            </div>
-
-            <button class="form-btn" onclick="submitContact()">Send Message</button>
-        </div>
-
     </div>
 
     <!-- FOOTER -->
@@ -112,7 +145,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 GYMIFY. All rights reserved. | By Ashar Waseem & Samiullah Khalid</p>
+            <p>&copy; 2025 GYMIFY. All rights reserved.</p>
         </div>
     </footer>
 
