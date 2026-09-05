@@ -1,7 +1,4 @@
-// ===========================
 // GYMIFY - JavaScript File
-// Simple & Minimal JS
-// ===========================
 
 // --- LOGIN ROLE TABS ---
 // Used on login.html to switch between Admin, Trainer, Member tabs
@@ -265,4 +262,20 @@ function processPayment(event) {
         }, 2000);
 
     }, 3000);
+}
+function togglePassword() {
+    var field = document.getElementById('password-field');
+    var icon  = document.getElementById('eye-icon');
+
+    if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+        icon.style.color = '#E63946';
+    } else {
+        field.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+        icon.style.color = '#858685';
+    }
 }

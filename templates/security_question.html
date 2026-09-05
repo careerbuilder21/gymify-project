@@ -1,11 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Security Question - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
 
     <nav class="navbar">
@@ -39,8 +41,7 @@
                       font-size:14px;margin-bottom:20px;">
                 🔐 What is your Mother Name?
             </p>
-            <form method="POST" action="/security-question/"
-                  autocomplete="off">
+            <form method="POST" action="/security-question/" autocomplete="off">
                 {% csrf_token %}
                 <div class="form-group">
                     <label>Answer</label>
@@ -56,4 +57,5 @@
         </div>
     </div>
 </body>
+
 </html>

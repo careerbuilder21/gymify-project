@@ -47,12 +47,22 @@ def login_view(request):
         if len(password) < 6:
             return render(request, 'login.html', {
                 'error': True,
-                'error_msg': 'Password consists of at least 6 charactors'
+                'error_msg': 'Password consists of at least 6 characters'
             })
+
+        # Email se bhi login ho sake
+        from django.contrib.auth import get_user_model
+        UserModel = get_user_model()
+
+        try:
+            user_obj       = UserModel.objects.get(email=username)
+            actual_username = user_obj.username
+        except UserModel.DoesNotExist:
+            actual_username = username
 
         user = authenticate(
             request,
-            username=username,
+            username=actual_username,
             password=password
         )
 
@@ -60,7 +70,7 @@ def login_view(request):
             if user.role != role:
                 return render(request, 'login.html', {
                     'error': True,
-                    'error_msg': f'This account is for {user.role} Select correct tab!'
+                    'error_msg': f'Ye account {user.role} ka hai — sahi tab select karo!'
                 })
             login(request, user)
             if user.role == 'admin':
@@ -72,7 +82,7 @@ def login_view(request):
         else:
             return render(request, 'login.html', {
                 'error': True,
-                'error_msg': 'Wrong Username or Password!'
+                'error_msg': 'Username ya Password galat hai!'
             })
 
     return render(request, 'login.html')

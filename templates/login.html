@@ -1,14 +1,16 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="{% static 'js/script.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<bo>
+
+<body>
 
     <nav class="navbar">
         <div class="nav-logo">GYM<span>IFY</span></div>
@@ -37,33 +39,23 @@
                 </p>
             </div>
             {% if error %}
-               <p class="error-msg"style="color:red;text-align:center;
+            <p class="error-msg" style="color:red;text-align:center;
                       font-size:14px;margin-bottom:15px;">{{ error_msg }}</p>{% endif %}
             <form method="POST" action="/login/">
                 {% csrf_token %}
                 <div class="role-tabs">
-                    <button type="button"
-                            class="role-tab active"
-                            id="tab-admin"
-                            onclick="switchTab('admin')">
+                    <button type="button" class="role-tab active" id="tab-admin" onclick="switchTab('admin')">
                         Admin
                     </button>
-                    <button type="button"
-                            class="role-tab"
-                            id="tab-trainer"
-                            onclick="switchTab('trainer')">
+                    <button type="button" class="role-tab" id="tab-trainer" onclick="switchTab('trainer')">
                         Trainer
                     </button>
-                    <button type="button"
-                            class="role-tab"
-                            id="tab-member"
-                            onclick="switchTab('member')">
+                    <button type="button" class="role-tab" id="tab-member" onclick="switchTab('member')">
                         Member
                     </button>
                 </div>
                 <input type="hidden" id="role-input" name="role" value="admin">
-                <h2 id="form-title"
-                    style="font-size:22px;text-align:center;margin-bottom:20px;">
+                <h2 id="form-title" style="font-size:22px;text-align:center;margin-bottom:20px;">
                     Admin Login
                 </h2>
                 <div class="form-group">
@@ -72,14 +64,18 @@
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password"name="password" autocomplete="new-password" placeholder="Enter your password">
-                </div>
-                <div style="text-align:right;margin-bottom:10px;">
-                   <a href="/forgot-password/"
-                       style="font-size:13px;color:#E63946;text-decoration:none;">Forgot Password?</a></div>
-                <button type="submit" class="form-btn">
-                    Sign In
-                </button>
+                    <div class="password-wrapper">
+                        <input type="password" name="password" id="password-field" autocomplete="new-password"
+                            placeholder="Enter your password"><i class="fa fa-eye eye-btn" id="eye-icon"
+                            onclick="togglePassword()"></i>
+                    </div>
+                    <div style="text-align:right;margin-bottom:10px;">
+                        <a href="/forgot-password/" style="font-size:13px;color:#E63946;text-decoration:none;">Forgot
+                            Password?</a>
+                    </div>
+                    <button type="submit" class="form-btn">
+                        Sign In
+                    </button>
             </form>
             <div class="form-footer">
                 <p>Don't have an account?
@@ -90,5 +86,7 @@
             </div>
         </div>
     </div>
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
+
 </html>

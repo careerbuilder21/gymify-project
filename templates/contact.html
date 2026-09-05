@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="{% static 'js/script.js' %}" defer></script>
 </head>
+
 <body>
 
     <!-- NAVIGATION -->
@@ -49,7 +51,7 @@
                     <div>
                         <strong>Address</strong>
                         <p>Govt. MAO Graduate College,
-                           Lahore, Pakistan</p>
+                            Lahore, Pakistan</p>
                     </div>
                 </div>
 
@@ -74,7 +76,7 @@
                     <div>
                         <strong>Hours</strong>
                         <p>Monday - Saturday:
-                           6:00 AM - 10:00 PM</p>
+                            6:00 AM - 10:00 PM</p>
                     </div>
                 </div>
             </div>
@@ -85,34 +87,26 @@
 
                 <div class="form-group">
                     <label>Your Name</label>
-                    <input type="text"
-                           id="contact-name"
-                           placeholder="Enter your name">
+                    <input type="text" id="contact-name" placeholder="Enter your name">
                 </div>
 
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email"
-                           id="contact-email"
-                           placeholder="Enter your email">
+                    <input type="email" id="contact-email" placeholder="Enter your email">
                 </div>
 
                 <div class="form-group">
                     <label>Subject</label>
-                    <input type="text"
-                           id="contact-subject"
-                           placeholder="What is this about?">
+                    <input type="text" id="contact-subject" placeholder="What is this about?">
                 </div>
 
                 <div class="form-group">
                     <label>Message</label>
-                    <textarea id="contact-message"
-                              placeholder="Write your message here...">
+                    <textarea id="contact-message" placeholder="Write your message here...">
                     </textarea>
                 </div>
 
-                <button class="form-btn"
-                        onclick="submitContact()">
+                <button class="form-btn" onclick="submitContact()">
                     Send Message
                 </button>
             </div>
@@ -150,4 +144,5 @@
     </footer>
 
 </body>
+
 </html>
