@@ -898,6 +898,8 @@ margin-top: 2px;
     border: 1px solid #ddd;
     border-radius: 10px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .course-thumb {
@@ -911,37 +913,47 @@ margin-top: 2px;
 
 .course-body {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .course-body h3 {
     font-size: 16px;
     color: #0C0C0C;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .course-body p {
-    font-size: 13px;
+    font-size: 14px;
     color: #858685;
     line-height: 1.6;
+    flex: 1;
     margin-bottom: 12px;
 }
 
 .course-meta {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
     margin-bottom: 12px;
+    margin-top: auto;
 }
 
 .badge {
     background-color: #F4F4F4;
     border: 1px solid #ddd;
     color: #0C0C0C;
-    padding: 3px 10px;
+    padding: 7px 16px;
     border-radius: 20px;
     font-size: 12px;
 }
-
+.course-body .btn-solid, 
+.course-body a.btn-solid {
+    margin-top: auto;
+    display: block;
+    text-align: center;
+}
 /* ===========================
    DASHBOARD COMMON
 =========================== */
