@@ -1,139 +1,135 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Upload Content - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
-<div class="dashboard-layout">
+    <div class="dashboard-layout">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <div class="sidebar-logo">GYM<span>IFY</span></div>
-        <div class="sidebar-user">
-            <strong>{{ request.user.get_full_name }}</strong>
-            {{ request.user.email }}
-        </div>
-        <p class="sidebar-title">Trainer Panel</p>
-        <nav class="sidebar-nav">
-            <a href="/trainer/dashboard/">🏠 Dashboard</a>
-            <a href="/trainer/members/">👥 Assigned Members</a>
-            <a href="/trainer/attendance/">📋 Mark Attendance</a>
-            <a href="/trainer/workout/">🏋️ Workout Plans</a>
-            <a href="/trainer/upload/" class="active">📤 Upload Content</a>
-            <a href="/trainer/progress/">📈 Member Progress</a>
-        </nav>
-        <div class="logout-btn">
-            <a href="/logout/"
-               style="display:block;width:100%;padding:12px;
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-logo">GYM<span>IFY</span></div>
+            <div class="sidebar-user">
+                <strong>{{ request.user.get_full_name }}</strong>
+                {{ request.user.email }}
+            </div>
+            <p class="sidebar-title">Trainer Panel</p>
+            <nav class="sidebar-nav">
+                <a href="/trainer/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="/trainer/members/"><i class="fas fa-users"></i>Assigned Members</a>
+                <a href="/trainer/attendance/"><i class="fas fa-clipboard-check"></i>Mark Attendance</a>
+                <a href="/trainer/workout/"><i class="fas fa-dumbbell"></i>Workout Plans</a>
+                <a href="/trainer/upload/" class="active"><i class="fas fa-cloud-upload-alt"></i>Upload Content</a>
+                <a href="/trainer/progress/"><i class="fas fa-chart-line"></i>Member Progress</a>
+            </nav>
+            <div class="logout-btn">
+                <a href="/logout/" style="display:block;width:100%;padding:12px;
                       background:#E63946;color:white;
                       text-align:center;border-radius:6px;
                       text-decoration:none;font-size:14px;">
-                🚪 Logout
-            </a>
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
         </div>
-    </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <h1>Upload Workout Content</h1>
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <h1>Upload Workout Content</h1>
 
-        <!-- UPLOAD FORM -->
-        <div class="dash-form">
-            <h3>Upload New Content</h3>
+            <!-- UPLOAD FORM -->
+            <div class="dash-form">
+                <h3>Upload New Content</h3>
 
-            {% if my_courses.count == 0 %}
-            <p style="color:#E63946;font-size:14px;">
-                ⚠️First assign course from admin, then upload content
-            </p>
-            {% else %}
-            <form method="POST"
-                  action="/trainer/upload/"
-                  enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Content Title</label>
-                        <input type="text" name="title"
-                               placeholder="Content Name"
-                               required>
+                {% if my_courses.count == 0 %}
+                <p style="color:#E63946;font-size:14px;">
+                    First assign course from admin, then upload content
+                </p>
+                {% else %}
+                <form method="POST" action="/trainer/upload/" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Content Title</label>
+                            <input type="text" name="title" placeholder="Content Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Content Type</label>
+                            <select name="content_type">
+                                <option value="pdf">Pdf</option>
+                                <option value="routine">Exercise Routine</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Course</label>
+                            <select name="course_id" required>
+                                <option value="">Select Course</option>
+                                {% for course in my_courses %}
+                                <option value="{{ course.id }}">
+                                    {{ course.title }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload File</label>
+                            <input type="file" name="file" required>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Content Type</label>
-                        <select name="content_type">
-                            <option value="pdf">Pdf</option>
-                            <option value="routine">Exercise Routine</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Select Course</label>
-                        <select name="course_id" required>
-                            <option value="">Select Course</option>
-                            {% for course in my_courses %}
-                            <option value="{{ course.id }}">
-                                {{ course.title }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Upload File</label>
-                        <input type="file" name="file" required>
-                    </div>
-                </div>
-                <br>
-                <button type="submit" class="btn-solid">
-                    Upload Content
-                </button>
-            </form>
-            {% endif %}
-        </div>
-        <!-- UPLOADED CONTENT TABLE -->
-        <div class="table-section">
-            <h3>Uploaded Content ({{ all_content.count }})</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Type</th>
-                        <th>Course</th>
-                        <th>Uploaded</th>
-                        <th>File</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for content in all_content %}
-                    <tr>
-                        <td>{{ content.title }}</td>
-                        <td>{{ content.get_content_type_display }}</td>
-                        <td>{{ content.course.title }}</td>
-                        <td>{{ content.uploaded_at|date:"d M Y" }}</td>
-                        <td>
-                            <a href="{{ content.file.url }}"
-                               target="_blank"
-                               class="btn-edit">
-                                View
-                            </a>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="5"
-                            style="text-align:center;
+                    <br>
+                    <button type="submit" class="btn-solid">
+                        Upload Content
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+            <!-- UPLOADED CONTENT TABLE -->
+            <div class="table-section">
+                <h3>Uploaded Content ({{ all_content.count }})</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Course</th>
+                            <th>Uploaded</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for content in all_content %}
+                        <tr>
+                            <td>{{ content.title }}</td>
+                            <td>{{ content.get_content_type_display }}</td>
+                            <td>{{ content.course.title }}</td>
+                            <td>{{ content.uploaded_at|date:"d M Y" }}</td>
+                            <td>
+                                <a href="{{ content.file.url }}" target="_blank" class="btn-edit">
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" style="text-align:center;
                                    color:#858685;padding:20px;">
-                            No Content Uploaded
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                                No Content Uploaded
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
+        </div>
     </div>
-</div>
 
 </body>
+
 </html>

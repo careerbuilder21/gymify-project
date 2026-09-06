@@ -1,110 +1,112 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Payment History - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
-<div class="dashboard-layout">
+    <div class="dashboard-layout">
 
-    <div class="sidebar">
-        <div class="sidebar-logo">GYM<span>IFY</span></div>
-        <div class="sidebar-user">
-            <strong>{{ request.user.get_full_name }}</strong>
-            {{ request.user.email }}
-        </div>
-        <p class="sidebar-title">Member Area</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/my-dashboard/">🏠 Dashboard</a>
-            <a href="/admin-panel/my-profile/">👤 My Profile</a>
-            <a href="/admin-panel/my-attendance/">📋 Attendance</a>
-            <a href="/admin-panel/my-payments/" class="active">💳 Payment History</a>
-            <a href="/admin-panel/my-courses/">🏋️ Workout Courses</a>
-            <a href="/admin-panel/my-store/">⚡ Store</a>
-        </nav>
-        <div class="logout-btn">
-            <a href="/logout/"
-               style="display:block;width:100%;padding:12px;
+        <div class="sidebar">
+            <div class="sidebar-logo">GYM<span>IFY</span></div>
+            <div class="sidebar-user">
+                <strong>{{ request.user.get_full_name }}</strong>
+                {{ request.user.email }}
+            </div>
+            <p class="sidebar-title">Member Area</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/my-dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="/admin-panel/my-profile/"><i class="fas fa-user-circle"></i> My Profile</a>
+                <a href="/admin-panel/my-attendance/"><i class="fas fa-clipboard-list"></i> Attendance</a>
+                <a href="/admin-panel/my-payments/" class="active"><i class="fas fa-receipt"></i> Payment History</a>
+                <a href="/admin-panel/my-courses/"><i class="fas fa-dumbbell"></i> Workout Courses</a>
+                <a href="/admin-panel/my-store/"><i class="fas fa-store"></i> Store</a>
+            </nav>
+            <div class="logout-btn">
+                <a href="/logout/" style="display:block;width:100%;padding:12px;
                       background:#E63946;color:white;
                       text-align:center;border-radius:6px;
                       text-decoration:none;font-size:14px;">
-                🚪 Logout
-            </a>
-        </div>
-    </div>
-
-    <div class="main-content">
-        <h1>Payment History</h1>
-
-        <!-- MEMBERSHIP STATUS -->
-        <div class="profile-box">
-            <h3>Membership Status</h3>
-            <div class="profile-row">
-                <span>Plan</span>
-                <span>{{ member.get_membership_plan_display }}</span>
-            </div>
-            <div class="profile-row">
-                <span>Last Payment</span>
-                <span>
-                    {% if payments %}
-                    {{ payments.0.payment_date }}
-                    {% else %}
-                    No Payment Yet
-                    {% endif %}
-                </span>
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
             </div>
         </div>
 
-        <!-- PAYMENTS TABLE -->
-        <div class="table-section">
-            <h3>Payment Records</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                        <th>Method</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for payment in payments %}
-                    <tr>
-                        <td>P-{{ payment.id }}</td>
-                        <td>PKR {{ payment.amount }}</td>
-                        <td>{{ payment.payment_date }}</td>
-                        <td>{{ payment.get_method_display }}</td>
-                        <td>
-                            {% if payment.status == 'paid' %}
-                            <span class="status-badge status-paid">
-                                Paid
-                            </span>
-                            {% else %}
-                            <span class="status-badge status-pending">
-                                Pending
-                            </span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="5"
-                            style="text-align:center;
+        <div class="main-content">
+            <h1>Payment History</h1>
+
+            <!-- MEMBERSHIP STATUS -->
+            <div class="profile-box">
+                <h3>Membership Status</h3>
+                <div class="profile-row">
+                    <span>Plan</span>
+                    <span>{{ member.get_membership_plan_display }}</span>
+                </div>
+                <div class="profile-row">
+                    <span>Last Payment</span>
+                    <span>
+                        {% if payments %}
+                        {{ payments.0.payment_date }}
+                        {% else %}
+                        No Payment Yet
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <!-- PAYMENTS TABLE -->
+            <div class="table-section">
+                <h3>Payment Records</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in payments %}
+                        <tr>
+                            <td>P-{{ payment.id }}</td>
+                            <td>PKR {{ payment.amount }}</td>
+                            <td>{{ payment.payment_date }}</td>
+                            <td>{{ payment.get_method_display }}</td>
+                            <td>
+                                {% if payment.status == 'paid' %}
+                                <span class="status-badge status-paid">
+                                    Paid
+                                </span>
+                                {% else %}
+                                <span class="status-badge status-pending">
+                                    Pending
+                                </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" style="text-align:center;
                                    color:#858685;padding:20px;">
-                            No Payment recorded
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                                No Payment recorded
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
+        </div>
     </div>
-</div>
 
 </body>
+
 </html>

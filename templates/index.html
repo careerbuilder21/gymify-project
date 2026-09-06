@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GYMIFY - Gym Management System</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -16,10 +17,10 @@
         <div class="nav-logo">GYM<span>IFY</span></div>
         <ul class="nav-links">
             <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'about' %}">About Us</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'public_store' %}">Store</a></li>
             <li><a href="{% url 'public_courses' %}">Workout Courses</a></li>
-            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'contact' %}">Contact Us</a></li>
         </ul>
         <div class="nav-buttons">
             <a href="{% url 'login' %}" class="btn-outline">Login</a>
@@ -44,22 +45,22 @@
         <h2>What We Offer</h2>
         <div class="features-grid">
             <div class="feature-card">
-                <div class="feature-icon">👤</div>
+                <div class="feature-icon"><i class="fas fa-users"></i></div>
                 <h3>Member Management</h3>
                 <p>Track all members, their attendance, payments and progress in one place.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🏋️</div>
+                <div class="feature-icon"><i class="fas fa-dumbbell"></i></div>
                 <h3>Workout Courses</h3>
                 <p>Access online workout courses created by certified trainers.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">⚡</div>
+                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
                 <h3>Energy Store</h3>
                 <p>Shop top gym energy drinks and supplements directly from our store.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">📊</div>
+                <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
                 <h3>Reports</h3>
                 <p>Admin can generate attendance, payment and sales reports easily.</p>
             </div>

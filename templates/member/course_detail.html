@@ -1,164 +1,159 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>{{ course.title }} - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
-<div class="dashboard-layout">
+    <div class="dashboard-layout">
 
-    <div class="sidebar">
-        <div class="sidebar-logo">GYM<span>IFY</span></div>
-        <div class="sidebar-user">
-            <strong>{{ request.user.get_full_name }}</strong>
-            {{ request.user.email }}
-        </div>
-        <p class="sidebar-title">Member Area</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/my-dashboard/">🏠 Dashboard</a>
-            <a href="/admin-panel/my-profile/">👤 My Profile</a>
-            <a href="/admin-panel/my-attendance/">📋 Attendance</a>
-            <a href="/admin-panel/my-payments/">💳 Payment History</a>
-            <a href="/admin-panel/my-courses/" class="active">🏋️ Workout Courses</a>
-            <a href="/admin-panel/my-store/">⚡ Store</a>
-        </nav>
-        <div class="logout-btn">
-            <a href="/logout/"
-               style="display:block;width:100%;padding:12px;
+        <div class="sidebar">
+            <div class="sidebar-logo">GYM<span>IFY</span></div>
+            <div class="sidebar-user">
+                <strong>{{ request.user.get_full_name }}</strong>
+                {{ request.user.email }}
+            </div>
+            <p class="sidebar-title">Member Area</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/my-dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="/admin-panel/my-profile/"><i class="fas fa-user-circle"></i> My Profile</a>
+                <a href="/admin-panel/my-attendance/"><i class="fas fa-clipboard-list"></i> Attendance</a>
+                <a href="/admin-panel/my-payments/"><i class="fas fa-receipt"></i> Payment History</a>
+                <a href="/admin-panel/my-courses/" class="active"><i class="fas fa-dumbbell"></i> Workout Courses</a>
+                <a href="/admin-panel/my-store/"><i class="fas fa-store"></i> Store</a>
+            </nav>
+            <div class="logout-btn">
+                <a href="/logout/" style="display:block;width:100%;padding:12px;
                       background:#E63946;color:white;
                       text-align:center;border-radius:6px;
                       text-decoration:none;font-size:14px;">
-                🚪 Logout
-            </a>
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
         </div>
-    </div>
 
-    <div class="main-content">
+        <div class="main-content">
 
-        <!-- BACK BUTTON -->
-        <a href="/admin-panel/my-courses/"
-           style="display:inline-block;margin-bottom:20px;
+            <!-- BACK BUTTON -->
+            <a href="/admin-panel/my-courses/" style="display:inline-block;margin-bottom:20px;
                   color:#858685;text-decoration:none;
                   font-size:14px;">
-            ← Back to courses
-        </a>
+                ← Back to courses
+            </a>
 
-        <!-- COURSE HEADER -->
-        <div style="background:#0C0C0C;border-radius:10px;
+            <!-- COURSE HEADER -->
+            <div style="background:#0C0C0C;border-radius:10px;
                     padding:30px;margin-bottom:25px;
                     display:flex;gap:25px;align-items:center;">
-            {% if course.image %}
-            <img src="{{ course.image.url }}"
-                 style="width:120px;height:120px;
+                {% if course.image %}
+                <img src="{{ course.image.url }}" style="width:120px;height:120px;
                         object-fit:cover;border-radius:8px;">
-            {% else %}
-            <div style="width:120px;height:120px;
+                {% else %}
+                <div style="width:120px;height:120px;
                         background:#1a1a1a;border-radius:8px;
                         display:flex;align-items:center;
                         justify-content:center;font-size:50px;">
-                🏋️
-            </div>
-            {% endif %}
-            <div>
-                <h1 style="color:#F4F4F4;font-size:28px;
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                {% endif %}
+                <div>
+                    <h1 style="color:#F4F4F4;font-size:28px;
                             margin-bottom:10px;">
-                    {{ course.title }}
-                </h1>
-                <p style="color:#858685;font-size:14px;
+                        {{ course.title }}
+                    </h1>
+                    <p style="color:#858685;font-size:14px;
                            margin-bottom:10px;">
-                    {{ course.description }}
-                </p>
-                <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                    <span class="badge"
-                          style="background:#333;color:#F4F4F4;">
-                        {{ course.get_level_display }}
-                    </span>
-                    <span class="badge"
-                          style="background:#333;color:#F4F4F4;">
-                        {{ course.duration }}
-                    </span>
-                    {% if course.trainer %}
-                    <span class="badge"
-                          style="background:#E63946;color:white;">
-                        👤 {{ course.trainer.user.get_full_name }}
-                    </span>
-                    {% endif %}
+                        {{ course.description }}
+                    </p>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                        <span class="badge" style="background:#333;color:#F4F4F4;">
+                            {{ course.get_level_display }}
+                        </span>
+                        <span class="badge" style="background:#333;color:#F4F4F4;">
+                            {{ course.duration }}
+                        </span>
+                        {% if course.trainer %}
+                        <span class="badge" style="background:#E63946;color:white;">
+                            👤 {{ course.trainer.user.get_full_name }}
+                        </span>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- COURSE CONTENT -->
-        <div class="table-section">
-            <h3>Course Content</h3>
+            <!-- COURSE CONTENT -->
+            <div class="table-section">
+                <h3>Course Content</h3>
 
-            {% if contents %}
-            <div style="display:grid;gap:15px;margin-top:15px;">
-                {% for content in contents %}
-                <div style="background:#F4F4F4;border:1px solid #ddd;
+                {% if contents %}
+                <div style="display:grid;gap:15px;margin-top:15px;">
+                    {% for content in contents %}
+                    <div style="background:#F4F4F4;border:1px solid #ddd;
                             border-radius:8px;padding:18px;
                             display:flex;align-items:center;
                             justify-content:space-between;">
-                    <div style="display:flex;align-items:center;gap:15px;">
-                        <!-- Icon by type -->
-                        <div style="font-size:32px;">
-                            {% if content.content_type == 'video' %}
-                            🎥
-                            {% elif content.content_type == 'pdf' %}
-                            📄
-                            {% else %}
-                            📋
-                            {% endif %}
-                        </div>
-                        <div>
-                            <p style="font-weight:700;color:#0C0C0C;
+                        <div style="display:flex;align-items:center;gap:15px;">
+                            <!-- Icon by type -->
+                            <div style="font-size:32px;">
+                                {% if content.content_type == 'video' %}
+                                🎥
+                                {% elif content.content_type == 'pdf' %}
+                                📄
+                                {% else %}
+                                📋
+                                {% endif %}
+                            </div>
+                            <div>
+                                <p style="font-weight:700;color:#0C0C0C;
                                        font-size:15px;margin-bottom:4px;">
-                                {{ content.title }}
-                            </p>
-                            <p style="color:#858685;font-size:13px;">
-                                {{ content.get_content_type_display }}
-                                &nbsp;•&nbsp;
-                                {{ content.uploaded_at|date:"d M Y" }}
-                            </p>
+                                    {{ content.title }}
+                                </p>
+                                <p style="color:#858685;font-size:13px;">
+                                    {{ content.get_content_type_display }}
+                                    &nbsp;•&nbsp;
+                                    {{ content.uploaded_at|date:"d M Y" }}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <!-- DOWNLOAD/VIEW BUTTON -->
-                    <a href="{{ content.file.url }}"
-                       target="_blank"
-                       class="btn-solid"
-                       style="text-decoration:none;
+                        <!-- DOWNLOAD/VIEW BUTTON -->
+                        <a href="{{ content.file.url }}" target="_blank" class="btn-solid" style="text-decoration:none;
                               font-size:13px;padding:8px 18px;
                               white-space:nowrap;">
-                        {% if content.content_type == 'video' %}
-                        ▶ Watch
-                        {% elif content.content_type == 'pdf' %}
-                        📥 Download
-                        {% else %}
-                        👁 View
-                        {% endif %}
-                    </a>
+                            {% if content.content_type == 'video' %}
+                            ▶ Watch
+                            {% elif content.content_type == 'pdf' %}
+                            📥 Download
+                            {% else %}
+                            👁 View
+                            {% endif %}
+                        </a>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
 
-            {% else %}
-            <div style="text-align:center;padding:40px;
+                {% else %}
+                <div style="text-align:center;padding:40px;
                         color:#858685;">
-                <p style="font-size:16px;">
-                    The content of this course is not uploaded now
-                </p>
-                <p style="font-size:14px;margin-top:8px;">
-                    Trainer will add course as soon as possible
-                </p>
+                    <p style="font-size:16px;">
+                        The content of this course is not uploaded now
+                    </p>
+                    <p style="font-size:14px;margin-top:8px;">
+                        Trainer will add course as soon as possible
+                    </p>
+                </div>
+                {% endif %}
+
             </div>
-            {% endif %}
 
         </div>
-
     </div>
-</div>
 
 </body>
+
 </html>

@@ -1,97 +1,96 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Workout Courses - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
-<div class="dashboard-layout">
+    <div class="dashboard-layout">
 
-    <div class="sidebar">
-        <div class="sidebar-logo">GYM<span>IFY</span></div>
-        <div class="sidebar-user">
-            <strong>{{ request.user.get_full_name }}</strong>
-            {{ request.user.email }}
-        </div>
-        <p class="sidebar-title">Member Area</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/my-dashboard/">🏠 Dashboard</a>
-            <a href="/admin-panel/my-profile/">👤 My Profile</a>
-            <a href="/admin-panel/my-attendance/">📋 Attendance</a>
-            <a href="/admin-panel/my-payments/">💳 Payment History</a>
-            <a href="/admin-panel/my-courses/" class="active">🏋️ Workout Courses</a>
-            <a href="/admin-panel/my-store/">⚡ Store</a>
-        </nav>
-        <div class="logout-btn">
-            <a href="/logout/"
-               style="display:block;width:100%;padding:12px;
+        <div class="sidebar">
+            <div class="sidebar-logo">GYM<span>IFY</span></div>
+            <div class="sidebar-user">
+                <strong>{{ request.user.get_full_name }}</strong>
+                {{ request.user.email }}
+            </div>
+            <p class="sidebar-title">Member Area</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/my-dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="/admin-panel/my-profile/"><i class="fas fa-user-circle"></i> My Profile</a>
+                <a href="/admin-panel/my-attendance/"><i class="fas fa-clipboard-list"></i> Attendance</a>
+                <a href="/admin-panel/my-payments/"><i class="fas fa-receipt"></i> Payment History</a>
+                <a href="/admin-panel/my-courses/" class="active"><i class="fas fa-dumbbell"></i> Workout Courses</a>
+                <a href="/admin-panel/my-store/"><i class="fas fa-store"></i> Store</a>
+            </nav>
+            <div class="logout-btn">
+                <a href="/logout/" style="display:block;width:100%;padding:12px;
                       background:#E63946;color:white;
                       text-align:center;border-radius:6px;
                       text-decoration:none;font-size:14px;">
-                🚪 Logout
-            </a>
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
         </div>
-    </div>
 
-    <div class="main-content">
-        <h1>Workout Courses</h1>
-        <div class="courses-grid">
-            {% for course in courses %}
-            <div class="course-card">
-                <div class="course-thumb"
-                     style="background:#0C0C0C;height:130px;
+        <div class="main-content">
+            <h1>Workout Courses</h1>
+            <div class="courses-grid">
+                {% for course in courses %}
+                <div class="course-card">
+                    <div class="course-thumb" style="background:#0C0C0C;height:300px;
                             display:flex;align-items:center;
                             justify-content:center;overflow:hidden;
                             padding:0;">
-                    {% if course.image %}
-                    <img src="{{ course.image.url }}"
-                         style="width:100%;height:100%;
+                        {% if course.image %}
+                        <img src="{{ course.image.url }}" style="width:100%;height:100%;
                                 object-fit:cover;">
-                    {% else %}
-                    <span style="font-size:50px;">🏋️</span>
-                    {% endif %}
-                </div>
-                <div class="course-body">
-                    <h3>{{ course.title }}</h3>
-                    <p>{{ course.description }}</p>
-                    <div class="course-meta">
-                        <span class="badge">
-                            {{ course.get_level_display }}
-                        </span>
-                        <span class="badge">
-                            {{ course.duration }}
-                        </span>
-                        {% if course.trainer %}
-                        <span class="badge">
-                            {{ course.trainer.user.get_full_name }}
-                        </span>
+                        {% else %}
+                        <span style="font-size:50px;"><i class="fas fa-dumbbell"></i> </span>
                         {% endif %}
                     </div>
-                    <!-- VIEW COURSE BUTTON -->
-                    <a href="/admin-panel/my-courses/{{ course.id }}/"
-                       class="btn-solid"
-                       style="display:block;text-align:center;
+                    <div class="course-body">
+                        <h3>{{ course.title }}</h3>
+                        <p>{{ course.description }}</p>
+                        <div class="course-meta">
+                            <span class="badge">
+                                {{ course.get_level_display }}
+                            </span>
+                            <span class="badge">
+                                {{ course.duration }}
+                            </span>
+                            {% if course.trainer %}
+                            <span class="badge">
+                                {{ course.trainer.user.get_full_name }}
+                            </span>
+                            {% endif %}
+                        </div>
+                        <!-- VIEW COURSE BUTTON -->
+                        <a href="/admin-panel/my-courses/{{ course.id }}/" class="btn-solid" style="display:block;text-align:center;
                               margin-top:12px;font-size:13px;
                               text-decoration:none;padding:8px 16px;">
-                        📖 View Course
-                    </a>
+                            📖 View Course
+                        </a>
+                    </div>
                 </div>
-            </div>
-            {% empty %}
-            <div style="text-align:center;color:#858685;
+                {% empty %}
+                <div style="text-align:center;color:#858685;
                         padding:40px;grid-column:1/-1;
                         background:#fff;border:1px solid #ddd;
                         border-radius:10px;">
-                No Course available
+                    No Course available
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
 
+        </div>
     </div>
-</div>
 
 </body>
+
 </html>

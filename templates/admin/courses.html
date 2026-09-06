@@ -1,177 +1,169 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Workout Courses - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-<div class="dashboard-layout">
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <div class="sidebar-logo">GYM<span>IFY</span></div>
-        <div class="sidebar-user">
-            <strong>{{ request.user.get_full_name }}</strong>
-            {{ request.user.email }}
-        </div>
-        <p class="sidebar-title">Overview</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/dashboard/">🏠 Dashboard</a>
-        </nav>
-        <p class="sidebar-title">Management</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/members/">👥 Manage Members</a>
-            <a href="/admin-panel/trainers/">💪 Manage Trainers</a>
-            <a href="/admin-panel/attendance/">📋 Attendance</a>
-            <a href="/admin-panel/payments/">💳 Payments</a>
-        </nav>
-        <p class="sidebar-title">Content</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/courses/" class="active">🏋️ Workout Courses</a>
-            <a href="/admin-panel/products/">⚡ Products Store</a>
-        </nav>
-        <p class="sidebar-title">Insights</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/reports/">📊 Reports</a>
-        </nav>
-        <div class="logout-btn">
-            <a href="/logout/"
-               style="display:block;width:100%;padding:12px;
+    <div class="dashboard-layout">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-logo">GYM<span>IFY</span></div>
+            <div class="sidebar-user">
+                <strong>{{ request.user.get_full_name }}</strong>
+                {{ request.user.email }}
+            </div>
+            <p class="sidebar-title">Overview</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+            </nav>
+            <p class="sidebar-title">Management</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/members/"><i class="fas fa-users"></i> Manage Members</a>
+                <a href="/admin-panel/trainers/"><i class="fas fa-dumbbell"></i> Manage Trainers</a>
+                <a href="/admin-panel/attendance/"><i class="fas fa-clipboard-list"></i> Attendance</a>
+                <a href="/admin-panel/payments/"><i class="fas fa-credit-card"></i> Payments</a>
+            </nav>
+            <p class="sidebar-title">Content</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/courses/" class="active"><i class="fas fa-dumbbell"></i> Workout Courses</a>
+                <a href="/admin-panel/products/"><i class="fas fa-bolt"></i> Products Store</a>
+            </nav>
+            <p class="sidebar-title">Insights</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/reports/"><i class="fas fa-chart-bar"></i> Reports</a>
+            </nav>
+            <div class="logout-btn">
+                <a href="/logout/" style="display:block;width:100%;padding:12px;
                       background:#E63946;color:white;
                       text-align:center;border-radius:6px;
                       text-decoration:none;font-size:14px;">
-                🚪 Logout
-            </a>
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
         </div>
-    </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <h1>Workout Course Management</h1>
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <h1>Workout Course Management</h1>
 
-        <!-- ADD COURSE FORM -->
-        <div class="dash-form">
-            <h3>Add New Course</h3>
-            <form method="POST"
-                  action="/admin-panel/courses/"
-                  enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Course Title</label>
-                        <input type="text" name="title"
-                               placeholder="Course name"
-                               required>
+            <!-- ADD COURSE FORM -->
+            <div class="dash-form">
+                <h3>Add New Course</h3>
+                <form method="POST" action="/admin-panel/courses/" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Course Title</label>
+                            <input type="text" name="title" placeholder="Course name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Assign Trainer</label>
+                            <select name="trainer_id" required>
+                                <option value="">Select Trainer</option>
+                                {% for trainer in trainers %}
+                                <option value="{{ trainer.id }}">
+                                    {{ trainer.user.get_full_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Level</label>
+                            <select name="level">
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                                <option value="all">All Levels</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Duration</label>
+                            <input type="text" name="duration" placeholder="e.g. 4 Weeks">
+                        </div>
+                        <div class="form-group">
+                            <label>Course Image</label>
+                            <input type="file" name="image" accept="image/*">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Assign Trainer</label>
-                        <select name="trainer_id" required>
-                            <option value="">Select Trainer</option>
-                            {% for trainer in trainers %}
-                            <option value="{{ trainer.id }}">
-                                {{ trainer.user.get_full_name }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Level</label>
-                        <select name="level">
-                            <option value="beginner">Beginner</option>
-                            <option value="intermediate">Intermediate</option>
-                            <option value="advanced">Advanced</option>
-                            <option value="all">All Levels</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Duration</label>
-                        <input type="text" name="duration"
-                               placeholder="e.g. 4 Weeks">
-                    </div>
-                    <div class="form-group">
-                        <label>Course Image</label>
-                        <input type="file" name="image"
-                               accept="image/*">
-                    </div>
-                </div>
-                <div class="form-group" style="margin-top:12px;">
-                    <label>Description</label>
-                    <textarea name="description"
-                              placeholder="Course description..."
-                              style="width:100%;padding:10px;
+                    <div class="form-group" style="margin-top:12px;">
+                        <label>Description</label>
+                        <textarea name="description" placeholder="Course description..." style="width:100%;padding:10px;
                                      height:80px;border:1px solid #ccc;
                                      border-radius:6px;font-family:inherit;">
                     </textarea>
-                </div>
-                <br>
-                <button type="submit" class="btn-solid">
-                    Add Course
-                </button>
-            </form>
-        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn-solid">
+                        Add Course
+                    </button>
+                </form>
+            </div>
 
-        <!-- COURSES TABLE -->
-        <div class="table-section">
-            <h3>All Courses ({{ courses.count }})</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Image</th>
-                        <th>Course Title</th>
-                        <th>Trainer</th>
-                        <th>Level</th>
-                        <th>Duration</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for course in courses %}
-                    <tr>
-                        <td>C-{{ course.id }}</td>
-                        <td>
-                            {% if course.image %}
-                            <img src="{{ course.image.url }}"
-                                 style="width:50px;height:50px;
+            <!-- COURSES TABLE -->
+            <div class="table-section">
+                <h3>All Courses ({{ courses.count }})</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Course Title</th>
+                            <th>Trainer</th>
+                            <th>Level</th>
+                            <th>Duration</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                        <tr>
+                            <td>C-{{ course.id }}</td>
+                            <td>
+                                {% if course.image %}
+                                <img src="{{ course.image.url }}" style="width:50px;height:50px;
                                         object-fit:cover;
                                         border-radius:4px;">
-                            {% else %}
-                            <span style="font-size:24px;">🏋️</span>
-                            {% endif %}
-                        </td>
-                        <td>{{ course.title }}</td>
-                        <td>
-                            {% if course.trainer %}
-                            {{ course.trainer.user.get_full_name }}
-                            {% else %}
-                            <span style="color:#858685;">—</span>
-                            {% endif %}
-                        </td>
-                        <td>{{ course.get_level_display }}</td>
-                        <td>{{ course.duration }}</td>
-                        <td>
-                            <a href="/admin-panel/courses/delete/{{ course.id }}/"
-                               onclick="return confirm('Want to delete a course?')"
-                               class="btn-delete">
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="7"
-                            style="text-align:center;
+                                {% else %}
+                                <span style="font-size:24px;"><i class="fas fa-dumbbell"></i> </span>
+                                {% endif %}
+                            </td>
+                            <td>{{ course.title }}</td>
+                            <td>
+                                {% if course.trainer %}
+                                {{ course.trainer.user.get_full_name }}
+                                {% else %}
+                                <span style="color:#858685;">—</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ course.get_level_display }}</td>
+                            <td>{{ course.duration }}</td>
+                            <td>
+                                <a href="/admin-panel/courses/delete/{{ course.id }}/"
+                                    onclick="return confirm('Want to delete a course?')" class="btn-delete">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" style="text-align:center;
                                    color:#858685;padding:20px;">
-                            There is no course available
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                                There is no course available
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
+        </div>
     </div>
-</div>
 </body>
+
 </html>

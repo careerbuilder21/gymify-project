@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Manage Trainers - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
@@ -19,23 +20,23 @@
         </div>
         <p class="sidebar-title">Overview</p>
         <nav class="sidebar-nav">
-            <a href="/admin-panel/dashboard/">🏠 Dashboard</a>
+            <a href="/admin-panel/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
         </nav>
         <p class="sidebar-title">Management</p>
         <nav class="sidebar-nav">
-            <a href="/admin-panel/members/">👥 Manage Members</a>
-            <a href="/admin-panel/trainers/" class="active">💪 Manage Trainers</a>
-            <a href="/admin-panel/attendance/">📋 Attendance</a>
-            <a href="/admin-panel/payments/">💳 Payments</a>
+            <a href="/admin-panel/members/"><i class="fas fa-users"></i> Manage Members</a>
+            <a href="/admin-panel/trainers/" class="active"><i class="fas fa-dumbbell"></i> Manage Trainers</a>
+            <a href="/admin-panel/attendance/"><i class="fas fa-clipboard-list"></i> Attendance</a>
+            <a href="/admin-panel/payments/"><i class="fas fa-credit-card"></i> Payments</a>
         </nav>
         <p class="sidebar-title">Content</p>
         <nav class="sidebar-nav">
-            <a href="/admin-panel/courses/">🏋️ Workout Courses</a>
-            <a href="/admin-panel/products/">⚡ Products Store</a>
+            <a href="/admin-panel/courses/"><i class="fas fa-dumbbell"></i> Workout Courses</a>
+            <a href="/admin-panel/products/"><i class="fas fa-bolt"></i> Products Store</a>
         </nav>
         <p class="sidebar-title">Insights</p>
         <nav class="sidebar-nav">
-            <a href="/admin-panel/reports/">📊 Reports</a>
+            <a href="/admin-panel/reports/"><i class="fas fa-chart-bar"></i> Reports</a>
         </nav>
         <div class="logout-btn">
             <a href="/logout/"
@@ -43,7 +44,7 @@
                       background:#E63946;color:white;
                       text-align:center;border-radius:6px;
                       text-decoration:none;font-size:14px;">
-                🚪 Logout
+                <i class="fas fa-sign-out-alt"></i> Logout
             </a>
         </div>
     </div>

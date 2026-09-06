@@ -1,204 +1,198 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Manage Members - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
-<div class="dashboard-layout">
+    <div class="dashboard-layout">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <div class="sidebar-logo">GYM<span>IFY</span></div>
-        <div class="sidebar-user">
-            <strong>{{ request.user.get_full_name }}</strong>
-            {{ request.user.email }}
-        </div>
-        <p class="sidebar-title">Overview</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/dashboard/">🏠 Dashboard</a>
-        </nav>
-        <p class="sidebar-title">Management</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/members/" class="active">👥 Manage Members</a>
-            <a href="/admin-panel/trainers/">💪 Manage Trainers</a>
-            <a href="/admin-panel/attendance/">📋 Attendance</a>
-            <a href="/admin-panel/payments/">💳 Payments</a>
-        </nav>
-        <p class="sidebar-title">Content</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/courses/">🏋️ Workout Courses</a>
-            <a href="/admin-panel/products/">⚡ Products Store</a>
-        </nav>
-        <p class="sidebar-title">Insights</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/reports/">📊 Reports</a>
-        </nav>
-        <div class="logout-btn">
-            <a href="/logout/"
-               style="display:block;width:100%;padding:12px;
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-logo">GYM<span>IFY</span></div>
+            <div class="sidebar-user">
+                <strong>{{ request.user.get_full_name }}</strong>
+                {{ request.user.email }}
+            </div>
+            <p class="sidebar-title">Overview</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+            </nav>
+            <p class="sidebar-title">Management</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/members/" class="active"><i class="fas fa-users"></i> Manage Members</a>
+                <a href="/admin-panel/trainers/"><i class="fas fa-dumbbell"></i> Manage Trainers</a>
+                <a href="/admin-panel/attendance/"><i class="fas fa-clipboard-list"></i> Attendance</a>
+                <a href="/admin-panel/payments/"><i class="fas fa-credit-card"></i> Payments</a>
+            </nav>
+            <p class="sidebar-title">Content</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/courses/"><i class="fas fa-dumbbell"></i> Workout Courses</a>
+                <a href="/admin-panel/products/"><i class="fas fa-bolt"></i> Products Store</a>
+            </nav>
+            <p class="sidebar-title">Insights</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/reports/"><i class="fas fa-chart-bar"></i> Reports</a>
+            </nav>
+            <div class="logout-btn">
+                <a href="/logout/" style="display:block;width:100%;padding:12px;
                       background:#E63946;color:white;
                       text-align:center;border-radius:6px;
                       text-decoration:none;font-size:14px;">
-                🚪 Logout
-            </a>
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
         </div>
-    </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <h1>Manage Members</h1>
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <h1>Manage Members</h1>
 
-        <!-- SUCCESS MESSAGE -->
-        {% if messages %}
-        {% if errors %}
-          <div style="background:#f8d7da;color:#721c24;
+            <!-- SUCCESS MESSAGE -->
+            {% if messages %}
+            {% if errors %}
+            <div style="background:#f8d7da;color:#721c24;
             padding:15px;border-radius:8px;
             margin-bottom:15px;">
-          {% for error in errors %}
-    <p style="margin:3px 0;">❌ {{ error }}</p>{% endfor %}
+                {% for error in errors %}
+                <p style="margin:3px 0;"><i class="fas fa-user-slash"></i> {{ error }}</p>{% endfor %}
             </div>
-         {% endif %}
-        {% for message in messages %}
-        <p style="color:green;background:#d4edda;
+            {% endif %}
+            {% for message in messages %}
+            <p style="color:green;background:#d4edda;
                   padding:10px;border-radius:6px;
                   margin-bottom:15px;">
-            {{ message }}
-        </p>
-        {% endfor %}
-        {% endif %}
+                {{ message }}
+            </p>
+            {% endfor %}
+            {% endif %}
 
-        <!-- ADD MEMBER FORM -->
-        <div class="dash-form">
-            <h3>Add New Member</h3>
-            <form method="POST" action="/admin-panel/members/">
-                {% csrf_token %}
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" name="m-name"
-                               placeholder="Member name"
-                               required>
+            <!-- ADD MEMBER FORM -->
+            <div class="dash-form">
+                <h3>Add New Member</h3>
+                <form method="POST" action="/admin-panel/members/">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" name="m-name" placeholder="Member name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" placeholder="Email address" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="text" name="phone" placeholder="0300-0000000">
+                        </div>
+                        <div class="form-group">
+                            <label>Age</label>
+                            <input type="number" name="age" placeholder="Age">
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (kg)</label>
+                            <input type="number" name="weight" placeholder="Weight">
+                        </div>
+                        <div class="form-group">
+                            <label>Membership Plan</label>
+                            <select name="plan">
+                                <option value="basic">Basic - PKR 2000</option>
+                                <option value="standard">Standard - PKR 3500</option>
+                                <option value="premium">Premium - PKR 5000</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Assign Trainer</label>
+                            <select name="trainer_id">
+                                <option value="">Select Trainer</option>
+                                {% for trainer in trainers %}
+                                <option value="{{ trainer.id }}">
+                                    {{ trainer.user.get_full_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" name="email"
-                               placeholder="Email address"
-                               required>
-                    </div>
-                    <div class="form-group">
-                        <label>Phone</label>
-                        <input type="text" name="phone"
-                               placeholder="0300-0000000">
-                    </div>
-                    <div class="form-group">
-                        <label>Age</label>
-                        <input type="number" name="age"
-                               placeholder="Age">
-                    </div>
-                    <div class="form-group">
-                        <label>Weight (kg)</label>
-                        <input type="number" name="weight"
-                               placeholder="Weight">
-                    </div>
-                    <div class="form-group">
-                        <label>Membership Plan</label>
-                        <select name="plan">
-                            <option value="basic">Basic - PKR 2000</option>
-                            <option value="standard">Standard - PKR 3500</option>
-                            <option value="premium">Premium - PKR 5000</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Assign Trainer</label>
-                        <select name="trainer_id">
-                            <option value="">Select Trainer</option>
-                            {% for trainer in trainers %}
-                            <option value="{{ trainer.id }}">
-                                {{ trainer.user.get_full_name }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <button type="submit" class="btn-solid">
-                    Save Member
-                </button>
-                <!-- <p style="color:#858685;font-size:13px;margin-top:8px;">
+                    <br>
+                    <button type="submit" class="btn-solid">
+                        Save Member
+                    </button>
+                    <!-- <p style="color:#858685;font-size:13px;margin-top:8px;">
                     Default Password: <strong>gymify123</strong>
                 </p> -->
-            </form>
-        </div>
+                </form>
+            </div>
 
-        <!-- MEMBERS TABLE -->
-        <div class="table-section">
-            <h3>All Members ({{ members.count }})</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Plan</th>
-                        <th>Trainer</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for member in members %}
-                    <tr>
-                        <td>#{{ member.id }}</td>
-                        <td>{{ member.user.get_full_name }}</td>
-                        <td>{{ member.user.email }}</td>
-                        <td>{{ member.user.phone }}</td>
-                        <td>{{ member.get_membership_plan_display }}</td>
-                        <td>
-                            {% if member.assigned_trainer %}
-                            {{ member.assigned_trainer.user.get_full_name }}
-                            {% else %}
-                            <span style="color:#858685;">
-                                Not Assigned
-                            </span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if member.is_active %}
-                            <span class="status-badge status-paid">
-                                Active
-                            </span>
-                            {% else %}
-                            <span class="status-badge status-pending">
-                                Inactive
-                            </span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="/admin-panel/members/delete/{{ member.id }}/"
-                               onclick="return confirm('Want to delete?')"
-                               class="btn-delete">
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="8"
-                            style="text-align:center;color:#858685;padding:20px;">
-                            There is no member here,add by fill the form
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+            <!-- MEMBERS TABLE -->
+            <div class="table-section">
+                <h3>All Members ({{ members.count }})</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Plan</th>
+                            <th>Trainer</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for member in members %}
+                        <tr>
+                            <td>#{{ member.id }}</td>
+                            <td>{{ member.user.get_full_name }}</td>
+                            <td>{{ member.user.email }}</td>
+                            <td>{{ member.user.phone }}</td>
+                            <td>{{ member.get_membership_plan_display }}</td>
+                            <td>
+                                {% if member.assigned_trainer %}
+                                {{ member.assigned_trainer.user.get_full_name }}
+                                {% else %}
+                                <span style="color:#858685;">
+                                    Not Assigned
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if member.is_active %}
+                                <span class="status-badge status-paid">
+                                    Active
+                                </span>
+                                {% else %}
+                                <span class="status-badge status-pending">
+                                    Inactive
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="/admin-panel/members/delete/{{ member.id }}/"
+                                    onclick="return confirm('Want to delete?')" class="btn-delete">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" style="text-align:center;color:#858685;padding:20px;">
+                                There is no member here,add by fill the form
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
+        </div>
     </div>
-</div>
 </body>
+
 </html>

@@ -8,6 +8,7 @@
     <title>Contact - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="{% static 'js/script.js' %}" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -17,10 +18,10 @@
         <div class="nav-logo">GYM<span>IFY</span></div>
         <ul class="nav-links">
             <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'about' %}">About Us</a></li>
+            <li><a href="{% url 'about' %}">About </a></li>
             <li><a href="{% url 'public_store' %}">Store</a></li>
             <li><a href="{% url 'public_courses' %}">Workout Courses</a></li>
-            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'contact' %}">Contact Us</a></li>
         </ul>
         <div class="nav-buttons">
             <a href="{% url 'login' %}" class="btn-outline">Login</a>
@@ -47,35 +48,34 @@
                 </p>
 
                 <div class="contact-info-item">
-                    <span class="contact-icon">📍</span>
+                   <span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
                     <div>
                         <strong>Address</strong>
-                        <p>Govt. MAO Graduate College,
-                            Lahore, Pakistan</p>
+                        <p>Ravi Road near Metro Shopping Mall</p>
                     </div>
                 </div>
 
                 <div class="contact-info-item">
-                    <span class="contact-icon">📧</span>
+                    <span class="contact-icon"><i class="fas fa-envelope"></i></span>
                     <div>
-                        <strong>Email</strong>
+                        <strong>Gmail</strong>
                         <p>admin@gymify.pk</p>
                     </div>
                 </div>
 
                 <div class="contact-info-item">
-                    <span class="contact-icon">📞</span>
+                    <span class="contact-icon"><i class="fas fa-phone"></i></span>
                     <div>
                         <strong>Phone</strong>
-                        <p>+92-300-0000000</p>
+                        <p>+92-3096784284</p>
                     </div>
                 </div>
 
                 <div class="contact-info-item">
-                    <span class="contact-icon">🕐</span>
+                    <span class="contact-icon"><i class="fas fa-clock"></i></span>
                     <div>
                         <strong>Hours</strong>
-                        <p>Monday - Saturday:
+                        <p>Monday to Saturday:
                             6:00 AM - 10:00 PM</p>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
 
                 <div class="form-group">
                     <label>Message</label>
-                    <textarea id="contact-message" placeholder="Write your message here...">
+                    <textarea id="contact-message" placeholder="Write your message here" autocomplete="off">
                     </textarea>
                 </div>
 

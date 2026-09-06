@@ -1,117 +1,125 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Reports - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
-<div class="dashboard-layout">
+    <div class="dashboard-layout">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <div class="sidebar-logo">GYM<span>IFY</span></div>
-        <div class="sidebar-user">
-            <strong>{{ request.user.get_full_name }}</strong>
-            {{ request.user.email }}
-        </div>
-        <p class="sidebar-title">Overview</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/dashboard/">🏠 Dashboard</a>
-        </nav>
-        <p class="sidebar-title">Management</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/members/">👥 Manage Members</a>
-            <a href="/admin-panel/trainers/">💪 Manage Trainers</a>
-            <a href="/admin-panel/attendance/">📋 Attendance</a>
-            <a href="/admin-panel/payments/">💳 Payments</a>
-        </nav>
-        <p class="sidebar-title">Content</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/courses/">🏋️ Workout Courses</a>
-            <a href="/admin-panel/products/">⚡ Products Store</a>
-        </nav>
-        <p class="sidebar-title">Insights</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/reports/" class="active">📊 Reports</a>
-        </nav>
-        <div class="logout-btn">
-            <a href="/logout/"
-               style="display:block;width:100%;padding:12px;
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-logo">GYM<span>IFY</span></div>
+            <div class="sidebar-user">
+                <strong>{{ request.user.get_full_name }}</strong>
+                {{ request.user.email }}
+            </div>
+            <p class="sidebar-title">Overview</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+            </nav>
+            <p class="sidebar-title">Management</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/members/"><i class="fas fa-users"></i> Manage Members</a>
+                <a href="/admin-panel/trainers/"><i class="fas fa-dumbbell"></i> Manage Trainers</a>
+                <a href="/admin-panel/attendance/"><i class="fas fa-clipboard-list"></i> Attendance</a>
+                <a href="/admin-panel/payments/"><i class="fas fa-credit-card"></i> Payments</a>
+            </nav>
+            <p class="sidebar-title">Content</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/courses/"><i class="fas fa-dumbbell"></i> Workout Courses</a>
+                <a href="/admin-panel/products/"><i class="fas fa-bolt"></i> Products Store</a>
+            </nav>
+            <p class="sidebar-title">Insights</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/reports/" class="active"><i class="fas fa-chart-bar"></i> Reports</a>
+            </nav>
+            <div class="logout-btn">
+                <a href="/logout/" style="display:block;width:100%;padding:12px;
                       background:#E63946;color:white;
                       text-align:center;border-radius:6px;
                       text-decoration:none;font-size:14px;">
-                🚪 Logout
-            </a>
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <h1>Reports</h1>
+
+            <!-- SUMMARY STATS -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users" style="color: #E63946;"></i>
+                    </div>
+                    <div class="stat-number">{{ total_members }}</div>
+                    <div class="stat-label">Total Members</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-dumbbell" style="color: #E63946;"></i>
+                    </div>
+                    <div class="stat-number">{{ total_trainers }}</div>
+                    <div class="stat-label">Trainers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-money-bill-wave" style="color: #E63946;"></i>
+                    </div>
+                    <div class="stat-number">PKR {{ total_revenue }}</div>
+                    <div class="stat-label">Total Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-receipt" style="color: #E63946;"></i></div>
+                    <div class="stat-number">{{ total_orders }}</div>
+                    <div class="stat-label">Total Orders</div>
+                </div>
+            </div>
+
+            <!-- REPORTS LIST -->
+            <div class="table-section">
+                <h3>Available Reports</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Report Name</th>
+                            <th>Description</th>
+                            <th>Records</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Member Report</td>
+                            <td>All registered members list</td>
+                            <td>{{ total_members }} Members</td>
+                        </tr>
+                        <tr>
+                            <td>Trainer Report</td>
+                            <td>All trainers list</td>
+                            <td>{{ total_trainers }} Trainers</td>
+                        </tr>
+                        <tr>
+                            <td>Payment Report</td>
+                            <td>Total revenue collected</td>
+                            <td>PKR {{ total_revenue }}</td>
+                        </tr>
+                        <tr>
+                            <td>Orders Report</td>
+                            <td>Total store orders</td>
+                            <td>{{ total_orders }} Orders</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <h1>Reports</h1>
-
-        <!-- SUMMARY STATS -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">👥</div>
-                <div class="stat-number">{{ total_members }}</div>
-                <div class="stat-label">Total Members</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">💪</div>
-                <div class="stat-number">{{ total_trainers }}</div>
-                <div class="stat-label">Trainers</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">💰</div>
-                <div class="stat-number">PKR {{ total_revenue }}</div>
-                <div class="stat-label">Total Revenue</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">🛒</div>
-                <div class="stat-number">{{ total_orders }}</div>
-                <div class="stat-label">Total Orders</div>
-            </div>
-        </div>
-
-        <!-- REPORTS LIST -->
-        <div class="table-section">
-            <h3>Available Reports</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Report Name</th>
-                        <th>Description</th>
-                        <th>Records</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>📋 Member Report</td>
-                        <td>All registered members list</td>
-                        <td>{{ total_members }} Members</td>
-                    </tr>
-                    <tr>
-                        <td>💪 Trainer Report</td>
-                        <td>All trainers list</td>
-                        <td>{{ total_trainers }} Trainers</td>
-                    </tr>
-                    <tr>
-                        <td>💳 Payment Report</td>
-                        <td>Total revenue collected</td>
-                        <td>PKR {{ total_revenue }}</td>
-                    </tr>
-                    <tr>
-                        <td>🛒 Orders Report</td>
-                        <td>Total store orders</td>
-                        <td>{{ total_orders }} Orders</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 </body>
+
 </html>

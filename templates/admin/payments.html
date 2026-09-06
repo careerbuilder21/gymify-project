@@ -1,167 +1,171 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Payments - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
-<div class="dashboard-layout">
+    <div class="dashboard-layout">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <div class="sidebar-logo">GYM<span>IFY</span></div>
-        <div class="sidebar-user">
-            <strong>{{ request.user.get_full_name }}</strong>
-            {{ request.user.email }}
-        </div>
-        <p class="sidebar-title">Overview</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/dashboard/">🏠 Dashboard</a>
-        </nav>
-        <p class="sidebar-title">Management</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/members/">👥 Manage Members</a>
-            <a href="/admin-panel/trainers/">💪 Manage Trainers</a>
-            <a href="/admin-panel/attendance/">📋 Attendance</a>
-            <a href="/admin-panel/payments/" class="active">💳 Payments</a>
-        </nav>
-        <p class="sidebar-title">Content</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/courses/">🏋️ Workout Courses</a>
-            <a href="/admin-panel/products/">⚡ Products Store</a>
-        </nav>
-        <p class="sidebar-title">Insights</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/reports/">📊 Reports</a>
-        </nav>
-        <div class="logout-btn">
-            <a href="/logout/"
-               style="display:block;width:100%;padding:12px;
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-logo">GYM<span>IFY</span></div>
+            <div class="sidebar-user">
+                <strong>{{ request.user.get_full_name }}</strong>
+                {{ request.user.email }}
+            </div>
+            <p class="sidebar-title">Overview</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+            </nav>
+            <p class="sidebar-title">Management</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/members/"><i class="fas fa-users"></i> Manage Members</a>
+                <a href="/admin-panel/trainers/"><i class="fas fa-dumbbell"></i> Manage Trainers</a>
+                <a href="/admin-panel/attendance/"><i class="fas fa-clipboard-list"></i> Attendance</a>
+                <a href="/admin-panel/payments/" class="active"><i class="fas fa-credit-card"></i> Payments</a>
+            </nav>
+            <p class="sidebar-title">Content</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/courses/"><i class="fas fa-dumbbell"></i> Workout Courses</a>
+                <a href="/admin-panel/products/"><i class="fas fa-bolt"></i> Products Store</a>
+            </nav>
+            <p class="sidebar-title">Insights</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/reports/"><i class="fas fa-chart-bar"></i> Reports</a>
+            </nav>
+            <div class="logout-btn">
+                <a href="/logout/" style="display:block;width:100%;padding:12px;
                       background:#E63946;color:white;
                       text-align:center;border-radius:6px;
                       text-decoration:none;font-size:14px;">
-                🚪 Logout
-            </a>
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
         </div>
-    </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <h1>Payment Management</h1>
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <h1>Payment Management</h1>
 
-        <!-- STATS -->
-        <div class="stats-grid"
-             style="grid-template-columns:repeat(3,1fr);">
-            <div class="stat-card">
-                <div class="stat-icon">✅</div>
-                <div class="stat-number">{{ paid_count }}</div>
-                <div class="stat-label">Paid</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">⏳</div>
-                <div class="stat-number">{{ pending_count }}</div>
-                <div class="stat-label">Pending</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">💰</div>
-                <div class="stat-number">
-                    PKR {{ total_revenue }}
+            <!-- STATS -->
+            <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-check" style="color: #E63946;"></i>
+                    </div>
+                    <div class="stat-number">{{ paid_count }}</div>
+                    <div class="stat-label">Paid</div>
                 </div>
-                <div class="stat-label">Total Collected</div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-clock" style="color: #E63946;"></i> </div>
+                    <div class="stat-number">{{ pending_count }}</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-money-bill-wave" style="color: #E63946;"></i>
+                    </div>
+                    <div class="stat-number">
+                        PKR {{ total_revenue }}
+                    </div>
+                    <div class="stat-label">Total Collected</div>
+                </div>
             </div>
-        </div>
 
-        <!-- ADD PAYMENT FORM -->
-        <div class="dash-form">
-            <h3>Record New Payment</h3>
-            <form method="POST" action="/admin-panel/payments/">
-                {% csrf_token %}
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Select Member</label>
-                      <select name="member_id" required>
-                       <option value="">Select Member</option>
-                          {% for member in members %}
-                            <option value="{{ member.id }}">
-                        {{ member.user.get_full_name }}
-                         {% if member.order_set.filter %}
-                               — Has Orders
+            <!-- ADD PAYMENT FORM -->
+            <div class="dash-form">
+                <h3>Record New Payment</h3>
+                <form method="POST" action="/admin-panel/payments/">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Select Member</label>
+                            <select name="member_id" required>
+                                <option value="">Select Member</option>
+                                {% for member in members %}
+                                <option value="{{ member.id }}">
+                                    {{ member.user.get_full_name }}
+                                    {% if member.order_set.filter %}
+                                    — Has Orders
+                                    {% endif %}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount (PKR)</label>
+                            <input type="number" name="amount" placeholder="Amount" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Payment Method</label>
+                            <select name="method">
+                                <option value="cash">Cash</option>
+                                <option value="Bank transer">Bank transfer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn-solid">
+                        Record Payment
+                    </button>
+                </form>
+            </div>
+
+            <!-- PAYMENTS TABLE -->
+            <div class="table-section">
+                <h3>All Payments</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Member</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in payments %}
+                        <tr>
+                            <td>P-{{ payment.id }}</td>
+                            <td>{{ payment.member.user.get_full_name }}</td>
+                            <td>PKR {{ payment.amount }}</td>
+                            <td>{{ payment.payment_date }}</td>
+                            <td>{{ payment.get_method_display }}</td>
+                            <td>
+                                {% if payment.status == 'paid' %}
+                                <span class="status-badge status-paid">
+                                    Paid
+                                </span>
+                                {% else %}
+                                <span class="status-badge status-pending">
+                                    Pending
+                                </span>
                                 {% endif %}
-                                   </option>
-                                  {% endfor %}
-                                </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Amount (PKR)</label>
-                        <input type="number" name="amount"
-                               placeholder="Amount" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Payment Method</label>
-                        <select name="method">
-                            <option value="cash">Cash</option>
-                            <option value="Bank transer">Bank transfer</option>
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <button type="submit" class="btn-solid">
-                    Record Payment
-                </button>
-            </form>
-        </div>
-
-        <!-- PAYMENTS TABLE -->
-        <div class="table-section">
-            <h3>All Payments</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Member</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                        <th>Method</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for payment in payments %}
-                    <tr>
-                        <td>P-{{ payment.id }}</td>
-                        <td>{{ payment.member.user.get_full_name }}</td>
-                        <td>PKR {{ payment.amount }}</td>
-                        <td>{{ payment.payment_date }}</td>
-                        <td>{{ payment.get_method_display }}</td>
-                        <td>
-                            {% if payment.status == 'paid' %}
-                            <span class="status-badge status-paid">
-                                Paid
-                            </span>
-                            {% else %}
-                            <span class="status-badge status-pending">
-                                Pending
-                            </span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="6"
-                            style="text-align:center;
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" style="text-align:center;
                                    color:#858685;padding:20px;">
-                            There is no payment recorded
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                                There is no payment recorded
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
+        </div>
     </div>
-</div>
 </body>
+
 </html>

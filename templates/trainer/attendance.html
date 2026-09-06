@@ -1,141 +1,142 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Mark Attendance - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
-<div class="dashboard-layout">
+    <div class="dashboard-layout">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <div class="sidebar-logo">GYM<span>IFY</span></div>
-        <div class="sidebar-user">
-            <strong>{{ request.user.get_full_name }}</strong>
-            {{ request.user.email }}
-        </div>
-        <p class="sidebar-title">Trainer Panel</p>
-        <nav class="sidebar-nav">
-            <a href="/trainer/dashboard/">🏠 Dashboard</a>
-            <a href="/trainer/members/">👥 Assigned Members</a>
-            <a href="/trainer/attendance/" class="active">📋 Mark Attendance</a>
-            <a href="/trainer/workout/">🏋️ Workout Plans</a>
-            <a href="/trainer/upload/">📤 Upload Content</a>
-            <a href="/trainer/progress/">📈 Member Progress</a>
-        </nav>
-        <div class="logout-btn">
-            <a href="/logout/"
-               style="display:block;width:100%;padding:12px;
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-logo">GYM<span>IFY</span></div>
+            <div class="sidebar-user">
+                <strong>{{ request.user.get_full_name }}</strong>
+                {{ request.user.email }}
+            </div>
+            <p class="sidebar-title">Trainer Panel</p>
+            <nav class="sidebar-nav">
+                <a href="/trainer/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="/trainer/members/"><i class="fas fa-users"></i>Assigned Members</a>
+                <a href="/trainer/attendance/" class="active"><i class="fas fa-clipboard-check"></i>Mark Attendance</a>
+                <a href="/trainer/workout/"><i class="fas fa-dumbbell"></i>Workout Plans</a>
+                <a href="/trainer/upload/"><i class="fas fa-cloud-upload-alt"></i>Upload Content</a>
+                <a href="/trainer/progress/"><i class="fas fa-chart-line"></i>Member Progress</a>
+            </nav>
+            <div class="logout-btn">
+                <a href="/logout/" style="display:block;width:100%;padding:12px;
                       background:#E63946;color:white;
                       text-align:center;border-radius:6px;
                       text-decoration:none;font-size:14px;">
-                🚪 Logout
-            </a>
-        </div>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <h1>Mark Attendance</h1>
-
-        <!-- MARK ATTENDANCE FORM -->
-        <div class="dash-form">
-            <h3>Mark Today's Attendance</h3>
-            <form method="POST" action="/trainer/attendance/">
-                {% csrf_token %}
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Select Member</label>
-                        <select name="att-member" required>
-                            <option value="">Select Member</option>
-                            {% for member in my_members %}
-                            <option value="{{ member.id }}">
-                                {{ member.user.get_full_name }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select name="att-status">
-                            <option value="present">Present</option>
-                            <option value="absent">Absent</option>
-                            <option value="late">Late</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Date</label>
-                        <input type="date" name="date"
-                               value="{{ today }}">
-                    </div>
-                    <div class="form-group">
-                        <label>Check-in Time</label>
-                        <input type="time" name="checkin_time">
-                    </div>
-                </div>
-                <br>
-                <button type="submit" class="btn-solid">
-                    Mark Attendance
-                </button>
-            </form>
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
         </div>
 
-        <!-- TODAY RECORDS -->
-        <div class="table-section">
-            <h3>Today's Attendance, {{ today }}</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Member</th>
-                        <th>Check-in Time</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for record in today_records %}
-                    <tr>
-                        <td>{{ record.member.user.get_full_name }}</td>
-                        <td>
-                            {% if record.checkin_time %}
-                            {{ record.checkin_time }}
-                            {% else %}
-                            <span style="color:#858685;">—</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if record.status == 'present' %}
-                            <span class="status-badge status-present">
-                                Present
-                            </span>
-                            {% elif record.status == 'absent' %}
-                            <span class="status-badge status-absent">
-                                Absent
-                            </span>
-                            {% else %}
-                            <span class="status-badge status-pending">
-                                Late
-                            </span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="3"
-                            style="text-align:center;
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <h1>Mark Attendance</h1>
+
+            <!-- MARK ATTENDANCE FORM -->
+            <div class="dash-form">
+                <h3>Mark Today's Attendance</h3>
+                <form method="POST" action="/trainer/attendance/">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Select Member</label>
+                            <select name="att-member" required>
+                                <option value="">Select Member</option>
+                                {% for member in my_members %}
+                                <option value="{{ member.id }}">
+                                    {{ member.user.get_full_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select name="att-status">
+                                <option value="present">Present</option>
+                                <option value="absent">Absent</option>
+                                <option value="late">Late</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" name="date" value="{{ today }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Check-in Time</label>
+                            <input type="time" name="checkin_time">
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn-solid">
+                        Mark Attendance
+                    </button>
+                </form>
+            </div>
+
+            <!-- TODAY RECORDS -->
+            <div class="table-section">
+                <h3>Today's Attendance, {{ today }}</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Member</th>
+                            <th>Check-in Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in today_records %}
+                        <tr>
+                            <td>{{ record.member.user.get_full_name }}</td>
+                            <td>
+                                {% if record.checkin_time %}
+                                {{ record.checkin_time }}
+                                {% else %}
+                                <span style="color:#858685;">—</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if record.status == 'present' %}
+                                <span class="status-badge status-present">
+                                    Present
+                                </span>
+                                {% elif record.status == 'absent' %}
+                                <span class="status-badge status-absent">
+                                    Absent
+                                </span>
+                                {% else %}
+                                <span class="status-badge status-pending">
+                                    Late
+                                </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" style="text-align:center;
                                    color:#858685;padding:20px;">
-                            There is no attendance today
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                                There is no attendance today
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
+        </div>
     </div>
-</div>
 
 </body>
+
 </html>

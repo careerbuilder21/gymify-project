@@ -216,6 +216,10 @@ ul {
   margin-bottom: 15px;
 }
 
+.feature-icon i {
+  font-size: 40px;
+  color: #e63946;
+}
 .feature-card h3 {
   font-size: 18px;
   margin-bottom: 10px;
@@ -249,6 +253,7 @@ ul {
   gap: 25px;
   max-width: 900px;
   margin: 0 auto;
+  align-items: stretch;
 }
 
 .role-card {
@@ -257,19 +262,31 @@ ul {
   border-radius: 10px;
   padding: 35px 25px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .role-card h3 {
   font-size: 22px;
   color: #f4f4f4;
   margin-bottom: 12px;
+  text-align: center;
 }
 
+.role-card a {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: auto;
+}
 .role-card p {
   font-size: 14px;
   color: #858685;
   line-height: 1.6;
   margin-bottom: 20px;
+  text-align: center;
+  flex: 1;
 }
 
 /* ===========================
@@ -349,13 +366,15 @@ ul {
   font-size: 16px;
 }
 .about-section {
-  padding: 10px;
+  padding: 60px 80px;
 }
 .about-section h2 {
-  padding: 10px;
+  margin-top: 30px;
+  margin-bottom: 15px;
 }
 .about-section p {
-  padding: 10px;
+  margin-bottom: 15px;
+  line-height: 1.8;
 }
 
 /* ===========================
@@ -366,6 +385,7 @@ ul {
   grid-template-columns: repeat(2, 1fr);
   gap: 25px;
   margin-top: 30px;
+  padding-bottom: 60px;
 }
 .team-card {
   background-color: #fff;
@@ -621,6 +641,12 @@ ul {
   margin-top: 2px;
 }
 
+.contact-icon i {
+    font-size: 22px;
+    color: #E63946;
+    width: 30px;
+    text-align: center;
+}
 .contact-info-item strong {
   display: block;
   color: black;
@@ -665,8 +691,9 @@ ul {
   box-sizing: border-box;
 }
 
-.contact-form-box textarea::placeholder {
+.contact-message-form-box textarea::placeholder {
   color: #858685;
+  opacity: 1;
 }
 
 .contact-form-box .form-btn {
@@ -705,6 +732,8 @@ ul {
   border: 3px solid #ddd;
   border-radius: 10px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .product-img-box {
@@ -725,12 +754,16 @@ ul {
 }
 .product-info {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .product-info h3 {
   font-size: 16px;
   color: #0c0c0c;
   margin-bottom: 5px;
+  min-height: 25px;
 }
 
 .product-info .product-desc {
@@ -756,6 +789,7 @@ ul {
   font-size: 14px;
   cursor: pointer;
   font-family: inherit;
+  margin-top: auto;
 }
 
 .add-to-cart-btn:hover {
@@ -930,7 +964,7 @@ ul {
 
 .course-thumb {
   background-color: #0c0c0c;
-  height: 130px;
+  height: 250px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1200,6 +1234,12 @@ table tr:last-child td {
   display: block;
 }
 
+.logout-btn:hover {
+    background: #c0303c;
+    color: white;
+    opacity: 0.9;
+    border-radius: 20px;
+}
 .action-btns {
   display: flex;
   gap: 8px;
@@ -1291,7 +1331,7 @@ h4,
 
 .product-img-box {
   background: #0c0c0c;
-  height: 180px;
+  height: 250px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1312,19 +1352,23 @@ h4,
   color: #858685;
   font-size: 13px;
   margin-bottom: 8px;
+  min-height: 25px;
 }
 
 .product-price {
   font-size: 18px;
   font-weight: 700;
+  margin-top: auto;
   color: #e63946;
   margin-bottom: 5px;
+  min-height: 10px;
 }
 
 .product-stock {
   font-size: 12px;
   color: #858685;
   margin-bottom: 10px;
+  min-height: 10px;
 }
 
 .add-to-cart-btn {
