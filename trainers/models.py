@@ -6,7 +6,6 @@ class Trainer(models.Model):
         ('weight',   'Weight Training'),
         ('cardio',   'Cardio & Fitness'),
         ('yoga',     'Yoga & Flexibility'),
-        ('crossfit', 'CrossFit'),
     ]
     user           = models.OneToOneField(
                          User,

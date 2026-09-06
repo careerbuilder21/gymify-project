@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             name='Trainer',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('specialization', models.CharField(choices=[('weight', 'Weight Training'), ('cardio', 'Cardio & Fitness'), ('yoga', 'Yoga & Flexibility'), ('crossfit', 'CrossFit')], default='weight', max_length=15)),
+                ('specialization', models.CharField(choices=[('weight', 'Weight Training'), ('cardio', 'Cardio & Fitness'), ('yoga', 'Yoga & Flexibility'),], default='weight', max_length=15)),
                 ('salary', models.DecimalField(decimal_places=2, default=0, max_digits=8)),
                 ('join_date', models.DateField(auto_now_add=True)),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
