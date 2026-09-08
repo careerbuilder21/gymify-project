@@ -8,9 +8,6 @@ urlpatterns = [
 
     # Public pages
     path('', include('accounts.urls')),
-    
-    # store 
-    path('', include('store.urls')),
 
     # Admin panel pages
     path('admin-panel/', include('members.urls')),

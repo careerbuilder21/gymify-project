@@ -110,7 +110,6 @@
                             <th>Category</th>
                             <th>Price</th>
                             <th>Stock</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -128,20 +127,6 @@
                             <td>{{ product.get_category_display }}</td>
                             <td>PKR {{ product.price }}</td>
                             <td>{{ product.stock }} units</td>
-                            <td>
-                                <a href="{% url 'edit_product' product.id %}" class="btn-edit">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <form method="POST" action="/admin-panel/products/" style="display:inline;">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="action" value="delete">
-                                    <input type="hidden" name="product_id" value="{{ product.id }}">
-                                    <button type="submit" class="btn-delete"
-                                        onclick="return confirm('Delete karna chahte ho?')">
-                                        <i class="fas fa-trash"></i> Delete
-                                    </button>
-                                </form>
-                            </td>
                         </tr>
                         {% empty %}
                         <tr>
@@ -223,7 +208,7 @@
                                 </span>
                                 {% else %}
                                 <span class="status-badge status-pending">
-                                    <i class="fas fa-clock"></i> Pending
+                                    <i class="fas fa-clock"></i>  Pending
                                 </span>
                                 <br>
                                 <small class="text-muted">
