@@ -80,7 +80,7 @@
                         </span>
                         {% if course.trainer %}
                         <span class="badge" style="background:#E63946;color:white;">
-                            👤 {{ course.trainer.user.get_full_name }}
+                            <i class="fas fa-user"></i> {{ course.trainer.user.get_full_name }}
                         </span>
                         {% endif %}
                     </div>
@@ -102,11 +102,11 @@
                             <!-- Icon by type -->
                             <div style="font-size:32px;">
                                 {% if content.content_type == 'video' %}
-                                🎥
+                                <i class="fas fa-video"></i>
                                 {% elif content.content_type == 'pdf' %}
-                                📄
+                                <i class="fas fa-file-alt"></i>
                                 {% else %}
-                                📋
+                                <i class="fas fa-clipboard"></i>
                                 {% endif %}
                             </div>
                             <div>
@@ -126,11 +126,11 @@
                               font-size:13px;padding:8px 18px;
                               white-space:nowrap;">
                             {% if content.content_type == 'video' %}
-                            ▶ Watch
+                            <i class="fas fa-play"></i> Watch
                             {% elif content.content_type == 'pdf' %}
-                            📥 Download
+                            <i class="fas fa-download"></i> Download
                             {% else %}
-                            👁 View
+                            <i class="fas fa-eye"></i>View
                             {% endif %}
                         </a>
                     </div>

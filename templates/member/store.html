@@ -42,7 +42,7 @@
 
             {% if messages %}
             {% for message in messages %}
-            <div class="success-msg">✅ {{ message }}</div>
+            <div class="success-msg"><i class="fas fa-check"></i> {{ message }}</div>
             {% endfor %}
             {% endif %}
 
@@ -230,7 +230,7 @@
                 </p>
             </div>
             <div id="success-screen" style="display:none;">
-                <div class="payment-success-icon">✅</div>
+                <div class="payment-success-icon"><i class="fas fa-check"></i></div>
                 <h3 class="payment-status-title">
                     Transfer Confirmed!
                 </h3>
@@ -238,7 +238,7 @@
                     Your order has been placed successfully.
                 </p>
                 <p class="payment-method-confirmed">
-                    🏦 Bank Transfer.. Admin will verify shortly
+                    <i class="fas fa-landmark"></i> Bank Transfer.. Admin will verify shortly
                 </p>
             </div>
         </div>

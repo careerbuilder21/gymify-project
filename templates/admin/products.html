@@ -195,7 +195,7 @@
                             <td>PKR {{ order.total_amount }}</td>
                             <td>
                                 {% if order.payment_method == 'bank_transfer' %}
-                                🏦 Bank Transfer
+                                <i class="fas fa-landmark"></i> Bank Transfer
                                 {% else %}
                                 {{ order.payment_method }}
                                 {% endif %}
@@ -204,11 +204,11 @@
                             <td>
                                 {% if order.status == 'completed' %}
                                 <span class="status-badge status-paid">
-                                    ✅ Paid
+                                     Paid
                                 </span>
                                 {% else %}
                                 <span class="status-badge status-pending">
-                                    <i class="fas fa-clock"></i>  Pending
+                                    Pending
                                 </span>
                                 <br>
                                 <small class="text-muted">
