@@ -78,7 +78,7 @@
             </div>
             <!-- CART BAR -->
             <div class="cart-bar">
-                <span>🛒 Cart Items:
+                <span><i class="fas fa-shopping-cart"></i> Cart Items:
                     <strong class="cart-count">
                         {{ cart_count }}
                     </strong>
@@ -87,7 +87,7 @@
             <!-- CART ITEMS LIST -->
             {% if cart_items %}
             <div class="dash-form" style="margin-bottom:25px;">
-                <h3>🛒 Cart Items</h3>
+                <h3><i class="fas fa-shopping-cart"></i> Cart Items</h3>
                 <table>
                     <thead>
                         <tr>
@@ -131,7 +131,7 @@
             <!-- CHECKOUT FORM -->
             {% if cart_count > 0 %}
             <div class="dash-form checkout-form-box">
-                <h3>🏦 Bank Transfer Checkout</h3>
+                <h3><i class="fas fa-university"></i> Bank Transfer Checkout</h3>
                 <p class="bank-info-note">
                     Confirm your payment through bank details below
                     Order will be complete after admin's verification
@@ -140,7 +140,7 @@
                 <!-- GYM BANK DETAILS -->
                 <div class="gym-bank-box">
                     <p class="gym-bank-title">
-                        🏦 Gym Bank Account Details
+                        <i class="fas fa-landmark"></i> Gym Bank Account Details
                     </p>
                     <p class="gym-bank-detail">
                         Bank: <strong>Meezan Bank</strong>
@@ -198,8 +198,7 @@
                     </div>
 
                     <br>
-                    <button type="submit" class="btn-solid confirm-pay-btn">
-                        ✅ Confirm Bank Transfer
+                    <button type="submit" class="btn-solid confirm-pay-btn">Confirm Bank Transfer
                     </button>
                 </form>
             </div>

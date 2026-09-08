@@ -119,7 +119,7 @@ def manage_members(request):
         'trainers': trainers,
         'errors':   errors,
     })
-
+     
 def delete_member(request, member_id):
     if not admin_check(request):
         return redirect('login')
