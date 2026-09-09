@@ -1,235 +1,348 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Products - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
 
-    <div class="dashboard-layout">
+<div class="dashboard-layout">
 
-        <!-- SIDEBAR -->
-        <div class="sidebar">
-            <div class="sidebar-logo">GYM<span>IFY</span></div>
-            <div class="sidebar-user">
-                <strong>{{ request.user.get_full_name }}</strong>
-                {{ request.user.email }}
-            </div>
-            <p class="sidebar-title">Overview</p>
-            <nav class="sidebar-nav">
-                <a href="/admin-panel/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
-            </nav>
-            <p class="sidebar-title">Management</p>
-            <nav class="sidebar-nav">
-                <a href="/admin-panel/members/"><i class="fas fa-users"></i> Manage Members</a>
-                <a href="/admin-panel/trainers/"><i class="fas fa-dumbbell"></i> Manage Trainers</a>
-                <a href="/admin-panel/attendance/"><i class="fas fa-clipboard-list"></i> Attendance</a>
-                <a href="/admin-panel/payments/"><i class="fas fa-credit-card"></i> Payments</a>
-            </nav>
-            <p class="sidebar-title">Content</p>
-            <nav class="sidebar-nav">
-                <a href="/admin-panel/courses/"><i class="fas fa-dumbbell"></i> Workout Courses</a>
-                <a href="/admin-panel/products/" class="active"><i class="fas fa-bolt"></i> Products Store</a>
-            </nav>
-            <p class="sidebar-title">Insights</p>
-            <nav class="sidebar-nav">
-                <a href="/admin-panel/reports/"><i class="fas fa-chart-bar"></i> Reports</a>
-            </nav>
-            <div class="logout-btn">
-                <a href="/logout/" class="logout-link" style="display:block;width:100%;padding:12px;
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-logo">GYM<span>IFY</span></div>
+        <div class="sidebar-user">
+            <strong>{{ request.user.get_full_name }}</strong>
+            {{ request.user.email }}
+        </div>
+        <p class="sidebar-title">Overview</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/dashboard/">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+        </nav>
+        <p class="sidebar-title">Management</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/members/">
+                <i class="fas fa-users"></i> Manage Members
+            </a>
+            <a href="/admin-panel/trainers/">
+                <i class="fas fa-dumbbell"></i> Manage Trainers
+            </a>
+            <a href="/admin-panel/attendance/">
+                <i class="fas fa-clipboard-list"></i> Attendance
+            </a>
+            <a href="/admin-panel/payments/">
+                <i class="fas fa-credit-card"></i> Payments
+            </a>
+        </nav>
+        <p class="sidebar-title">Content</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/courses/">
+                <i class="fas fa-dumbbell"></i> Workout Courses
+            </a>
+            <a href="/admin-panel/products/" class="active">
+                <i class="fas fa-bolt"></i> Products Store
+            </a>
+        </nav>
+        <p class="sidebar-title">Insights</p>
+        <nav class="sidebar-nav">
+            <a href="/admin-panel/reports/">
+                <i class="fas fa-chart-bar"></i> Reports
+            </a>
+        </nav>
+        <div class="logout-btn">
+            <a href="/logout/" class="logout-link"
+               style="display:block;width:100%;padding:12px;
                       background:#E63946;color:white;
                       text-align:center;border-radius:6px;
                       text-decoration:none;font-size:14px;">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-            </div>
-        </div>
-
-        <!-- MAIN CONTENT -->
-        <div class="main-content">
-            <h1>Products Management</h1>
-
-            <!-- ADD PRODUCT FORM -->
-            <div class="dash-form">
-                <h3>Add New Product</h3>
-                <form method="POST" action="/admin-panel/products/" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Product Name</label>
-                            <input type="text" name="name" placeholder="Product Name" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Category</label>
-                            <select name="category">
-                                <option value="energy">Energy Drink</option>
-                                <option value="preworkout">Pre-Workout</option>
-                                <option value="protein">Protein</option>
-                                <option value="bcaa">BCAA</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Price (PKR)</label>
-                            <input type="number" name="price" placeholder="Price" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Stock</label>
-                            <input type="number" name="stock" placeholder="Available stock">
-                        </div>
-                        <div class="form-group">
-                            <label>Product Image</label>
-                            <input type="file" name="image" accept="image/*">
-                        </div>
-                    </div>
-                    <div class="form-group form-group-mt">
-                        <label>Description</label>
-                        <textarea name="description" class="description-textarea" placeholder="Product description...">
-                    </textarea>
-                    </div>
-                    <br>
-                    <button type="submit" class="btn-solid">
-                        Add Product
-                    </button>
-                </form>
-            </div>
-
-            <!-- PRODUCTS TABLE -->
-            <div class="table-section">
-                <h3>All Products ({{ products.count }})</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for product in products %}
-                        <tr>
-                            <td>PR-{{ product.id }}</td>
-                            <td>
-                                {% if product.image %}
-                                <img src="{{ product.image.url }}" class="product-img-small" alt="{{ product.name }}">
-                                {% else %}
-                                <span class="product-icon"><i class="fas fa-bolt"></i></span>
-                                {% endif %}
-                            </td>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.get_category_display }}</td>
-                            <td>PKR {{ product.price }}</td>
-                            <td>{{ product.stock }} units</td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="6" class="table-empty-msg">
-                                No product found. Add by filling the form
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- ALL ORDERS SECTION -->
-            <div class="table-section">
-                <h3>All Orders</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Member</th>
-                            <th>Products</th>
-                            <th>Bank Details</th>
-                            <th>Total Amount</th>
-                            <th>Method</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for order in orders %}
-                        <tr>
-                            <td>#{{ order.id }}</td>
-                            <td>
-                                {% if order.member %}
-                                <strong>
-                                    {{ order.member.user.get_full_name }}
-                                </strong>
-                                <br>
-                                <small class="text-muted">
-                                    {{ order.member.user.email }}
-                                </small>
-                                {% else %}
-                                <span class="text-muted">Unknown</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% for item in order.orderitem_set.all %}
-                                <small>
-                                    {{ item.product.name }}
-                                    x{{ item.quantity }}
-                                </small><br>
-                                {% endfor %}
-                            </td>
-                            <td style="font-size:12px;">
-                                {% if order.bank_name %}
-                                <strong>{{ order.bank_name }}</strong><br>
-                                {{ order.account_title }}<br>
-                                {{ order.account_number }}<br>
-                                <span style="color:#E63946;">
-                                    Ref: {{ order.transaction_ref }}
-                                </span>
-                                {% else %}
-                                <span class="text-muted">—</span>
-                                {% endif %}
-                            </td>
-                            <td>PKR {{ order.total_amount }}</td>
-                            <td>
-                                {% if order.payment_method == 'bank_transfer' %}
-                                <i class="fas fa-landmark"></i> Bank Transfer
-                                {% else %}
-                                {{ order.payment_method }}
-                                {% endif %}
-                            </td>
-                            <td>{{ order.order_date|date:"d M Y" }}</td>
-                            <td>
-                                {% if order.status == 'completed' %}
-                                <span class="status-badge status-paid">
-                                     Paid
-                                </span>
-                                {% else %}
-                                <span class="status-badge status-pending">
-                                    Pending
-                                </span>
-                                <br>
-                                <small class="text-muted">
-                                    Record payment to confirm
-                                </small>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="8" class="table-empty-msg">
-                                There is no order right now
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
         </div>
     </div>
-</body>
 
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <h1>Products Management</h1>
+
+        <!-- ADD PRODUCT FORM -->
+        <div class="dash-form">
+            <h3>Add New Product</h3>
+            <form method="POST" action="/admin-panel/products/"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" name="name"
+                               placeholder="Product Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="category">
+                            <option value="energy">Energy Drink</option>
+                            <option value="preworkout">Pre-Workout</option>
+                            <option value="protein">Protein</option>
+                            <option value="bcaa">BCAA</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Price (PKR)</label>
+                        <input type="number" name="price"
+                               placeholder="Price" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Stock</label>
+                        <input type="number" name="stock"
+                               placeholder="Available stock">
+                    </div>
+                    <div class="form-group">
+                        <label>Product Image</label>
+                        <input type="file" name="image" accept="image/*">
+                    </div>
+                </div>
+                <div class="form-group form-group-mt">
+                    <label>Description</label>
+                    <textarea name="description"
+                              class="description-textarea"
+                              placeholder="Product description...">
+                    </textarea>
+                </div>
+                <br>
+                <button type="submit" class="btn-solid">
+                    Add Product
+                </button>
+            </form>
+        </div>
+
+        <!-- PRODUCTS TABLE -->
+        <div class="table-section">
+            <h3>All Products ({{ products.count }})</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>PR-{{ product.id }}</td>
+                        <td>
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}"
+                                 class="product-img-small"
+                                 alt="{{ product.name }}">
+                            {% else %}
+                            <span class="product-icon">
+                                <i class="fas fa-bolt"></i>
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.get_category_display }}</td>
+                        <td>PKR {{ product.price }}</td>
+                        <td>{{ product.stock }} units</td>
+                        <td>
+                            <button class="btn-edit"
+                                onclick="openProductModal(
+                                    '{{ product.id }}',
+                                    '{{ product.name }}',
+                                    '{{ product.category }}',
+                                    '{{ product.price }}',
+                                    '{{ product.stock }}',
+                                    '{{ product.description|escapejs }}'
+                                )">
+                                Edit
+                            </button>
+                            <form method="POST"
+                                  action="/admin-panel/products/"
+                                  style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                <button type="submit" class="btn-delete"
+                                    onclick="return confirm('Want to delete?')">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="table-empty-msg">
+                            No product found. Add by filling the form
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ALL ORDERS SECTION -->
+        <div class="table-section">
+            <h3>All Orders</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Member</th>
+                        <th>Products</th>
+                        <th>Bank Details</th>
+                        <th>Total Amount</th>
+                        <th>Method</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>#{{ order.id }}</td>
+                        <td>
+                            {% if order.member %}
+                            <strong>
+                                {{ order.member.user.get_full_name }}
+                            </strong><br>
+                            <small class="text-muted">
+                                {{ order.member.user.email }}
+                            </small>
+                            {% else %}
+                            <span class="text-muted">Unknown</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% for item in order.orderitem_set.all %}
+                            <small>
+                                {{ item.product.name }} x{{ item.quantity }}
+                            </small><br>
+                            {% endfor %}
+                        </td>
+                        <td style="font-size:12px;">
+                            {% if order.bank_name %}
+                            <strong>{{ order.bank_name }}</strong><br>
+                            {{ order.account_title }}<br>
+                            {{ order.account_number }}<br>
+                            <span style="color:#E63946;">
+                                Ref: {{ order.transaction_ref }}
+                            </span>
+                            {% else %}
+                            <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td>PKR {{ order.total_amount }}</td>
+                        <td>
+                            {% if order.payment_method == 'bank_transfer' %}
+                            <i class="fas fa-landmark"></i> Bank Transfer
+                            {% else %}
+                            {{ order.payment_method }}
+                            {% endif %}
+                        </td>
+                        <td>{{ order.order_date|date:"d M Y" }}</td>
+                        <td>
+                            {% if order.status == 'completed' %}
+                            <span class="status-badge status-paid">
+                                Paid
+                            </span>
+                            {% else %}
+                            <span class="status-badge status-pending">
+                                Pending
+                            </span><br>
+                            <small class="text-muted">
+                                Record payment to confirm
+                            </small>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="table-empty-msg">
+                            There is no order right now
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- EDIT PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal">
+    <div class="modal-box">
+        <span class="modal-close"
+              onclick="closeProductModal()">
+            <i class="fas fa-times"></i>
+        </span>
+        <h3>Edit Product</h3>
+        <form method="POST" action="/admin-panel/products/"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="edit_product">
+            <input type="hidden" name="product_id" id="edit_product_id">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" name="name"
+                           id="edit_product_name" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category" id="edit_product_category">
+                        <option value="energy">Energy Drink</option>
+                        <option value="preworkout">Pre-Workout</option>
+                        <option value="protein">Protein</option>
+                        <option value="bcaa">BCAA</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Price (PKR)</label>
+                    <input type="number" name="price"
+                           id="edit_product_price" required>
+                </div>
+                <div class="form-group">
+                    <label>Stock</label>
+                    <input type="number" name="stock"
+                           id="edit_product_stock">
+                </div>
+                <div class="form-group">
+                    <label>New Image (Optional)</label>
+                    <input type="file" name="image" accept="image/*">
+                </div>
+            </div>
+            <div class="form-group form-group-mt">
+                <label>Description</label>
+                <textarea name="description"
+                          id="edit_product_desc"
+                          class="description-textarea">
+                </textarea>
+            </div>
+            <br>
+            <button type="submit" class="btn-solid">
+                Save Changes
+            </button>
+            <button type="button"
+                    onclick="closeProductModal()"
+                    style="margin-left:10px;padding:10px 20px;
+                           background:#858685;color:white;
+                           border:none;border-radius:6px;
+                           cursor:pointer;">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'js/script.js' %}"></script>
+</body>
 </html>

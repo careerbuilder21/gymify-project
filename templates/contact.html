@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="{% static 'js/script.js' %}" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -18,7 +17,7 @@
         <div class="nav-logo">GYM<span>IFY</span></div>
         <ul class="nav-links">
             <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'about' %}">About </a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'public_store' %}">Store</a></li>
             <li><a href="{% url 'public_courses' %}">Workout Courses</a></li>
             <li><a href="{% url 'contact' %}">Contact Us</a></li>
@@ -48,7 +47,9 @@
                 </p>
 
                 <div class="contact-info-item">
-                   <span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+                    <span class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </span>
                     <div>
                         <strong>Address</strong>
                         <p>Ravi Road near Metro Shopping Mall</p>
@@ -56,7 +57,9 @@
                 </div>
 
                 <div class="contact-info-item">
-                    <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                    <span class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </span>
                     <div>
                         <strong>Gmail</strong>
                         <p>admin@gymify.pk</p>
@@ -64,7 +67,9 @@
                 </div>
 
                 <div class="contact-info-item">
-                    <span class="contact-icon"><i class="fas fa-phone"></i></span>
+                    <span class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </span>
                     <div>
                         <strong>Phone</strong>
                         <p>+92-3096784284</p>
@@ -72,7 +77,9 @@
                 </div>
 
                 <div class="contact-info-item">
-                    <span class="contact-icon"><i class="fas fa-clock"></i></span>
+                    <span class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </span>
                     <div>
                         <strong>Hours</strong>
                         <p>Monday to Saturday:
@@ -85,30 +92,46 @@
             <div class="contact-form-box">
                 <h2>Send a Message</h2>
 
-                <div class="form-group">
-                    <label>Your Name</label>
-                    <input type="text" id="contact-name" placeholder="Enter your name">
+                {% if success %}
+                <div style="background:#2d6a4f;color:white;
+                            padding:15px;border-radius:8px;
+                            margin-bottom:15px;text-align:center;">
+                    <i class="fas fa-check-circle"></i>
+                    Message sent! We'll reply soon.
                 </div>
+                {% endif %}
 
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="contact-email" placeholder="Enter your email">
-                </div>
+                <form method="POST" action="/contact/">
+                    {% csrf_token %}
 
-                <div class="form-group">
-                    <label>Subject</label>
-                    <input type="text" id="contact-subject" placeholder="What is this about?">
-                </div>
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" name="contact-name" placeholder="Enter your name" required>
+                    </div>
 
-                <div class="form-group">
-                    <label>Message</label>
-                    <textarea id="contact-message" placeholder="Write your message here" autocomplete="off">
-                    </textarea>
-                </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="contact-email" placeholder="Enter your email" required>
+                    </div>
 
-                <button class="form-btn" onclick="submitContact()">
-                    Send Message
-                </button>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" name="contact-subject" placeholder="What is this about?">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea name="contact-message" placeholder="Write your message here" autocomplete="off"
+                            required>
+                        </textarea>
+                    </div>
+
+                    <button type="submit" class="form-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        Send Message
+                    </button>
+
+                </form>
             </div>
 
         </div>

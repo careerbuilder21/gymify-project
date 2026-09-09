@@ -29,18 +29,15 @@ def admin_dashboard(request):
     if not admin_check(request):
         return redirect('login')
     today = timezone.now().date()
-    
     from django.db.models import Sum
     total_revenue = Payment.objects.filter(
         status='paid'
     ).aggregate(Sum('amount'))['amount__sum'] or 0
-    
     context = {
         'total_members':  Member.objects.count(),
         'total_trainers': Trainer.objects.count(),
         'present_today':  Attendance.objects.filter(
-            date=today,
-            status='present'
+            date=today, status='present'
         ).count(),
         'total_revenue':  total_revenue,
         'recent_members': Member.objects.select_related(
@@ -60,6 +57,38 @@ def manage_members(request):
     errors = []
 
     if request.method == 'POST':
+        action = request.POST.get('action')
+
+        # ── Edit Member ──
+        if action == 'edit_member':
+            member_id = request.POST.get('member_id')
+            member = get_object_or_404(Member, id=member_id)
+            member.user.first_name = request.POST.get('name', '')
+            member.user.phone = request.POST.get('phone', '')
+            member.user.save()
+            member.age = request.POST.get('age', member.age)
+            member.weight = request.POST.get('weight', member.weight)
+            member.membership_plan = request.POST.get(
+                'plan', member.membership_plan)
+            trainer_id = request.POST.get('trainer_id')
+            if trainer_id:
+                member.assigned_trainer = get_object_or_404(
+                    Trainer, id=trainer_id)
+            member.save()
+            return redirect('manage_members')
+
+        # ── Assign Trainer ──
+        if action == 'assign_trainer':
+            member_id  = request.POST.get('member_id')
+            trainer_id = request.POST.get('trainer_id')
+            member     = get_object_or_404(Member, id=member_id)
+            if trainer_id:
+                trainer = get_object_or_404(Trainer, id=trainer_id)
+                member.assigned_trainer = trainer
+                member.save()
+            return redirect('manage_members')
+
+        # ── Add Member ──
         name       = request.POST.get('m-name', '').strip()
         email      = request.POST.get('email', '').strip()
         phone      = request.POST.get('phone', '').strip()
@@ -68,7 +97,6 @@ def manage_members(request):
         plan       = request.POST.get('plan', 'basic')
         trainer_id = request.POST.get('trainer_id', '')
 
-        # Validation
         if not name:
             errors.append('Name did not empty!')
         if not email:
@@ -119,7 +147,8 @@ def manage_members(request):
         'trainers': trainers,
         'errors':   errors,
     })
-     
+
+
 def delete_member(request, member_id):
     if not admin_check(request):
         return redirect('login')
@@ -135,13 +164,31 @@ def manage_trainers(request):
     errors = []
 
     if request.method == 'POST':
+        action = request.POST.get('action')
+
+        # ── Edit Trainer ──
+        if action == 'edit_trainer':
+            trainer_id = request.POST.get('trainer_id')
+            trainer = get_object_or_404(Trainer, id=trainer_id)
+            trainer.user.first_name = request.POST.get('name', '')
+            trainer.user.phone = request.POST.get('phone', '')
+            security_answer = request.POST.get('security_answer', '')
+            if security_answer:
+                trainer.user.security_answer = security_answer
+            trainer.user.save()
+            trainer.specialization = request.POST.get(
+                'specialization', trainer.specialization)
+            trainer.salary = request.POST.get('salary', trainer.salary)
+            trainer.save()
+            return redirect('manage_trainers')
+
+        # ── Add Trainer ──
         name   = request.POST.get('t-name', '').strip()
         email  = request.POST.get('email', '').strip()
         phone  = request.POST.get('phone', '').strip()
         spec   = request.POST.get('specialization', 'weight')
         salary = request.POST.get('salary', '').strip()
 
-        # Validation
         if not name:
             errors.append('Trainer name did not empty!')
         if not email:
@@ -157,7 +204,7 @@ def manage_trainers(request):
         if not salary:
             errors.append('Salary did not empty!')
         elif int(salary) < 1000:
-            errors.append('Salary consistes of at least 1000 PKR!')
+            errors.append('Salary consists of at least 1000 PKR!')
 
         if not errors:
             user = User.objects.create_user(
@@ -168,6 +215,9 @@ def manage_trainers(request):
                 phone=phone,
                 role='trainer'
             )
+            security_answer = request.POST.get('security_answer', '')
+            user.security_answer = security_answer
+            user.save()
             Trainer.objects.create(
                 user=user,
                 specialization=spec,
@@ -204,6 +254,7 @@ def admin_attendance(request):
         'today':         today,
     })
 
+
 def admin_payments(request):
     if not admin_check(request):
         return redirect('login')
@@ -217,7 +268,6 @@ def admin_payments(request):
         member    = get_object_or_404(Member, id=member_id)
         today     = timezone.now().date()
 
-        # Payment record banao
         Payment.objects.create(
             member=member,
             amount=amount,
@@ -227,7 +277,6 @@ def admin_payments(request):
             status='paid'
         )
 
-        # Is member ke pending orders complete karo
         Order.objects.filter(
             member=member,
             status='pending'
@@ -254,10 +303,32 @@ def admin_payments(request):
         'total_revenue': total_revenue,
     })
 
+
 def admin_courses(request):
     if not admin_check(request):
         return redirect('login')
+
     if request.method == 'POST':
+        action = request.POST.get('action')
+
+        # ── Edit Course ──
+        if action == 'edit_course':
+            course_id = request.POST.get('course_id')
+            course = get_object_or_404(Course, id=course_id)
+            course.title = request.POST.get('title', course.title)
+            course.description = request.POST.get(
+                'description', course.description)
+            course.level = request.POST.get('level', course.level)
+            course.duration = request.POST.get('duration', course.duration)
+            trainer_id = request.POST.get('trainer_id')
+            if trainer_id:
+                course.trainer = get_object_or_404(Trainer, id=trainer_id)
+            if request.FILES.get('image'):
+                course.image = request.FILES.get('image')
+            course.save()
+            return redirect('admin_courses')
+
+        # ── Add Course ──
         title       = request.POST.get('title')
         description = request.POST.get('description', '')
         trainer_id  = request.POST.get('trainer_id')
@@ -275,10 +346,8 @@ def admin_courses(request):
         )
         return redirect('admin_courses')
 
-    all_courses = Course.objects.select_related(
-        'trainer__user'
-    ).all()
-    trainers = Trainer.objects.select_related('user').all()
+    all_courses = Course.objects.select_related('trainer__user').all()
+    trainers    = Trainer.objects.select_related('user').all()
     return render(request, 'admin/courses.html', {
         'courses':  all_courses,
         'trainers': trainers
@@ -297,14 +366,39 @@ def admin_products(request):
     if not admin_check(request):
         return redirect('login')
     from store.models import Product, Order
+
     if request.method == 'POST':
+        action = request.POST.get('action')
+
+        # ── Edit Product ──
+        if action == 'edit_product':
+            product_id = request.POST.get('product_id')
+            product = get_object_or_404(Product, id=product_id)
+            product.name = request.POST.get('name', product.name)
+            product.description = request.POST.get(
+                'description', product.description)
+            product.category = request.POST.get(
+                'category', product.category)
+            product.price = request.POST.get('price', product.price)
+            product.stock = request.POST.get('stock', product.stock)
+            if request.FILES.get('image'):
+                product.image = request.FILES.get('image')
+            product.save()
+            return redirect('admin_products')
+
+        # ── Delete Product ──
+        if action == 'delete':
+            product_id = request.POST.get('product_id')
+            Product.objects.filter(id=product_id).delete()
+            return redirect('admin_products')
+
+        # ── Add Product ──
         name        = request.POST.get('name')
         description = request.POST.get('description', '')
         category    = request.POST.get('category', 'energy')
         price       = request.POST.get('price')
         stock       = request.POST.get('stock', 0)
         image       = request.FILES.get('image')
-
         Product.objects.create(
             name=name,
             description=description,
@@ -343,6 +437,16 @@ def admin_reports(request):
     return render(request, 'admin/reports.html', context)
 
 
+def admin_messages(request):
+    if not admin_check(request):
+        return redirect('login')
+    from accounts.models import ContactMessage
+    messages_list = ContactMessage.objects.all().order_by('-created_at')
+    return render(request, 'admin/messages.html', {
+        'messages_list': messages_list
+    })
+
+
 # ============================================
 # MEMBER VIEWS
 # ============================================
@@ -350,22 +454,21 @@ def admin_reports(request):
 def member_dashboard(request):
     if not member_check(request):
         return redirect('login')
-    member    = request.user.member
-    today     = timezone.now().date()
+    member     = request.user.member
+    today      = timezone.now().date()
     this_month = today.month
-    monthly   = Attendance.objects.filter(
-        member=member,
-        date__month=this_month
+    monthly    = Attendance.objects.filter(
+        member=member, date__month=this_month
     )
     present = monthly.filter(status='present').count()
     total   = monthly.count()
     percent = int((present / total * 100)) if total > 0 else 0
     return render(request, 'member/dashboard.html', {
-        'member':            member,
+        'member':             member,
         'attendance_percent': percent,
-        'present_count':     present,
-        'recent_attendance': monthly.order_by('-date')[:5],
-        'latest_payment':    Payment.objects.filter(
+        'present_count':      present,
+        'recent_attendance':  monthly.order_by('-date')[:5],
+        'latest_payment':     Payment.objects.filter(
             member=member
         ).order_by('-payment_date').first(),
     })
@@ -381,14 +484,11 @@ def member_profile(request):
         member.user.phone = request.POST.get(
             'phone', member.user.phone)
         member.age    = request.POST.get('age', member.age)
-        member.weight = request.POST.get(
-            'weight', member.weight)
+        member.weight = request.POST.get('weight', member.weight)
         member.user.save()
         member.save()
         return redirect('member_profile')
-    return render(request, 'member/profile.html', {
-        'member': member
-    })
+    return render(request, 'member/profile.html', {'member': member})
 
 
 def member_attendance(request):
@@ -404,8 +504,7 @@ def member_attendance(request):
     return render(request, 'member/attendance.html', {
         'records':            records,
         'present_count':      present,
-        'absent_count':       records.filter(
-                                  status='absent').count(),
+        'absent_count':       records.filter(status='absent').count(),
         'attendance_percent': percent,
     })
 
@@ -427,13 +526,12 @@ def member_courses(request):
     if not member_check(request):
         return redirect('login')
     member      = request.user.member
-    all_courses = Course.objects.select_related(
-        'trainer__user'
-    ).all()
+    all_courses = Course.objects.select_related('trainer__user').all()
     return render(request, 'member/courses.html', {
         'courses': all_courses,
         'member':  member,
     })
+
 
 def member_course_detail(request, course_id):
     if not member_check(request):
@@ -448,17 +546,15 @@ def member_course_detail(request, course_id):
         'contents': contents,
     })
 
+
 def member_store(request):
     if not member_check(request):
         return redirect('login')
-
     from store.models import Product
-
-    products  = Product.objects.filter(stock__gt=0)
-    cart      = request.session.get('cart', {})
+    products   = Product.objects.filter(stock__gt=0)
+    cart       = request.session.get('cart', {})
     cart_items = []
     cart_total = 0
-
     for product_id, quantity in cart.items():
         try:
             product  = Product.objects.get(id=int(product_id))
@@ -471,7 +567,6 @@ def member_store(request):
             })
         except Product.DoesNotExist:
             pass
-
     return render(request, 'member/store.html', {
         'products':   products,
         'cart_count': len(cart),
@@ -481,33 +576,30 @@ def member_store(request):
 
 
 def add_to_cart(request, product_id):
-    cart     = request.session.get('cart', {})
-    key      = str(product_id)
+    cart      = request.session.get('cart', {})
+    key       = str(product_id)
     cart[key] = cart.get(key, 0) + 1
     request.session['cart'] = cart
     return redirect('member_store')
 
+
 def remove_from_cart(request, product_id):
     if not member_check(request):
         return redirect('login')
-
-    cart = request.session.get('cart', {})
+    cart           = request.session.get('cart', {})
     product_id_str = str(product_id)
-
     if product_id_str in cart:
         del cart[product_id_str]
-        request.session['cart'] = cart
-        request.session.modified = True
-
+        request.session['cart']    = cart
+        request.session.modified   = True
     return redirect('member_store')
+
 
 def checkout(request):
     if not member_check(request):
         return redirect('login')
-
     from store.models import Product, Order, OrderItem
     from django.contrib import messages
-
     if request.method == 'POST':
         member          = request.user.member
         payment_method  = request.POST.get('payment_method', 'bank_transfer')
@@ -517,30 +609,22 @@ def checkout(request):
         transaction_ref = request.POST.get('transaction_ref', '').strip()
         transfer_amount = request.POST.get('transfer_amount', '').strip()
         cart            = request.session.get('cart', {})
-
-        # Validation
         if not cart:
             messages.error(request, 'Cart is empty!')
             return redirect('member_store')
-
         if not bank_name:
             messages.error(request, 'Select bank name!')
             return redirect('member_store')
-
         if not account_title:
             messages.error(request, 'Account title did not empty!')
             return redirect('member_store')
-
         if not account_number:
             messages.error(request, 'Account number did not empty!')
             return redirect('member_store')
-
         if not transfer_amount:
             messages.error(request, 'Transfer amount did not empty!')
             return redirect('member_store')
-
         try:
-            # Create Order
             order = Order.objects.create(
                 member=member,
                 payment_method=payment_method,
@@ -552,12 +636,10 @@ def checkout(request):
                 transaction_ref=transaction_ref,
                 transfer_amount=transfer_amount
             )
-
             total = 0
             for product_id, quantity in cart.items():
                 try:
-                    product  = Product.objects.get(
-                        id=int(product_id))
+                    product  = Product.objects.get(id=int(product_id))
                     subtotal = product.price * int(quantity)
                     total   += subtotal
                     OrderItem.objects.create(
@@ -571,23 +653,17 @@ def checkout(request):
                         product.save()
                 except Product.DoesNotExist:
                     continue
-
             order.total_amount = total
             order.save()
-
-            # Cart clear karo
-            request.session['cart'] = {}
+            request.session['cart']  = {}
             request.session.modified = True
-
             messages.success(
                 request,
                 'Order placed! Admin will verify your bank transfer.'
             )
             return redirect('member_store')
-
         except Exception as e:
             print("Checkout Error:", e)
             messages.error(request, 'Error, Try again!')
             return redirect('member_store')
-
     return redirect('member_store')

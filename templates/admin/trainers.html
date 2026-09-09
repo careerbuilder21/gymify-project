@@ -1,84 +1,215 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Manage Trainers - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
-<div class="dashboard-layout">
+    <div class="dashboard-layout">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <div class="sidebar-logo">GYM<span>IFY</span></div>
-        <div class="sidebar-user">
-            <strong>{{ request.user.get_full_name }}</strong>
-            {{ request.user.email }}
-        </div>
-        <p class="sidebar-title">Overview</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
-        </nav>
-        <p class="sidebar-title">Management</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/members/"><i class="fas fa-users"></i> Manage Members</a>
-            <a href="/admin-panel/trainers/" class="active"><i class="fas fa-dumbbell"></i> Manage Trainers</a>
-            <a href="/admin-panel/attendance/"><i class="fas fa-clipboard-list"></i> Attendance</a>
-            <a href="/admin-panel/payments/"><i class="fas fa-credit-card"></i> Payments</a>
-        </nav>
-        <p class="sidebar-title">Content</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/courses/"><i class="fas fa-dumbbell"></i> Workout Courses</a>
-            <a href="/admin-panel/products/"><i class="fas fa-bolt"></i> Products Store</a>
-        </nav>
-        <p class="sidebar-title">Insights</p>
-        <nav class="sidebar-nav">
-            <a href="/admin-panel/reports/"><i class="fas fa-chart-bar"></i> Reports</a>
-        </nav>
-        <div class="logout-btn">
-            <a href="/logout/"
-               style="display:block;width:100%;padding:12px;
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-logo">GYM<span>IFY</span></div>
+            <div class="sidebar-user">
+                <strong>{{ request.user.get_full_name }}</strong>
+                {{ request.user.email }}
+            </div>
+            <p class="sidebar-title">Overview</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/dashboard/">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+            </nav>
+            <p class="sidebar-title">Management</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/members/">
+                    <i class="fas fa-users"></i> Manage Members
+                </a>
+                <a href="/admin-panel/trainers/" class="active">
+                    <i class="fas fa-dumbbell"></i> Manage Trainers
+                </a>
+                <a href="/admin-panel/attendance/">
+                    <i class="fas fa-clipboard-list"></i> Attendance
+                </a>
+                <a href="/admin-panel/payments/">
+                    <i class="fas fa-credit-card"></i> Payments
+                </a>
+            </nav>
+            <p class="sidebar-title">Content</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/courses/">
+                    <i class="fas fa-dumbbell"></i> Workout Courses
+                </a>
+                <a href="/admin-panel/products/">
+                    <i class="fas fa-bolt"></i> Products Store
+                </a>
+            </nav>
+            <p class="sidebar-title">Insights</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/reports/">
+                    <i class="fas fa-chart-bar"></i> Reports
+                </a>
+            </nav>
+            <div class="logout-btn">
+                <a href="/logout/" style="display:block;width:100%;padding:12px;
                       background:#E63946;color:white;
                       text-align:center;border-radius:6px;
                       text-decoration:none;font-size:14px;">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <h1>Manage Trainers</h1>
+
+            {% if errors %}
+            <div style="background:#f8d7da;color:#721c24;
+                    padding:15px;border-radius:8px;
+                    margin-bottom:15px;">
+                {% for error in errors %}
+                <p style="margin:3px 0;">
+                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                </p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- ADD TRAINER FORM -->
+            <div class="dash-form">
+                <h3>Add New Trainer</h3>
+                <form method="POST" action="/admin-panel/trainers/" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" name="t-name" placeholder="Trainer name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" placeholder="Email address" autocomplete="new-email"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="text" name="phone" placeholder="0300-0000000">
+                        </div>
+                        <div class="form-group">
+                            <label>Specialization</label>
+                            <select name="specialization" required>
+                                <option value="" disabled selected>
+                                    Select Specialization
+                                </option>
+                                <option value="weight">Weight Training</option>
+                                <option value="cardio">Cardio & Fitness</option>
+                                <option value="yoga">Yoga & Flexibility</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Salary (PKR/month)</label>
+                            <input type="number" name="salary" placeholder="Monthly salary">
+                        </div>
+                        <div class="form-group">
+                            <label>Security Answer (Mother Name)</label>
+                            <input type="text" name="security_answer" placeholder="Mother Name" required>
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn-solid">
+                        Save Trainer
+                    </button>
+                </form>
+            </div>
+
+            <!-- TRAINERS TABLE -->
+            <div class="table-section">
+                <h3>All Trainers ({{ trainers.count }})</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Specialization</th>
+                            <th>Salary</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trainer in trainers %}
+                        <tr>
+                            <td>T-{{ trainer.id }}</td>
+                            <td>{{ trainer.user.get_full_name }}</td>
+                            <td>{{ trainer.user.email }}</td>
+                            <td>{{ trainer.user.phone }}</td>
+                            <td>{{ trainer.get_specialization_display }}</td>
+                            <td>PKR {{ trainer.salary }}</td>
+                            <td>
+                                <button class="btn-edit" onclick="openTrainerModal(
+                                   '{{ trainer.id }}',
+                                   '{{ trainer.user.get_full_name }}',
+                                   '{{ trainer.user.phone }}',
+                                   '{{ trainer.specialization }}',
+                                   '{{ trainer.salary }}',
+                                   '{{ trainer.user.security_answer }}'
+                                    )">
+                                    Edit
+                                </button>
+                                <a href="/admin-panel/trainers/delete/{{ trainer.id }}/"
+                                    onclick="return confirm('Trainer delete karna chahte hain?')" class="btn-delete">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" style="text-align:center;
+                                   color:#858685;padding:20px;">
+                                There is no trainer here, add by fill the form
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <h1>Manage Trainers</h1>
-
-        <!-- ADD TRAINER FORM -->
-        <div class="dash-form">
-            <h3>Add New Trainer</h3>
+    <!-- EDIT TRAINER MODAL -->
+    <div class="modal-overlay" id="trainerModal">
+        <div class="modal-box">
+            <span class="modal-close" onclick="closeTrainerModal()">
+                <i class="fas fa-times"></i>
+            </span>
+            <h3>Edit Trainer</h3>
             <form method="POST" action="/admin-panel/trainers/">
                 {% csrf_token %}
+                <input type="hidden" name="action" value="edit_trainer">
+                <input type="hidden" name="trainer_id" id="edit_trainer_id">
                 <div class="form-row">
                     <div class="form-group">
                         <label>Full Name</label>
-                        <input type="text" name="t-name"
-                               placeholder="Trainer name"
-                               required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" name="email"
-                               placeholder="Email address"
-                               required>
+                        <input type="text" name="name" id="edit_trainer_name" required>
                     </div>
                     <div class="form-group">
                         <label>Phone</label>
-                        <input type="text" name="phone"
-                               placeholder="0300-0000000">
+                        <input type="text" name="phone" id="edit_trainer_phone">
+                    </div>
+                    <div class="form-group">
+                        <label>Security Answer (Mother Name)</label>
+                        <input type="text" name="security_answer" id="edit_trainer_security">
                     </div>
                     <div class="form-group">
                         <label>Specialization</label>
-                        <select name="specialization">
+                        <select name="specialization" id="edit_trainer_spec">
                             <option value="weight">Weight Training</option>
                             <option value="cardio">Cardio & Fitness</option>
                             <option value="yoga">Yoga & Flexibility</option>
@@ -86,63 +217,23 @@
                     </div>
                     <div class="form-group">
                         <label>Salary (PKR/month)</label>
-                        <input type="number" name="salary"
-                               placeholder="Monthly salary">
+                        <input type="number" name="salary" id="edit_trainer_salary">
                     </div>
                 </div>
                 <br>
                 <button type="submit" class="btn-solid">
-                    Save Trainer
+                    Save Changes
+                </button>
+                <button type="button" onclick="closeTrainerModal()" style="margin-left:10px;padding:10px 20px;
+                           background:#858685;color:white;
+                           border:none;border-radius:6px;
+                           cursor:pointer;">
+                    Cancel
                 </button>
             </form>
         </div>
-
-        <!-- TRAINERS TABLE -->
-        <div class="table-section">
-            <h3>All Trainers ({{ trainers.count }})</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Specialization</th>
-                        <th>Salary</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for trainer in trainers %}
-                    <tr>
-                        <td>T-{{ trainer.id }}</td>
-                        <td>{{ trainer.user.get_full_name }}</td>
-                        <td>{{ trainer.user.email }}</td>
-                        <td>{{ trainer.user.phone }}</td>
-                        <td>{{ trainer.get_specialization_display }}</td>
-                        <td>PKR {{ trainer.salary }}</td>
-                        <td>
-                            <a href="/admin-panel/trainers/delete/{{ trainer.id }}/"
-                               onclick="return confirm('Trainer delete karna chahte hain?')"
-                               class="btn-delete">
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="7"
-                            style="text-align:center;
-                                   color:#858685;padding:20px;">
-                            There is no trainer here,add by fill the form
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
     </div>
-</div>
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
+
 </html>

@@ -22,23 +22,39 @@
             </div>
             <p class="sidebar-title">Overview</p>
             <nav class="sidebar-nav">
-                <a href="/admin-panel/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="/admin-panel/dashboard/">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
             </nav>
             <p class="sidebar-title">Management</p>
             <nav class="sidebar-nav">
-                <a href="/admin-panel/members/" class="active"><i class="fas fa-users"></i> Manage Members</a>
-                <a href="/admin-panel/trainers/"><i class="fas fa-dumbbell"></i> Manage Trainers</a>
-                <a href="/admin-panel/attendance/"><i class="fas fa-clipboard-list"></i> Attendance</a>
-                <a href="/admin-panel/payments/"><i class="fas fa-credit-card"></i> Payments</a>
+                <a href="/admin-panel/members/" class="active">
+                    <i class="fas fa-users"></i> Manage Members
+                </a>
+                <a href="/admin-panel/trainers/">
+                    <i class="fas fa-dumbbell"></i> Manage Trainers
+                </a>
+                <a href="/admin-panel/attendance/">
+                    <i class="fas fa-clipboard-list"></i> Attendance
+                </a>
+                <a href="/admin-panel/payments/">
+                    <i class="fas fa-credit-card"></i> Payments
+                </a>
             </nav>
             <p class="sidebar-title">Content</p>
             <nav class="sidebar-nav">
-                <a href="/admin-panel/courses/"><i class="fas fa-dumbbell"></i> Workout Courses</a>
-                <a href="/admin-panel/products/"><i class="fas fa-bolt"></i> Products Store</a>
+                <a href="/admin-panel/courses/">
+                    <i class="fas fa-dumbbell"></i> Workout Courses
+                </a>
+                <a href="/admin-panel/products/">
+                    <i class="fas fa-bolt"></i> Products Store
+                </a>
             </nav>
             <p class="sidebar-title">Insights</p>
             <nav class="sidebar-nav">
-                <a href="/admin-panel/reports/"><i class="fas fa-chart-bar"></i> Reports</a>
+                <a href="/admin-panel/reports/">
+                    <i class="fas fa-chart-bar"></i> Reports
+                </a>
             </nav>
             <div class="logout-btn">
                 <a href="/logout/" style="display:block;width:100%;padding:12px;
@@ -54,23 +70,16 @@
         <div class="main-content">
             <h1>Manage Members</h1>
 
-            <!-- SUCCESS MESSAGE -->
-            {% if messages %}
             {% if errors %}
             <div style="background:#f8d7da;color:#721c24;
-            padding:15px;border-radius:8px;
-            margin-bottom:15px;">
+                    padding:15px;border-radius:8px;
+                    margin-bottom:15px;">
                 {% for error in errors %}
-                <p style="margin:3px 0;"><i class="fas fa-user-slash"></i> {{ error }}</p>{% endfor %}
+                <p style="margin:3px 0;">
+                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                </p>
+                {% endfor %}
             </div>
-            {% endif %}
-            {% for message in messages %}
-            <p style="color:green;background:#d4edda;
-                  padding:10px;border-radius:6px;
-                  margin-bottom:15px;">
-                {{ message }}
-            </p>
-            {% endfor %}
             {% endif %}
 
             <!-- ADD MEMBER FORM -->
@@ -154,42 +163,109 @@
                                 {% if member.assigned_trainer %}
                                 {{ member.assigned_trainer.user.get_full_name }}
                                 {% else %}
-                                <span style="color:#858685;">
-                                    Not Assigned
-                                </span>
+                                <span style="color:#858685;">Not Assigned</span>
                                 {% endif %}
                             </td>
                             <td>
                                 {% if member.is_active %}
-                                <span class="status-badge status-paid">
-                                    Active
-                                </span>
+                                <span class="status-badge status-paid">Active</span>
                                 {% else %}
-                                <span class="status-badge status-pending">
-                                    Inactive
-                                </span>
+                                <span class="status-badge status-pending">Inactive</span>
                                 {% endif %}
                             </td>
                             <td>
+                                <button class="btn-edit" onclick="openEditModal(
+                                    '{{ member.id }}',
+                                    '{{ member.user.get_full_name }}',
+                                    '{{ member.user.phone }}',
+                                    '{{ member.age }}',
+                                    '{{ member.weight }}',
+                                    '{{ member.membership_plan }}',
+                                    '{{ member.assigned_trainer.id }}'
+                                )">
+                                     Edit
+                                </button>
                                 <a href="/admin-panel/members/delete/{{ member.id }}/"
                                     onclick="return confirm('Want to delete?')" class="btn-delete">
-                                    Delete
+                                     Delete
                                 </a>
                             </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="8" style="text-align:center;color:#858685;padding:20px;">
-                                There is no member here,add by fill the form
+                            <td colspan="8" style="text-align:center;
+                                   color:#858685;padding:20px;">
+                                There is no member here, add by fill the form
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
+
+    <!-- EDIT MODAL -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-box">
+            <span class="modal-close" onclick="closeEditModal()">
+            </span>
+            <h3>Edit Member</h3>
+            <form method="POST" action="/admin-panel/members/">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="edit_member">
+                <input type="hidden" name="member_id" id="edit_member_id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" name="name" id="edit_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" name="phone" id="edit_phone">
+                    </div>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" name="age" id="edit_age">
+                    </div>
+                    <div class="form-group">
+                        <label>Weight (kg)</label>
+                        <input type="number" name="weight" id="edit_weight">
+                    </div>
+                    <div class="form-group">
+                        <label>Membership Plan</label>
+                        <select name="plan" id="edit_plan">
+                            <option value="basic">Basic - PKR 2000</option>
+                            <option value="standard">Standard - PKR 3500</option>
+                            <option value="premium">Premium - PKR 5000</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Assign Trainer</label>
+                        <select name="trainer_id" id="edit_trainer">
+                            <option value="">Select Trainer</option>
+                            {% for trainer in trainers %}
+                            <option value="{{ trainer.id }}">
+                                {{ trainer.user.get_full_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn-solid">
+                    Save Changes
+                </button>
+                <button type="button" onclick="closeEditModal()" style="margin-left:10px;padding:10px 20px;
+                           background:#858685;color:white;
+                           border:none;border-radius:6px;
+                           cursor:pointer;">
+                    Cancel
+                </button>
+            </form>
+        </div>
+    </div>
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 
 </html>

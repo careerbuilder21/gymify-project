@@ -11,6 +11,22 @@ def about(request):
     return render(request, 'about.html')
 
 def contact_page(request):
+    if request.method == 'POST':
+        name    = request.POST.get('contact-name', '')
+        email   = request.POST.get('contact-email', '')
+        subject = request.POST.get('contact-subject', '')
+        message = request.POST.get('contact-message', '')
+        if name and email and message:
+            from accounts.models import ContactMessage
+            ContactMessage.objects.create(
+                name=name,
+                email=email,
+                subject=subject,
+                message=message
+            )
+            return render(request, 'contact.html', {
+                'success': True
+            })
     return render(request, 'contact.html')
 
 def public_courses(request):

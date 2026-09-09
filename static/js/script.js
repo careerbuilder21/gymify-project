@@ -1,182 +1,5 @@
 // GYMIFY - JavaScript File
 
-// --- LOGIN ROLE TABS ---
-// Used on login.html to switch between Admin, Trainer, Member tabs
-function switchTab(role) {
-    // Remove active from all tabs
-    var tabs = document.querySelectorAll('.role-tab');
-    tabs.forEach(function(tab) {
-        tab.classList.remove('active');
-    });
-
-    // Add active to clicked tab
-    var clicked = document.getElementById('tab-' + role);
-    if (clicked) clicked.classList.add('active');
-
-    // Update hidden role input
-    var roleInput = document.getElementById('role-input');
-    if (roleInput) roleInput.value = role;
-
-    // Change form title
-    var title = document.getElementById('form-title');
-    if (title) {
-        if (role === 'admin') title.textContent = 'Admin Login';
-        if (role === 'trainer') title.textContent = 'Trainer Login';
-        if (role === 'member') title.textContent = 'Member Login';
-    }
-}
-
-// --- LOGIN REDIRECT ---
-// Redirects to correct dashboard based on role
-function handleLogin() {
-    var role = document.getElementById('role-input').value;
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
-
-    if (!email || !password) {
-        alert('Please enter email and password.');
-        return;
-    }
-
-    // Simple redirect based on role (no real backend here)
-    if (role === 'admin') {
-        window.location.href = 'admin-dashboard.html';
-    } else if (role === 'trainer') {
-        window.location.href = 'trainer-dashboard.html';
-    } else if (role === 'member') {
-        window.location.href = 'member-dashboard.html';
-    } else {
-        alert('Please select a role (Admin, Trainer, or Member).');
-    }
-}
-
-// --- LOGOUT ---
-function logout() {
-    window.location.href = 'index.html';
-}
-
-// --- CART SYSTEM (Store Page) ---
-var cart = [];
-
-function addToCart(name, price) {
-    // Check if item already in cart
-    var found = false;
-    for (var i = 0; i < cart.length; i++) {
-        if (cart[i].name === name) {
-            cart[i].qty += 1;
-            found = true;
-            break;
-        }
-    }
-    if (!found) {
-        cart.push({ name: name, price: price, qty: 1 });
-    }
-    updateCartDisplay();
-    alert(name + ' added to cart!');
-}
-
-function updateCartDisplay() {
-    var total = 0;
-    var count = 0;
-    cart.forEach(function(item) {
-        total += item.price * item.qty;
-        count += item.qty;
-    });
-
-    // Update cart count in bar
-    var countEl = document.getElementById('cart-count');
-    if (countEl) countEl.textContent = count;
-
-    var totalEl = document.getElementById('cart-total-bar');
-    if (totalEl) totalEl.textContent = 'PKR ' + total.toLocaleString();
-}
-
-function openCart() {
-    var modal = document.getElementById('cart-modal');
-    if (!modal) return;
-    modal.style.display = 'block';
-
-    var list = document.getElementById('cart-items');
-    var totalEl = document.getElementById('cart-grand-total');
-    if (!list) return;
-
-    list.innerHTML = '';
-    var total = 0;
-
-    if (cart.length === 0) {
-        list.innerHTML = '<p style="color:#858685;font-size:14px;">Your cart is empty.</p>';
-    } else {
-        cart.forEach(function(item) {
-            var div = document.createElement('div');
-            div.className = 'cart-item';
-            div.innerHTML = '<span class="cart-item-name">' + item.name + ' x' + item.qty + '</span>' +
-                            '<span class="cart-item-price">PKR ' + (item.price * item.qty).toLocaleString() + '</span>';
-            list.appendChild(div);
-            total += item.price * item.qty;
-        });
-    }
-
-    if (totalEl) totalEl.textContent = 'Total: PKR ' + total.toLocaleString();
-}
-
-function closeCart() {
-    var modal = document.getElementById('cart-modal');
-    if (modal) modal.style.display = 'none';
-}
-
-function checkout() {
-    var selected = document.querySelector('input[name="payment"]:checked');
-    if (!selected) {
-        alert('Please select a payment method.');
-        return;
-    }
-    if (cart.length === 0) {
-        alert('Your cart is empty!');
-        return;
-    }
-    alert('Order placed successfully!\nPayment via: ' + selected.value + '\nThank you for shopping at GYMIFY!');
-    cart = [];
-    updateCartDisplay();
-    closeCart();
-}
-
-// --- CONTACT FORM SUBMIT ---
-function submitContact() {
-    var name = document.getElementById('contact-name').value;
-    var email = document.getElementById('contact-email').value;
-    var message = document.getElementById('contact-message').value;
-
-    if (!name || !email || !message) {
-        alert('Please fill all fields.');
-        return;
-    }
-    alert('Message sent! We will get back to you soon.');
-    document.getElementById('contact-name').value = '';
-    document.getElementById('contact-email').value = '';
-    document.getElementById('contact-message').value = '';
-}
-
-// --- REGISTER FORM ---
-function handleRegister() {
-    var name = document.getElementById('reg-name').value;
-    var email = document.getElementById('reg-email').value;
-    var phone = document.getElementById('reg-phone').value;
-    var password = document.getElementById('reg-password').value;
-
-    if (!name || !email || !phone || !password) {
-        alert('Please fill all fields.');
-        return;
-    }
-    alert('Registration successful! You can now login.');
-    window.location.href = 'login.html';
-}
-
-// --- ADMIN: Save Member ---
-function saveMember() {
-    var name = document.getElementById('m-name').value;
-    if (!name) { alert('Please enter member name.'); return; }
-    alert('Member saved successfully!');
-}
 // --- LOGIN TAB SWITCH ---
 function switchTab(role) {
     var tabs = document.querySelectorAll('.role-tab');
@@ -194,79 +17,44 @@ function switchTab(role) {
         if (role === 'member')  title.textContent = 'Member Login';
     }
 }
-// --- ADMIN: Save Trainer ---
-function saveTrainer() {
-    var name = document.getElementById('t-name').value;
-    if (!name) { alert('Please enter trainer name.'); return; }
-    alert('Trainer saved successfully!');
+
+// --- CONTACT FORM ---
+function submitContact() {
+    var name    = document.getElementById('contact-name').value;
+    var email   = document.getElementById('contact-email').value;
+    var message = document.getElementById('contact-message').value;
+    if (!name || !email || !message) {
+        alert('Please fill all fields.');
+        return;
+    }
+    alert('Message sent! We will get back to you soon.');
 }
 
-// --- TRAINER: Mark Attendance ---
-function markAttendance() {
-    var member = document.getElementById('att-member').value;
-    var status = document.getElementById('att-status').value;
-    if (!member) { alert('Please select a member.'); return; }
-    alert('Attendance marked: ' + member + ' - ' + status);
-}
-
-// --- MEMBER: Update Profile ---
-function updateProfile() {
-    alert('Profile updated successfully!');
-}
-// --- PAYMENT METHOD SWITCH ---
-var paymentSelect = document.getElementById('payment-method');
-if (paymentSelect) {
-    paymentSelect.addEventListener('change', function() {
-        var method = this.value;
-        var epBox  = document.getElementById('easypaisa-box');
-        var jcBox  = document.getElementById('jazzcash-box');
-        if (method === 'easypaisa') {
-            epBox.style.display = 'block';
-            jcBox.style.display = 'none';
-        } else {
-            epBox.style.display = 'none';
-            jcBox.style.display = 'block';
-        }
-    });
-}
 // --- PAYMENT PROCESSING ---
 function processPayment(event) {
     event.preventDefault();
     event.stopPropagation();
-
     var overlay = document.getElementById('payment-overlay');
     var form    = document.getElementById('checkout-form');
-
-    if (!overlay || !form) {
-        console.log('Elements not found');
-        return;
-    }
-
-    // Reset screens
+    if (!overlay || !form) return;
     document.getElementById('processing-screen').style.display = 'block';
     document.getElementById('success-screen').style.display   = 'none';
-
-    // Overlay show karo
     overlay.style.display = 'flex';
-
-    // 3 second baad success
     setTimeout(function() {
         document.getElementById('processing-screen').style.display = 'none';
         document.getElementById('success-screen').style.display    = 'block';
-
-        // 2 second baad submit
         setTimeout(function() {
             overlay.style.display = 'none';
             form.onsubmit = null;
             form.submit();
         }, 2000);
-
     }, 3000);
 }
+
+// --- PASSWORD SHOW/HIDE (Login) ---
 function togglePassword() {
     var field = document.getElementById('password-field');
     var icon  = document.getElementById('eye-icon');
-
     if (field.type === 'password') {
         field.type = 'text';
         icon.classList.remove('fa-eye');
@@ -278,4 +66,127 @@ function togglePassword() {
         icon.classList.add('fa-eye');
         icon.style.color = '#858685';
     }
+}
+
+// --- PASSWORD SHOW/HIDE (Register) ---
+function toggleRegPassword() {
+    var field = document.getElementById('reg-password-field');
+    var icon  = document.getElementById('reg-eye-icon');
+    if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+        icon.style.color = '#E63946';
+    } else {
+        field.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+        icon.style.color = '#858685';
+    }
+}
+
+// --- EDIT MEMBER MODAL ---
+function openEditModal(id, name, phone, age, weight, plan, trainerId) {
+    document.getElementById('edit_member_id').value = id;
+    document.getElementById('edit_name').value = name;
+    document.getElementById('edit_phone').value = phone;
+    document.getElementById('edit_age').value = age;
+    document.getElementById('edit_weight').value = weight;
+
+    var planSelect = document.getElementById('edit_plan');
+    for (var i = 0; i < planSelect.options.length; i++) {
+        if (planSelect.options[i].value === plan) {
+            planSelect.selectedIndex = i;
+            break;
+        }
+    }
+
+    var trainerSelect = document.getElementById('edit_trainer');
+    for (var j = 0; j < trainerSelect.options.length; j++) {
+        if (trainerSelect.options[j].value === trainerId) {
+            trainerSelect.selectedIndex = j;
+            break;
+        }
+    }
+
+    document.getElementById('editModal').style.display = 'block';
+}
+
+function closeEditModal() {
+    document.getElementById('editModal').style.display = 'none';
+}
+
+// --- EDIT TRAINER MODAL ---
+function openTrainerModal(id, name, phone, spec, salary, security) {
+    document.getElementById('edit_trainer_id').value = id;
+    document.getElementById('edit_trainer_name').value = name;
+    document.getElementById('edit_trainer_phone').value = phone;
+    document.getElementById('edit_trainer_security').value = security;
+    document.getElementById('edit_trainer_salary').value = salary;
+
+    var specSelect = document.getElementById('edit_trainer_spec');
+    for (var i = 0; i < specSelect.options.length; i++) {
+        if (specSelect.options[i].value === spec) {
+            specSelect.selectedIndex = i;
+            break;
+        }
+    }
+
+    document.getElementById('trainerModal').style.display = 'block';
+}
+
+function closeTrainerModal() {
+    document.getElementById('trainerModal').style.display = 'none';
+}
+// --- EDIT COURSE MODAL ---
+function openCourseModal(id, title, trainerId, level, duration, desc) {
+    document.getElementById('edit_course_id').value = id;
+    document.getElementById('edit_course_title').value = title;
+    document.getElementById('edit_course_duration').value = duration;
+    document.getElementById('edit_course_desc').value = desc;
+
+    var levelSelect = document.getElementById('edit_course_level');
+    for (var i = 0; i < levelSelect.options.length; i++) {
+        if (levelSelect.options[i].value === level) {
+            levelSelect.selectedIndex = i;
+            break;
+        }
+    }
+
+    var trainerSelect = document.getElementById('edit_course_trainer');
+    for (var j = 0; j < trainerSelect.options.length; j++) {
+        if (trainerSelect.options[j].value === trainerId) {
+            trainerSelect.selectedIndex = j;
+            break;
+        }
+    }
+
+    document.getElementById('courseModal').style.display = 'block';
+}
+
+function closeCourseModal() {
+    document.getElementById('courseModal').style.display = 'none';
+}
+
+// --- EDIT PRODUCT MODAL ---
+function openProductModal(id, name, category, price, stock, desc) {
+    document.getElementById('edit_product_id').value = id;
+    document.getElementById('edit_product_name').value = name;
+    document.getElementById('edit_product_price').value = price;
+    document.getElementById('edit_product_stock').value = stock;
+    document.getElementById('edit_product_desc').value = desc;
+
+    var catSelect = document.getElementById('edit_product_category');
+    for (var i = 0; i < catSelect.options.length; i++) {
+        if (catSelect.options[i].value === category) {
+            catSelect.selectedIndex = i;
+            break;
+        }
+    }
+
+    document.getElementById('productModal').style.display = 'block';
+}
+
+function closeProductModal() {
+    document.getElementById('productModal').style.display = 'none';
 }

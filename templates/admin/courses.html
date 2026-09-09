@@ -11,6 +11,7 @@
 
 <body>
     <div class="dashboard-layout">
+
         <!-- SIDEBAR -->
         <div class="sidebar">
             <div class="sidebar-logo">GYM<span>IFY</span></div>
@@ -20,23 +21,39 @@
             </div>
             <p class="sidebar-title">Overview</p>
             <nav class="sidebar-nav">
-                <a href="/admin-panel/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="/admin-panel/dashboard/">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
             </nav>
             <p class="sidebar-title">Management</p>
             <nav class="sidebar-nav">
-                <a href="/admin-panel/members/"><i class="fas fa-users"></i> Manage Members</a>
-                <a href="/admin-panel/trainers/"><i class="fas fa-dumbbell"></i> Manage Trainers</a>
-                <a href="/admin-panel/attendance/"><i class="fas fa-clipboard-list"></i> Attendance</a>
-                <a href="/admin-panel/payments/"><i class="fas fa-credit-card"></i> Payments</a>
+                <a href="/admin-panel/members/">
+                    <i class="fas fa-users"></i> Manage Members
+                </a>
+                <a href="/admin-panel/trainers/">
+                    <i class="fas fa-dumbbell"></i> Manage Trainers
+                </a>
+                <a href="/admin-panel/attendance/">
+                    <i class="fas fa-clipboard-list"></i> Attendance
+                </a>
+                <a href="/admin-panel/payments/">
+                    <i class="fas fa-credit-card"></i> Payments
+                </a>
             </nav>
             <p class="sidebar-title">Content</p>
             <nav class="sidebar-nav">
-                <a href="/admin-panel/courses/" class="active"><i class="fas fa-dumbbell"></i> Workout Courses</a>
-                <a href="/admin-panel/products/"><i class="fas fa-bolt"></i> Products Store</a>
+                <a href="/admin-panel/courses/" class="active">
+                    <i class="fas fa-dumbbell"></i> Workout Courses
+                </a>
+                <a href="/admin-panel/products/">
+                    <i class="fas fa-bolt"></i> Products Store
+                </a>
             </nav>
             <p class="sidebar-title">Insights</p>
             <nav class="sidebar-nav">
-                <a href="/admin-panel/reports/"><i class="fas fa-chart-bar"></i> Reports</a>
+                <a href="/admin-panel/reports/">
+                    <i class="fas fa-chart-bar"></i> Reports
+                </a>
             </nav>
             <div class="logout-btn">
                 <a href="/logout/" style="display:block;width:100%;padding:12px;
@@ -93,9 +110,7 @@
                     </div>
                     <div class="form-group" style="margin-top:12px;">
                         <label>Description</label>
-                        <textarea name="description" placeholder="Course description..." style="width:100%;padding:10px;
-                                     height:80px;border:1px solid #ccc;
-                                     border-radius:6px;font-family:inherit;">
+                        <textarea name="description" class="description-textarea" placeholder="Course description...">
                     </textarea>
                     </div>
                     <br>
@@ -130,7 +145,9 @@
                                         object-fit:cover;
                                         border-radius:4px;">
                                 {% else %}
-                                <span style="font-size:24px;"><i class="fas fa-dumbbell"></i> </span>
+                                <span style="font-size:24px;">
+                                    <i class="fas fa-dumbbell"></i>
+                                </span>
                                 {% endif %}
                             </td>
                             <td>{{ course.title }}</td>
@@ -144,6 +161,16 @@
                             <td>{{ course.get_level_display }}</td>
                             <td>{{ course.duration }}</td>
                             <td>
+                                <button class="btn-edit" onclick="openCourseModal(
+                                    '{{ course.id }}',
+                                    '{{ course.title }}',
+                                    '{{ course.trainer.id }}',
+                                    '{{ course.level }}',
+                                    '{{ course.duration }}',
+                                    '{{ course.description|escapejs }}'
+                                )">
+                                    Edit
+                                </button>
                                 <a href="/admin-panel/courses/delete/{{ course.id }}/"
                                     onclick="return confirm('Want to delete a course?')" class="btn-delete">
                                     Delete
@@ -161,9 +188,74 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
+
+    <!-- EDIT COURSE MODAL -->
+    <div class="modal-overlay" id="courseModal">
+        <div class="modal-box">
+            <span class="modal-close" onclick="closeCourseModal()">
+                <i class="fas fa-times"></i>
+            </span>
+            <h3>Edit Course</h3>
+            <form method="POST" action="/admin-panel/courses/" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="edit_course">
+                <input type="hidden" name="course_id" id="edit_course_id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Course Title</label>
+                        <input type="text" name="title" id="edit_course_title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Assign Trainer</label>
+                        <select name="trainer_id" id="edit_course_trainer">
+                            <option value="">Select Trainer</option>
+                            {% for trainer in trainers %}
+                            <option value="{{ trainer.id }}">
+                                {{ trainer.user.get_full_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Level</label>
+                        <select name="level" id="edit_course_level">
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                            <option value="all">All Levels</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <input type="text" name="duration" id="edit_course_duration">
+                    </div>
+                    <div class="form-group">
+                        <label>New Image (Optional)</label>
+                        <input type="file" name="image" accept="image/*">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:12px;">
+                    <label>Description</label>
+                    <textarea name="description" id="edit_course_desc" class="description-textarea">
+                </textarea>
+                </div>
+                <br>
+                <button type="submit" class="btn-solid">
+                    Save Changes
+                </button>
+                <button type="button" onclick="closeCourseModal()" style="margin-left:10px;padding:10px 20px;
+                           background:#858685;color:white;
+                           border:none;border-radius:6px;
+                           cursor:pointer;">
+                    Cancel
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 
 </html>

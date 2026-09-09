@@ -39,7 +39,7 @@
             </h2>
             <p style="color:#858685;text-align:center;
                       font-size:14px;margin-bottom:20px;">
-                🔐 What is your Mother Name?
+                <i class="fas fa-lock"></i> What is your Mother Name?
             </p>
             <form method="POST" action="/security-question/" autocomplete="off">
                 {% csrf_token %}
@@ -47,11 +47,11 @@
                     <label>Answer</label>
                     <input type="text" name="answer" placeholder="Type Your Answer" autocomplete="off">
                 </div>
-                <button type="submit" class="form-btn">Verify →</button>
+                <button type="submit" class="form-btn">Verify</button>
             </form>
             <div class="form-footer">
                 <p>
-                    <a href="/forgot-password/">← Go back</a>
+                    <a href="/forgot-password/">Go back</a>
                 </p>
             </div>
         </div>
