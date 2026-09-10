@@ -1720,8 +1720,8 @@ img {
 
   /* Dashboard */
   .dashboard-layout {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     width: 100%;
   }
   .sidebox {
@@ -1927,4 +1927,43 @@ img {
     padding: 15px 10px;
     margin: 5px;
   }
+}
+/* Action Buttons Fix */
+@media (max-width: 1050px) {
+    .btn-edit,
+    .btn-delete {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    td {
+        white-space: normal;
+        word-break: break-word;
+    }
+}
+/* Status Badge Fix */
+.status-badge {
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.btn-delete,
+.btn-edit {
+    white-space: nowrap;
+}
+/* All Orders Table Fix */
+@media (max-width: 1050px) {
+    .table-section {
+        overflow-x: auto;
+        width: 100%;
+        -webkit-overflow-scrolling: touch;
+        display: block;
+    }
+
+    table {
+        min-width: 700px;
+    }
 }
