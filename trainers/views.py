@@ -5,17 +5,15 @@ from trainers.models import Trainer
 from attendance.models import Attendance
 from courses.models import Course, CourseContent
 
-# ============================================
+
 # TRAINER CHECK
-# ============================================
+
 def trainer_check(request):
     if not request.user.is_authenticated:
         return False
     return request.user.role == 'trainer'
 
-# ============================================
 # TRAINER VIEWS
-# ============================================
 
 def trainer_dashboard(request):
     if not trainer_check(request):

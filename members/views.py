@@ -8,9 +8,9 @@ from payments.models import Payment
 from courses.models import Course
 from store.models import Product, Order, OrderItem
 
-# ============================================
+
 # ADMIN CHECK
-# ============================================
+
 def admin_check(request):
     if not request.user.is_authenticated:
         return False
@@ -21,9 +21,7 @@ def member_check(request):
         return False
     return request.user.role == 'member'
 
-# ============================================
 # ADMIN VIEWS
-# ============================================
 
 def admin_dashboard(request):
     if not admin_check(request):
@@ -446,10 +444,7 @@ def admin_messages(request):
         'messages_list': messages_list
     })
 
-
-# ============================================
 # MEMBER VIEWS
-# ============================================
 
 def member_dashboard(request):
     if not member_check(request):

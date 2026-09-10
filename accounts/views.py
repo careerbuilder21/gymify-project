@@ -86,7 +86,7 @@ def login_view(request):
             if user.role != role:
                 return render(request, 'login.html', {
                     'error': True,
-                    'error_msg': f'Ye account {user.role} ka hai — sahi tab select karo!'
+                    'error_msg': f'This is {user.role} account, Kindly use Correct tab !'
                 })
             login(request, user)
             if user.role == 'admin':
@@ -98,7 +98,7 @@ def login_view(request):
         else:
             return render(request, 'login.html', {
                 'error': True,
-                'error_msg': 'Username ya Password galat hai!'
+                'error_msg': 'Incorrect Username or Password!'
             })
 
     return render(request, 'login.html')
@@ -181,7 +181,7 @@ def register_view(request):
 
         if User.objects.filter(email=email).exists():
             return render(request, 'register.html', {
-                'error': 'email already registered!'
+                'error': 'Email already registered!'
             })
 
         user = User.objects.create_user(
@@ -215,7 +215,7 @@ def forgot_password(request):
             request.session['reset_email'] = email
             return redirect('/security-question/')
         except User.DoesNotExist:
-            error = 'Ye email registered nahi hai!'
+            error = 'This Email is not registered!'
 
     return render(request, 'forgot_password.html', {
         'error': error
@@ -239,7 +239,7 @@ def security_question(request):
                 request.session['reset_verified'] = True
                 return redirect('/reset-password/')
             else:
-                error = 'Jawab galat hai!'
+                error = 'Wrong Answer!'
         except User.DoesNotExist:
             return redirect('/forgot-password/')
 
@@ -261,9 +261,9 @@ def reset_password(request):
         confirm_password = request.POST.get('confirm_password')
 
         if new_password != confirm_password:
-            error = 'Passwords match nahi kar rahe!'
+            error = 'Passwords did not match!'
         elif len(new_password) < 6:
-            error = 'Password kam se kam 6 characters ka hona chahiye!'
+            error = 'Password consists of at least 6 Characters!'
         else:
             try:
                 user = User.objects.get(email=email)
@@ -272,12 +272,12 @@ def reset_password(request):
                 # Session clear karo
                 del request.session['reset_email']
                 del request.session['reset_verified']
-                success = 'Password successfully change ho gaya!'
+                success = 'Password change successfully!'
                 return render(request, 'reset_password.html', {
                     'success': success
                 })
             except User.DoesNotExist:
-                error = 'Koi error aaya — dobara try karo.'
+                error = 'Error occured, Try Again!.'
 
     return render(request, 'reset_password.html', {
         'error': error

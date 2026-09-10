@@ -1461,41 +1461,37 @@ h4,
    EDIT MODAL
 =========================== */
 .modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 1000;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
 
 .modal-box {
-    background: white;
-    width: 600px;
-    margin: 50px auto;
-    padding: 30px;
-    border-radius: 10px;
-    max-height: 80vh;
-    overflow-y: auto;
+  background: white;
+  width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 10px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .modal-box h3 {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .modal-close {
-    float: right;
-    cursor: pointer;
-    font-size: 20px;
-    color: #858685;
+  float: right;
+  cursor: pointer;
+  font-size: 20px;
+  color: #858685;
 }
 /* Responsive basic */
-/* ===========================
-   RESPONSIVE — ALL SCREENS
-=========================== */
-
 /* Base — Fluid Layout */
 * {
   box-sizing: border-box;
@@ -1724,9 +1720,38 @@ img {
 
   /* Dashboard */
   .dashboard-layout {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
-
+  .sidebox {
+    width: 100%;
+    min-width: auto;
+    display: box;
+  }
+  .sidebar-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 5px;
+  }
+  .sidebar-nav a {
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  .main-content {
+    width: 100%;
+    display: block;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+  .logout-btn {
+    display: block;
+    padding: 5px;
+    width: 100%;
+  }
   .sidebar {
     display: block;
     width: 100%;
@@ -1761,11 +1786,14 @@ img {
   }
 
   .logout-btn {
-    display: none;
+    display: block !important;
+    padding: 5px;
   }
 
   .main-content {
+    width: 100%;
     padding: 15px;
+    display: block;
   }
 
   .stats-grid {
@@ -1780,11 +1808,15 @@ img {
   /* Tables */
   .table-section {
     overflow-x: auto;
-  }
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+}
 
   table {
-    min-width: 500px;
-    font-size: 13px;
+    min-width: 400px;
+    font-size: 12px;
+    width: 100%;
   }
 
   /* Forms in Dashboard */
