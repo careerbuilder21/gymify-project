@@ -88,16 +88,21 @@ def mark_attendance(request):
         )
         return redirect('mark_attendance')
 
+    selected_date = request.GET.get(
+    'date', str(timezone.now().date())
+       )
+
     today_records = Attendance.objects.filter(
-        member__assigned_trainer=trainer,
-        date=timezone.now().date()
-    ).select_related('member__user')
+    member__assigned_trainer=trainer,
+    date=selected_date
+          ).select_related('member__user')
 
     return render(request, 'trainer/attendance.html', {
-        'my_members':    my_members,
-        'today_records': today_records,
-        'today':         timezone.now().date(),
-    })
+    'my_members':    my_members,
+    'today_records': today_records,
+    'today':         timezone.now().date(),
+    'selected_date': selected_date,
+     })
 
 
 def trainer_workout(request):

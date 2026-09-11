@@ -3,9 +3,9 @@ from accounts.models import User
 
 class Member(models.Model):
     PLAN_CHOICES = [
-        ('basic',    'Basic - PKR 2000'),
-        ('standard', 'Standard - PKR 3500'),
-        ('premium',  'Premium - PKR 5000'),
+        ('basic',    'Basic  PKR 2000'),
+        ('standard', 'Standard  PKR 3500'),
+        ('premium',  'Premium  PKR 5000'),
     ]
     user             = models.OneToOneField(
                            User,

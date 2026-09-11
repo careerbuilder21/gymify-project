@@ -1197,7 +1197,44 @@ table tr:last-child td {
   background-color: #f8d7da;
   color: #721c24;
 }
+/* Date Filter Form */
+.date-filter-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
 
+.date-filter-form h3 {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #0c0c0c;
+}
+.date-filter-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  align-items: end;
+}
+
+.date-filter-form .form-group input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  height: 42px;
+  box-sizing: border-box;
+}
+
+.date-filter-form .btn-solid {
+  height: 42px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 /* Form inside dashboard */
 .dash-form {
   background-color: #fff;
@@ -1811,7 +1848,7 @@ img {
     width: 100%;
     -webkit-overflow-scrolling: touch;
     display: block;
-}
+  }
 
   table {
     min-width: 400px;
@@ -1930,40 +1967,40 @@ img {
 }
 /* Action Buttons Fix */
 @media (max-width: 1050px) {
-    .btn-edit,
-    .btn-delete {
-        display: block;
-        width: 100%;
-        margin-bottom: 5px;
-        text-align: center;
-        box-sizing: border-box;
-    }
+  .btn-edit,
+  .btn-delete {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+    text-align: center;
+    box-sizing: border-box;
+  }
 
-    td {
-        white-space: normal;
-        word-break: break-word;
-    }
+  td {
+    white-space: normal;
+    word-break: break-word;
+  }
 }
 /* Status Badge Fix */
 .status-badge {
-    white-space: nowrap;
-    display: inline-block;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .btn-delete,
 .btn-edit {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 /* All Orders Table Fix */
 @media (max-width: 1050px) {
-    .table-section {
-        overflow-x: auto;
-        width: 100%;
-        -webkit-overflow-scrolling: touch;
-        display: block;
-    }
+  .table-section {
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+  }
 
-    table {
-        min-width: 700px;
-    }
+  table {
+    min-width: 700px;
+  }
 }

@@ -22,12 +22,24 @@
             </div>
             <p class="sidebar-title">Trainer Panel</p>
             <nav class="sidebar-nav">
-                <a href="/trainer/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
-                <a href="/trainer/members/"><i class="fas fa-users"></i>Assigned Members</a>
-                <a href="/trainer/attendance/" class="active"><i class="fas fa-clipboard-check"></i>Mark Attendance</a>
-                <a href="/trainer/workout/"><i class="fas fa-dumbbell"></i>Workout Plans</a>
-                <a href="/trainer/upload/"><i class="fas fa-cloud-upload-alt"></i>Upload Content</a>
-                <a href="/trainer/progress/"><i class="fas fa-chart-line"></i>Member Progress</a>
+                <a href="/trainer/dashboard/">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="/trainer/members/">
+                    <i class="fas fa-users"></i> Assigned Members
+                </a>
+                <a href="/trainer/attendance/" class="active">
+                    <i class="fas fa-clipboard-check"></i> Mark Attendance
+                </a>
+                <a href="/trainer/workout/">
+                    <i class="fas fa-dumbbell"></i> Workout Plans
+                </a>
+                <a href="/trainer/upload/">
+                    <i class="fas fa-cloud-upload-alt"></i> Upload Content
+                </a>
+                <a href="/trainer/progress/">
+                    <i class="fas fa-chart-line"></i> Member Progress
+                </a>
             </nav>
             <div class="logout-btn">
                 <a href="/logout/" style="display:block;width:100%;padding:12px;
@@ -43,9 +55,9 @@
         <div class="main-content">
             <h1>Mark Attendance</h1>
 
-            <!-- MARK ATTENDANCE FORM -->
+            <!-- SECTION 1: MARK ATTENDANCE FORM -->
             <div class="dash-form">
-                <h3>Mark Today's Attendance</h3>
+                <h3>Mark Attendance</h3>
                 <form method="POST" action="/trainer/attendance/">
                     {% csrf_token %}
                     <div class="form-row">
@@ -84,9 +96,9 @@
                 </form>
             </div>
 
-            <!-- TODAY RECORDS -->
-            <div class="table-section">
-                <h3>Today's Attendance, {{ today }}</h3>
+            <!-- SECTION 2: TODAY'S ATTENDANCE -->
+            <div class="table-section" style="margin-top:30px;">
+                <h3>Today's Attendance ({{ today }}) </h3>
                 <table>
                     <thead>
                         <tr>
@@ -126,7 +138,75 @@
                         <tr>
                             <td colspan="3" style="text-align:center;
                                    color:#858685;padding:20px;">
-                                There is no attendance today
+                                No attendance marked today
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SECTION 3: PREVIOUS ATTENDANCE FILTER -->
+            <div class="dash-form" style="margin-top:30px;">
+                <h3>View Previous Attendance</h3>
+                <form method="GET" action="/trainer/attendance/">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Select Date</label>
+                            <input type="date" name="date" value="{{ selected_date }}" max="{{ today }}">
+                        </div>
+                        <div class="form-group" style="display:flex;align-items:flex-end;">
+                            <button type="submit" class="btn-solid" style="height:42px;padding:0 20px;">
+                                Show Records
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- SECTION 4: SELECTED DATE RECORDS -->
+            <div class="table-section" style="margin-top:30px;">
+                <h3>Previous Attendance Records</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Member</th>
+                            <th>Check-in Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in selected_records %}
+                        <tr>
+                            <td>{{ record.member.user.get_full_name }}</td>
+                            <td>
+                                {% if record.checkin_time %}
+                                {{ record.checkin_time }}
+                                {% else %}
+                                <span style="color:#858685;">—</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if record.status == 'present' %}
+                                <span class="status-badge status-present">
+                                    Present
+                                </span>
+                                {% elif record.status == 'absent' %}
+                                <span class="status-badge status-absent">
+                                    Absent
+                                </span>
+                                {% else %}
+                                <span class="status-badge status-pending">
+                                    Late
+                                </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" style="text-align:center;
+                                   color:#858685;padding:20px;">
+                                No attendance record for {{ selected_date }}
                             </td>
                         </tr>
                         {% endfor %}
@@ -137,6 +217,7 @@
         </div>
     </div>
 
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 
 </html>

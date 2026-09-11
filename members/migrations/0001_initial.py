@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('age', models.IntegerField(default=0)),
                 ('weight', models.DecimalField(decimal_places=2, default=0, max_digits=5)),
-                ('membership_plan', models.CharField(choices=[('basic', 'Basic - PKR 2000'), ('standard', 'Standard - PKR 3500'), ('premium', 'Premium - PKR 5000')], default='basic', max_length=10)),
+                ('membership_plan', models.CharField(choices=[('basic', 'Basic PKR 2000'), ('standard', 'Standard PKR 3500'), ('premium', 'Premium PKR 5000')], default='basic', max_length=10)),
                 ('join_date', models.DateField(auto_now_add=True)),
                 ('is_active', models.BooleanField(default=True)),
                 ('assigned_trainer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='trainers.trainer')),
