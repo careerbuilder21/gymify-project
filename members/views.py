@@ -34,6 +34,7 @@ def admin_dashboard(request):
     context = {
         'total_members':  Member.objects.count(),
         'total_trainers': Trainer.objects.count(),
+        'pending_orders': Order.objects.filter(status='pending').count(),
         'present_today':  Attendance.objects.filter(
             date=today, status='present'
         ).count(),
@@ -279,6 +280,7 @@ def admin_payments(request):
             member=member,
             status='pending'
         ).update(status='completed')
+        
 
         return redirect('admin_payments')
 
@@ -286,7 +288,10 @@ def admin_payments(request):
     payments      = Payment.objects.select_related(
                         'member__user'
                     ).order_by('-payment_date')
-    members       = Member.objects.select_related('user').all()
+    members = Member.objects.select_related('user').all()
+    members_with_pending = Member.objects.filter(
+                    order__status='pending'
+                    ).select_related('user').distinct()
     total_revenue = Payment.objects.filter(
                         status='paid'
                     ).aggregate(
@@ -294,13 +299,14 @@ def admin_payments(request):
                     )['amount__sum'] or 0
 
     return render(request, 'admin/payments.html', {
-        'payments':      payments,
-        'members':       members,
-        'paid_count':    payments.filter(status='paid').count(),
-        'pending_count': payments.filter(status='pending').count(),
-        'total_revenue': total_revenue,
-    })
-
+    'payments':      payments,
+    'members':       members,
+    'members_with_pending': members_with_pending,
+    'paid_count':    payments.filter(status='paid').count(),
+    'pending_count': payments.filter(status='pending').count(),
+    'total_revenue': total_revenue,
+    'pending_orders': Order.objects.filter(status='pending').count(),
+})
 
 def admin_courses(request):
     if not admin_check(request):
@@ -408,11 +414,13 @@ def admin_products(request):
         return redirect('admin_products')
 
     products = Product.objects.all()
-    orders   = Order.objects.select_related(
-        'member__user'
-    ).prefetch_related(
-        'orderitem_set__product'
-    ).order_by('-order_date')
+    orders = Order.objects.filter(
+    status='pending'
+       ).select_related(
+       'member__user'
+       ).prefetch_related(
+       'orderitem_set__product'   
+       ).order_by('-order_date')
 
     return render(request, 'admin/products.html', {
         'products': products,

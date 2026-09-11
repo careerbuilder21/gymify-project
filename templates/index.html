@@ -74,17 +74,17 @@
             <div class="role-card">
                 <h3>Admin</h3>
                 <p>Manage trainers, members, payments, attendance, products and generate reports.</p>
-                <a href="{% url 'login' %}" class="btn-solid">Admin Login</a>
+                <a href="{% url 'login' %}?role=admin" class="btn-solid">Admin Login</a>
             </div>
             <div class="role-card">
                 <h3>Trainer</h3>
                 <p>View assigned members, mark attendance, create workout plans and upload content.</p>
-                <a href="{% url 'login' %}" class="btn-solid">Trainer Login</a>
+                <a href="{% url 'login' %}?role=trainer" class="btn-solid">Trainer Login</a>
             </div>
             <div class="role-card">
                 <h3>Member</h3>
                 <p>View attendance, payment history, access workout courses and purchase products.</p>
-                <a href="{% url 'register' %}" class="btn-solid">Member Register</a>
+                <a href="{% url 'login' %}?role=member" class="btn-solid">Member Login</a>
             </div>
         </div>
     </section>
@@ -114,10 +114,10 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 GYMIFY. All rights reserved.</p>
+            <p>&copy; 2026 GYMIFY. All rights reserved.</p>
         </div>
     </footer>
-
+<script src="{% static 'js/script.js' %}"></script>
 </body>
 
 </html>

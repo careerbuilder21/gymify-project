@@ -190,3 +190,12 @@ function openProductModal(id, name, category, price, stock, desc) {
 function closeProductModal() {
     document.getElementById('productModal').style.display = 'none';
 }
+
+// --- AUTO SELECT TAB FROM URL ---
+document.addEventListener('DOMContentLoaded', function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var role = urlParams.get('role');
+    if (role === 'admin' || role === 'trainer' || role === 'member') {
+        switchTab(role);
+    }
+});
