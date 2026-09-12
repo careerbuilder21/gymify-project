@@ -39,13 +39,11 @@
         </div>
         <div class="main-content">
             <h1> Energy Drinks Store</h1>
-
             {% if messages %}
             {% for message in messages %}
             <div class="success-msg"><i class="fas fa-check"></i> {{ message }}</div>
             {% endfor %}
             {% endif %}
-
             <!-- PRODUCTS GRID -->
             {% if products %}
             <div class="products-grid" style="padding-bottom: 20px;">
