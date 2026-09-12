@@ -47,6 +47,10 @@ urlpatterns = [
     path('reports/',
          views.admin_reports,
          name='admin_reports'),
+         
+    path('messages/',
+     views.admin_messages,
+     name='admin_messages'),
 
     # ── MEMBER URLS ──────────────────────────────
     path('my-dashboard/',

@@ -24,9 +24,7 @@ def contact_page(request):
                 subject=subject,
                 message=message
             )
-            return render(request, 'contact.html', {
-                'success': True
-            })
+            return redirect('/contact/?sent=1')
     return render(request, 'contact.html')
 
 def public_courses(request):
@@ -199,7 +197,9 @@ def register_view(request):
             weight=weight,
             membership_plan=plan
         )
-        return redirect('login')
+        return render(request, 'register.html', {
+            'success': 'Account created successfully! You can now login.'
+        })
 
     return render(request, 'register.html')
 def forgot_password(request):

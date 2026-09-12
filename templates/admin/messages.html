@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Messages - GYMIFY</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-logo">GYM<span>IFY</span></div>
+            <div class="sidebar-user">
+                <strong>{{ request.user.get_full_name }}</strong>
+                {{ request.user.email }}
+            </div>
+            <p class="sidebar-title">Overview</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/dashboard/">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+            </nav>
+            <p class="sidebar-title">Management</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/members/">
+                    <i class="fas fa-users"></i> Manage Members
+                </a>
+                <a href="/admin-panel/trainers/">
+                    <i class="fas fa-dumbbell"></i> Manage Trainers
+                </a>
+                <a href="/admin-panel/attendance/">
+                    <i class="fas fa-clipboard-list"></i> Attendance
+                </a>
+                <a href="/admin-panel/payments/">
+                    <i class="fas fa-credit-card"></i> Payments
+                </a>
+            </nav>
+            <p class="sidebar-title">Content</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/courses/">
+                    <i class="fas fa-dumbbell"></i> Workout Courses
+                </a>
+                <a href="/admin-panel/products/">
+                    <i class="fas fa-bolt"></i> Products Store
+                </a>
+            </nav>
+            <p class="sidebar-title">Insights</p>
+            <nav class="sidebar-nav">
+                <a href="/admin-panel/reports/">
+                    <i class="fas fa-chart-bar"></i> Reports
+                </a>
+                <a href="/admin-panel/messages/" class="active">
+                    <i class="fas fa-envelope"></i> Feedbacks
+                </a>
+            </nav>
+            <div class="logout-btn">
+                <a href="/logout/" style="display:block;width:100%;padding:12px;
+                      background:#E63946;color:white;
+                      text-align:center;border-radius:6px;
+                      text-decoration:none;font-size:14px;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <h1>Feedbacks</h1>
+
+            <div class="table-section">
+                <h3>All Feedbacks ({{ messages_list.count }})</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for msg in messages_list %}
+                        <tr>
+                            <td>#{{ msg.id }}</td>
+                            <td>{{ msg.name }}</td>
+                            <td>{{ msg.email }}</td>
+                            <td>{{ msg.subject }}</td>
+                            <td>{{ msg.message }}</td>
+                            <td>{{ msg.created_at|date:"d M Y" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" style="text-align:center;
+                                   color:#858685;padding:20px;">
+                                No messages yet
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

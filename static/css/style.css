@@ -562,6 +562,23 @@ ul {
   background-color: #0c0c0c;
   color: #f4f4f4;
 }
+/* Auth Logo Box */
+.auth-logo-box {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-logo-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0C0C0C;
+}
+
+.auth-logo-subtitle {
+    color: #858685;
+    font-size: 14px;
+    margin-top: 5px;
+}
 /* Password Eye Icon Fix */
 .password-wrapper {
   position: relative;

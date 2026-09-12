@@ -92,10 +92,8 @@
             <div class="contact-form-box">
                 <h2>Send a Message</h2>
 
-                {% if success %}
-                <div style="background:#2d6a4f;color:white;
-                            padding:15px;border-radius:8px;
-                            margin-bottom:15px;text-align:center;">
+                {% if request.GET.sent %}
+                <div style="background:#2d6a4f;color:white;padding:15px;border-radius:8px;margin-bottom:15px;text-align:center;">
                     <i class="fas fa-check-circle"></i>
                     Message sent! We'll reply soon.
                 </div>
