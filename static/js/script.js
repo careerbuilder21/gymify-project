@@ -1,5 +1,4 @@
 // GYMIFY - JavaScript File
-
 // --- LOGIN TAB SWITCH ---
 function switchTab(role) {
     var tabs = document.querySelectorAll('.role-tab');

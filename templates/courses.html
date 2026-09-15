@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
     <!-- NAVIGATION -->
     <nav class="navbar">
         <div class="nav-logo">GYM<span>IFY</span></div>
@@ -22,7 +21,7 @@
             <li><a href="{% url 'contact' %}">Contact Us</a></li>
         </ul>
         <div class="nav-buttons">
-            <a href="{% url 'login' %}" class="btn-outline">Login</a>
+            <a href="{% url 'login' %}?role=member" class="btn-outline">Login</a>
             <a href="{% url 'register' %}" class="btn-solid">Sign Up</a>
         </div>
     </nav>
@@ -61,7 +60,8 @@
                             {{ course.duration }}
                         </span>
                     </div>
-                    <a href="{% url 'login' %}" class="btn-solid" style="font-size:13px;padding:8px 16px;">
+                    <a href="{% url 'login' %}?role=member"" class=" btn-solid"
+                        style="font-size:13px;padding:8px 16px;">
                         Access Course
                     </a>
                 </div>
@@ -108,7 +108,7 @@
             <div>
                 <h4>Account</h4>
                 <ul>
-                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'login' %}?role=member">Login</a></li>
                     <li><a href="{% url 'register' %}">Sign Up</a></li>
                 </ul>
             </div>
