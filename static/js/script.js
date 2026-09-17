@@ -1,8 +1,8 @@
 // GYMIFY - JavaScript File
-// --- LOGIN TAB SWITCH ---
+// --- LOGIN PAGE TAB SWITCH ---
 function switchTab(role) {
-    var tabs = document.querySelectorAll('.role-tab');
-    tabs.forEach(function(tab) {
+    var tabs = document.querySelectorAll('.login-tab');
+    tabs.forEach(function (tab) {
         tab.classList.remove('active');
     });
     var clicked = document.getElementById('tab-' + role);
@@ -11,16 +11,55 @@ function switchTab(role) {
     if (roleInput) roleInput.value = role;
     var title = document.getElementById('form-title');
     if (title) {
-        if (role === 'admin')   title.textContent = 'Admin Login';
+        if (role === 'admin') title.textContent = 'Admin Login';
         if (role === 'trainer') title.textContent = 'Trainer Login';
-        if (role === 'member')  title.textContent = 'Member Login';
+        if (role === 'member') title.textContent = 'Member Login';
     }
 }
 
+// --- LOGIN PAGE AUTO TAB ---
+document.addEventListener('DOMContentLoaded', function () {
+    var urlParams = new URLSearchParams(window.location.search);
+    var role = urlParams.get('role');
+    if (role) { switchTab(role); }
+});
+
+// --- LOGIN PAGE PASSWORD TOGGLE ---
+function loginTogglePassword() {
+    var field = document.getElementById('password-field');
+    var icon = document.getElementById('eye-icon');
+    if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+        icon.style.color = '#E63946';
+    } else {
+        field.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+        icon.style.color = '#858685';
+    }
+}
+// --- REGISTER PASSWORD TOGGLE ---
+function toggleRegPassword() {
+    var field = document.getElementById('reg-password-field');
+    var icon = document.getElementById('reg-eye-icon');
+    if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+        icon.style.color = '#E63946';
+    } else {
+        field.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+        icon.style.color = '#858685';
+    }
+}
 // --- CONTACT FORM ---
 function submitContact() {
-    var name    = document.getElementById('contact-name').value;
-    var email   = document.getElementById('contact-email').value;
+    var name = document.getElementById('contact-name').value;
+    var email = document.getElementById('contact-email').value;
     var message = document.getElementById('contact-message').value;
     if (!name || !email || !message) {
         alert('Please fill all fields.');
@@ -34,15 +73,15 @@ function processPayment(event) {
     event.preventDefault();
     event.stopPropagation();
     var overlay = document.getElementById('payment-overlay');
-    var form    = document.getElementById('checkout-form');
+    var form = document.getElementById('checkout-form');
     if (!overlay || !form) return;
     document.getElementById('processing-screen').style.display = 'block';
-    document.getElementById('success-screen').style.display   = 'none';
+    document.getElementById('success-screen').style.display = 'none';
     overlay.style.display = 'flex';
-    setTimeout(function() {
+    setTimeout(function () {
         document.getElementById('processing-screen').style.display = 'none';
-        document.getElementById('success-screen').style.display    = 'block';
-        setTimeout(function() {
+        document.getElementById('success-screen').style.display = 'block';
+        setTimeout(function () {
             overlay.style.display = 'none';
             form.onsubmit = null;
             form.submit();
@@ -53,7 +92,7 @@ function processPayment(event) {
 // --- PASSWORD SHOW/HIDE (Login) ---
 function togglePassword() {
     var field = document.getElementById('password-field');
-    var icon  = document.getElementById('eye-icon');
+    var icon = document.getElementById('eye-icon');
     if (field.type === 'password') {
         field.type = 'text';
         icon.classList.remove('fa-eye');
@@ -70,7 +109,7 @@ function togglePassword() {
 // --- PASSWORD SHOW/HIDE (Register) ---
 function toggleRegPassword() {
     var field = document.getElementById('reg-password-field');
-    var icon  = document.getElementById('reg-eye-icon');
+    var icon = document.getElementById('reg-eye-icon');
     if (field.type === 'password') {
         field.type = 'text';
         icon.classList.remove('fa-eye');
@@ -189,12 +228,3 @@ function openProductModal(id, name, category, price, stock, desc) {
 function closeProductModal() {
     document.getElementById('productModal').style.display = 'none';
 }
-
-// --- AUTO SELECT TAB FROM URL ---
-document.addEventListener('DOMContentLoaded', function() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var role = urlParams.get('role');
-    if (role === 'admin' || role === 'trainer' || role === 'member') {
-        switchTab(role);
-    }
-});

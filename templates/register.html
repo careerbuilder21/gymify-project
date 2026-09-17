@@ -10,107 +10,133 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body>
+<body class="login-page">
 
-    <!-- NAVIGATION -->
-    <nav class="navbar">
-        <div class="nav-logo">GYM<span>IFY</span></div>
-        <ul class="nav-links">
+    <!-- NAVBAR -->
+    <nav class="login-navbar">
+        <div class="login-nav-logo">GYM<span>IFY</span></div>
+        <ul class="login-nav-links">
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'public_store' %}">Store</a></li>
             <li><a href="{% url 'public_courses' %}">Workout Courses</a></li>
             <li><a href="{% url 'contact' %}">Contact Us</a></li>
         </ul>
-        <div class="nav-buttons">
-            <a href="{% url 'login' %}?role=member" class="btn-outline">Login</a>
-            <a href="{% url 'register' %}" class="btn-solid">Sign Up</a>
+        <div class="login-nav-btns">
+            <a href="{% url 'login' %}?role=member" class="ln-outline">Login</a>
+            <a href="{% url 'register' %}" class="ln-solid">Sign Up</a>
         </div>
     </nav>
 
-    <!-- REGISTER FORM -->
-    <div class="form-section form-section-wide">
-        <div class="form-box register-box">
+    <!-- MAIN WRAPPER -->
+    <div class="register-wrapper">
 
-            <div class="auth-logo-box">
-                <div class="auth-logo-title">GYM<span style="color:#E63946;">IFY</span></div>
-                <p class="auth-logo-subtitle">Create your member account</p>
+        <!-- LEFT — IMAGE -->
+        <div class="login-image-side">
+            <img src="{% static 'images/login.jpg' %}" alt="Gym">
+            <div class="login-image-overlay">
+                <h2>Join <span>GYMIFY</span><br>Today!</h2>
+                <p>Start your fitness journey with us</p>
             </div>
-            {% if error %}
-            <p class="error-msg">{{ error }}</p>
-            {% endif %}
-            {% if success %}
-            <div style="background:#d4edda;color:#155724;padding:15px;border-radius:8px;margin-bottom:15px;text-align:center;">
-                <i class="fas fa-check-circle"></i>{{ success }}
-                <br><br>
-                <a href="{% url 'login' %}" style="color:#155724;font-weight:bold;text-decoration:underline;">
-                    Click here to Login</a>
-            </div>
-            {% endif %}
-            <h2>Member Registration</h2>
-            <form method="POST" action="{% url 'register' %}" autocomplete="off">
-                {% csrf_token %}
+        </div>
 
-                <div class="register-grid">
+        <!-- RIGHT — FORM -->
+        <div class="register-form-side">
+            <div class="register-form-box">
 
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" name="reg-name" placeholder="Enter your full name" required>
-                    </div>
+                <div class="login-logo">GYM<span>IFY</span></div>
+                <p class="login-subtitle">Create your member account</p>
 
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="text" name="reg-email" autocomplete="new-email" placeholder="Enter your email"
-                            required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="text" name="reg-phone" placeholder="e.g. 0300-0000000" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Age</label>
-                        <input type="number" name="reg-age" placeholder="Enter your age" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Weight (kg)</label>
-                        <input type="number" name="reg-weight" placeholder="Enter your weight" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Membership Plan</label>
-                        <select name="reg-membership" required>
-                            <option value="">Select a Plan</option>
-                            <option value="basic">Basic PKR 2,000/month</option>
-                            <option value="standard">Standard PKR 3,500/month</option>
-                            <option value="premium">Premium PKR 5,000/month</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <div class="password-wrapper">
-                            <input type="password" name="reg-password" id="reg-password-field"
-                                autocomplete="new-password" placeholder="Create a password" required>
-                            <i class="fa fa-eye eye-btn" id="reg-eye-icon" onclick="toggleRegPassword()">
-                            </i>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Security Question</label>
-                        <input type="text" value="What is your Date of Birth?" disabled class="security-input-disabled">
-                    </div>
-                    <div class="form-group">
-                        <label>Date of Birth</label>
-                        <input type="date" name="security_answer" autocomplete="off" required>
-                    </div>
+                {% if error %}
+                <div class="lf-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {{ error }}
                 </div>
-                <button type="submit" class="form-btn">Create Account</button>
-            </form>
-            <div class="form-footer">
-                <p>Already have an account?
-                    <a href="{% url 'login' %}">Login here</a>
-                </p>
+                {% endif %}
+
+                {% if success %}
+                <div class="lf-success">
+                    <i class="fas fa-check-circle"></i>
+                    {{ success }}
+                    <br><br>
+                    <a href="{% url 'login' %}">Click here to Login</a>
+                </div>
+                {% endif %}
+
+                <h3 class="register-title">Member Registration</h3>
+
+                <form method="POST" action="{% url 'register' %}" autocomplete="off">
+                    {% csrf_token %}
+
+                    <div class="register-grid">
+
+                        <div class="lf-group">
+                            <label>Full Name</label>
+                            <input type="text" name="reg-name" placeholder="Enter your full name" required>
+                        </div>
+
+                        <div class="lf-group">
+                            <label>Email Address</label>
+                            <input type="text" name="reg-email" autocomplete="new-email" placeholder="Enter your email"
+                                required>
+                        </div>
+
+                        <div class="lf-group">
+                            <label>Phone Number</label>
+                            <input type="text" name="reg-phone" placeholder="e.g. 0300-0000000" required>
+                        </div>
+
+                        <div class="lf-group">
+                            <label>Age</label>
+                            <input type="number" name="reg-age" placeholder="Enter your age" required>
+                        </div>
+
+                        <div class="lf-group">
+                            <label>Weight (kg)</label>
+                            <input type="number" name="reg-weight" placeholder="Enter your weight" required>
+                        </div>
+
+                        <div class="lf-group">
+                            <label>Membership Plan</label>
+                            <select name="reg-membership" required>
+                                <option value="">Select a Plan</option>
+                                <option value="basic">Basic PKR 2,000/month</option>
+                                <option value="standard">Standard PKR 3,500/month</option>
+                                <option value="premium">Premium PKR 5,000/month</option>
+                            </select>
+                        </div>
+
+                        <div class="lf-group">
+                            <label>Password</label>
+                            <div class="lf-password-wrapper">
+                                <input type="password" name="reg-password" id="reg-password-field"
+                                    autocomplete="new-password" placeholder="Create a password" required>
+                                <i class="fa fa-eye lf-eye-btn" id="reg-eye-icon" onclick="toggleRegPassword()"></i>
+                            </div>
+                        </div>
+
+                        <div class="lf-group">
+                            <label>Security Question</label>
+                            <input type="text" value="What is your Date of Birth?" disabled class="reg-disabled-input">
+                        </div>
+
+                        <div class="lf-group">
+                            <label>Date of Birth</label>
+                            <input type="date" name="security_answer" autocomplete="off" required>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="lf-btn" style="margin-top:20px;">
+                        Create Account
+                    </button>
+                </form>
+
+                <div class="lf-footer">
+                    Already have an account?
+                    <a href="{% url 'login' %}?role=member">Login here</a>
+                </div>
+
             </div>
         </div>
     </div>
