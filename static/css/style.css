@@ -545,7 +545,7 @@ body.login-page {
   background-color: white;
 }
 .ln-solid {
-  background: black;
+  background:#0c0c0c;
   color: white;
 }
 .ln-outline:hover {
