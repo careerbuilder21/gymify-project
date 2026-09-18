@@ -575,7 +575,7 @@ body.login-page {
   display: flex;
   gap: 0;
   margin-bottom: 25px;
-  border-radius: 8px;
+  border-radius: 50px;
   overflow: hidden;
   border: 1px solid #ddd;
 }
@@ -621,10 +621,10 @@ body.login-page {
 
 .lf-group input {
   width: 100%;
-  padding: 12px 15px;
+  padding: 12px 20px;
   background: #f4f4f4;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 50px;
   color: #0c0c0c;
   font-size: 14px;
   outline: none;
@@ -634,6 +634,7 @@ body.login-page {
 
 .lf-group input:focus {
   border-color: #e63946;
+  outline: none;
 }
 
 .lf-group input::placeholder {
@@ -675,7 +676,7 @@ body.login-page {
   background: black;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 50px;
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
@@ -806,11 +807,11 @@ body.login-page {
 
 .register-grid .lf-group select {
   width: 100%;
-  padding: 12px 15px;
+  padding: 12px 20px;
   background: #f4f4f4;
   border: 1px solid #ccc;
   color: #0c0c0c;
-  border-radius: 8px;
+  border-radius: 50px;
   font-size: 14px;
   outline: none;
   box-sizing: border-box;
