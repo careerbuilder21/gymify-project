@@ -145,9 +145,32 @@ ul {
 =========================== */
 .hero {
   background-color: #0c0c0c;
+  background-image: url("../images/Home.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: #f4f4f4;
   text-align: center;
   padding: 100px 40px;
+  position: relative;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 0;
+}
+
+.hero h1,
+.hero p,
+.hero-btns {
+  position: relative;
+  z-index: 1;
 }
 
 .hero h1 {
@@ -161,7 +184,7 @@ ul {
 }
 
 .hero p {
-  font-size: 18px;
+  font-size: 20px;
   color: #858685;
   margin-bottom: 35px;
   max-width: 500px;
@@ -450,6 +473,7 @@ ul {
   font-size: 13px;
   margin-top: 5px;
 }
+
 /* ===========================
    LOGIN PAGE — DARK LAYOUT
 =========================== */
@@ -516,7 +540,7 @@ body.login-page {
   border: 1px solid #858685;
   color: white;
 }
-.ln-outline:hover{
+.ln-outline:hover {
   color: black;
   background-color: white;
 }
@@ -530,7 +554,7 @@ body.login-page {
 }
 
 .ln-solid:hover {
-  background: #E63946;
+  background: #e63946;
   color: white;
 }
 
@@ -564,7 +588,7 @@ body.login-page {
 }
 
 .login-logo span {
-  color: #E63946;
+  color: #e63946;
 }
 
 .login-subtitle {
@@ -600,7 +624,7 @@ body.login-page {
   color: white;
 }
 .login-tab:hover {
-  background:#E63946;
+  background: #e63946;
   color: white;
 }
 .login-form-title {
@@ -636,7 +660,7 @@ body.login-page {
 }
 
 .lf-group input:focus {
-  border-color: #E63946;
+  border-color: #e63946;
   outline: none;
 }
 
@@ -668,7 +692,7 @@ body.login-page {
 }
 
 .lf-forgot a {
-  color: #E63946;
+  color: #e63946;
   font-size: 13px;
   text-decoration: none;
 }
@@ -688,7 +712,7 @@ body.login-page {
 }
 
 .lf-btn:hover {
-  background:#E63946;
+  background: #e63946;
 }
 
 .lf-footer {
@@ -699,15 +723,15 @@ body.login-page {
 }
 
 .lf-footer a {
-  color:#E63946;
+  color: #e63946;
   text-decoration: none;
   font-weight: 600;
 }
 
 .lf-error {
   background: rgba(230, 57, 70, 0.1);
-  border: 1px solid #E63946;
-  color: #E63946;
+  border: 1px solid #e63946;
+  color: #e63946;
   padding: 10px 15px;
   border-radius: 8px;
   font-size: 13px;
@@ -725,14 +749,14 @@ body.login-page {
 }
 
 .login-image-side img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.5);
-    position: absolute;
-    top: 0;
-    left: 0;
-    object-position: center 10%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-position: center 10%;
 }
 
 .login-image-overlay {
@@ -761,7 +785,7 @@ body.login-page {
 
 .login-dumbbell-icon {
   font-size: 100px;
-  color:#E63946;
+  color: #e63946;
   margin-bottom: 30px;
   display: block;
 }
@@ -2393,5 +2417,60 @@ img {
 @media (max-width: 600px) {
   .register-grid {
     grid-template-columns: 1fr;
+  }
+}
+/* ===========================
+   HERO BACKGROUND RESPONSIVE
+=========================== */
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 70px 20px;
+    background-position: center center;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 50px 15px;
+    background-position: center center;
+    background-attachment: scroll;
+  }
+
+  .hero h1 {
+    font-size: 22px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-btns a {
+    width: 80%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero {
+    padding: 40px 10px;
+  }
+
+  .hero h1 {
+    font-size: 18px;
   }
 }
