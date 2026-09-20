@@ -4,53 +4,80 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Security Question - GYMIFY</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body>
+<body class="login-page">
 
-    <nav class="navbar">
-        <div class="nav-logo">GYM<span>IFY</span></div>
-        <div class="nav-buttons">
-            <a href="{% url 'login' %}" class="btn-solid">Login</a>
+    <!-- NAVBAR -->
+    <nav class="login-navbar">
+        <div class="login-nav-logo">GYM<span>IFY</span></div>
+        <div class="login-nav-btns">
+            <a href="{% url 'login' %}" class="ln-outline">Login</a>
         </div>
     </nav>
 
-    <div class="form-section">
-        <div class="form-box">
+    <!-- MAIN WRAPPER -->
+    <div class="login-wrapper">
 
-            <div style="text-align:center;margin-bottom:20px;">
-                <div style="font-size:28px;font-weight:800;">
-                    GYM<span style="color:#E63946;">IFY</span>
+        <!-- LEFT — FORM -->
+        <div class="login-form-side">
+            <div class="login-form-box">
+
+                <div class="login-logo">GYM<span>IFY</span></div>
+                <p class="login-subtitle">Verify your identity</p>
+
+                {% if error %}
+                <div class="lf-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {{ error }}
                 </div>
-            </div>
-            {% if error %}
-            <p style="color:red;text-align:center;font-size:14px;margin-bottom:15px;">
-                {{ error }}
-            </p>
-            {% endif %}
-            <h2 style="font-size:22px;text-align:center;margin-bottom:20px;">
-                Security Question
-            </h2>
-            <p style="color:#858685;text-align:center;font-size:14px;margin-bottom:20px;">
-                <i class="fas fa-lock"></i> What is your Date of Birth?
-            </p>
-            <form method="POST" action="/security-question/" autocomplete="off">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label>Answer</label>
-                    <input type="text" name="answer" placeholder="Type Your Answer" autocomplete="off">
-                </div>
-                <button type="submit" class="form-btn">Verify</button>
-            </form>
-            <div class="form-footer">
-                <p>
-                    <a href="/forgot-password/">Go back</a>
+                {% endif %}
+
+                <div class="login-form-title">Security Question</div>
+
+                <p style="color:#858685;font-size:14px;
+                      text-align:center;margin-bottom:20px;">
+                    <i class="fas fa-lock"></i>
+                    What is your Date of Birth?
                 </p>
+
+                <form method="POST" action="/security-question/" autocomplete="off">
+                    {% csrf_token %}
+
+                    <div class="lf-group">
+                        <label>Your Answer</label>
+                        <input type="date" name="answer" autocomplete="off" required>
+                    </div>
+
+                    <button type="submit" class="lf-btn">
+                        Verify
+                    </button>
+                </form>
+
+                <div class="lf-footer">
+                    <a href="/forgot-password/">
+                        Go Back
+                    </a>
+                </div>
+
             </div>
         </div>
+
+        <!-- RIGHT — IMAGE -->
+        <div class="login-image-side">
+            <img src="{% static 'images/login.jpg' %}" alt="Gym">
+            <div class="login-image-overlay">
+                <h2>Verify Your<br><span>Identity</span></h2>
+                <p>Answer your security question to continue</p>
+            </div>
+        </div>
+
     </div>
+
 </body>
 
 </html>
