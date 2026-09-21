@@ -4,8 +4,8 @@ from accounts.models import User
 class Trainer(models.Model):
     SPEC_CHOICES = [
         ('weight',   'Weight Training'),
-        ('cardio',   'Cardio & Fitness'),
-        ('yoga',     'Yoga & Flexibility'),
+        ('cardio',   'Cardio & Flexibility'),
+        ('Hiit',     'Powerlifting & Hiit Training'),
     ]
     user           = models.OneToOneField(
                          User,
