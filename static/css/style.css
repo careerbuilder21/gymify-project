@@ -1,11 +1,3 @@
-/* ===========================
-   GYMIFY - MAIN STYLESHEET
-   Color Scheme:
-   White: #F4F4F4
-   Grey:  #858685
-   Black: #0C0C0C
-   Accent: #E63946 (red for gym)
-=========================== */
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap");
 
 * {
@@ -32,9 +24,8 @@ ul {
   list-style: none;
 }
 
-/* ===========================
-   BUTTONS
-=========================== */
+/* -- BUTTONS -- */
+
 .btn-solid {
   background-color: #0c0c0c;
   color: #f4f4f4;
@@ -85,9 +76,8 @@ ul {
   background-color: #f4f4f4;
   color: black;
 }
-/* ===========================
-   NAVBAR
-=========================== */
+/* -- NAVBAR -- */
+
 .navbar {
   background-color: #0c0c0c;
   color: #f4f4f4;
@@ -140,9 +130,8 @@ ul {
   color: #0c0c0c;
 }
 
-/* ===========================
-   HERO SECTION
-=========================== */
+/* -- HERO SECTION-- */
+
 .hero {
   background-color: #0c0c0c;
   background-image: url("../images/Home.jpg");
@@ -203,9 +192,8 @@ ul {
   border-color: #f4f4f4;
 }
 
-/* ===========================
-   FEATURES SECTION
-=========================== */
+/* -- FEATURES SECTION -- */
+
 .features {
   padding: 70px 40px;
   background-color: #f4f4f4;
@@ -255,9 +243,8 @@ ul {
   line-height: 1.6;
 }
 
-/* ===========================
-   ROLES SECTION
-=========================== */
+/* -- ROLES SECTIOn -- */
+
 .roles {
   padding: 70px 40px;
   background-color: #0c0c0c;
@@ -312,9 +299,8 @@ ul {
   flex: 1;
 }
 
-/* ===========================
-   FOOTER
-=========================== */
+/* -- FOOTER -- */
+
 .footer {
   background-color: #0c0c0c;
   color: #f4f4f4;
@@ -368,9 +354,8 @@ ul {
   text-align: center;
 }
 
-/* ===========================
-   PAGE HEADER (used in inner pages)
-=========================== */
+/* -- PAGE HEADER (used in inner pages) -- */
+
 .page-header {
   background-color: #0c0c0c;
   color: #f4f4f4;
@@ -400,9 +385,8 @@ ul {
   line-height: 1.8;
 }
 
-/* ===========================
-   ABOUT PAGE
-=========================== */
+/* -- ABOUT PAGE -- */
+
 .team-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -450,7 +434,8 @@ ul {
   color: #858685;
   margin-top: 2px;
 }
-/*==============Supervisor========*/
+/* -- Supervisor -- */
+
 .supervisor {
   margin-top: 30px;
   padding: 40px;
@@ -474,9 +459,8 @@ ul {
   margin-top: 5px;
 }
 
-/* ===========================
-   LOGIN PAGE — DARK LAYOUT
-=========================== */
+/* -- LOGIN PAGE  -- */
+
 body.login-page {
   background: #f4f4f4;
 }
@@ -545,7 +529,7 @@ body.login-page {
   background-color: white;
 }
 .ln-solid {
-  background:#0c0c0c;
+  background: #0c0c0c;
   color: white;
 }
 .ln-outline:hover {
@@ -789,9 +773,8 @@ body.login-page {
   margin-bottom: 30px;
   display: block;
 }
-/* ===========================
-   REGISTER PAGE — DARK LAYOUT
-=========================== */
+/* -- REGISTER PAGE —- */
+
 .register-wrapper {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
@@ -945,7 +928,8 @@ body.login-page {
   font-weight: 600;
 }
 
-/* Password Eye Icon Fix */
+/* -- Password Eye Icon Fix -- */
+
 .password-wrapper {
   position: relative;
   width: 100%;
@@ -970,9 +954,7 @@ body.login-page {
   padding: 0;
   line-height: 1;
 }
-/* ===========================
-   CONTACT PAGE
-=========================== */
+/* -- CONTACT PAGE -- */
 
 .contact-section {
   padding: 30px 30px;
@@ -1085,9 +1067,8 @@ body.login-page {
   font-size: 15px;
   margin-top: 10px;
 }
-/* ===========================
-   STORE PAGE
-=========================== */
+/* -- STORE PAGE -- */
+
 .store-section {
   padding: 60px 40px;
   max-width: 1200px;
@@ -1178,7 +1159,8 @@ body.login-page {
 .add-to-cart-btn:hover {
   background-color: #e63946;
 }
-/* Cart Icon */
+/* -- Cart Icon -- */
+
 .cart-bar {
   background-color: #0c0c0c;
   color: #f4f4f4;
@@ -1203,7 +1185,8 @@ body.login-page {
   font-size: 13px;
 }
 
-/* Cart Modal */
+/* -- Cart Modal-- */
+
 .cart-modal {
   display: none;
   position: fixed;
@@ -1258,7 +1241,8 @@ body.login-page {
   color: #858685;
 }
 
-/* Payment Method */
+/* -- Payment Method -- */
+
 .payment-methods {
   margin-top: 20px;
   padding-top: 15px;
@@ -1311,9 +1295,8 @@ body.login-page {
   background-color: #c0303c;
 }
 
-/* ===========================
-   WORKOUT COURSES PAGE
-=========================== */
+/* -- WORKOUT COURSES PAGE -- */
+
 .courses-section {
   padding: 60px 40px;
   max-width: 1100px;
@@ -1397,9 +1380,8 @@ body.login-page {
   display: block;
   text-align: center;
 }
-/* ===========================
-   DASHBOARD COMMON
-=========================== */
+/* -- DASHBOARD COMMON -- */
+
 .dashboard-layout {
   display: flex;
   min-height: calc(100vh - 60px);
@@ -1486,7 +1468,8 @@ body.login-page {
   margin-bottom: 25px;
 }
 
-/* Dashboard Cards */
+/* -- Dashboard Cards -- */
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1685,9 +1668,8 @@ table tr:last-child td {
   cursor: pointer;
 }
 
-/* ===========================
-   MEMBER PROFILE PAGE
-=========================== */
+/* -- MEMBER PROFILE PAGE -- */
+
 .profile-box {
   background-color: #fff;
   border: 1px solid #ddd;
@@ -1730,9 +1712,7 @@ h4,
   letter-spacing: 0.5px;
   font-weight: 600;
 }
-/* ===========================
-   MEMBER STORE PAGE
-=========================== */
+/* -- MEMBER STORE PAGE -- */
 
 .cart-bar {
   background: #0c0c0c;
@@ -1857,9 +1837,7 @@ h4,
   border-radius: 10px;
   color: #858685;
 }
-/* ===========================
-   ADMIN PRODUCTS TABLE FIX
-=========================== */
+/* -- ADMIN PRODUCTS TABLE FIX -- */
 
 .product-img-small {
   width: 50px;
@@ -1877,9 +1855,8 @@ h4,
 .table-section table th {
   white-space: nowrap;
 }
-/* ===========================
-   EDIT MODAL
-=========================== */
+/* -- EDIT MODAL -- */
+
 .modal-overlay {
   display: none;
   position: fixed;
@@ -1911,8 +1888,8 @@ h4,
   font-size: 20px;
   color: #858685;
 }
-/* Responsive basic */
-/* Base — Fluid Layout */
+/* -- Responsive basic -- */
+
 * {
   box-sizing: border-box;
 }
@@ -1923,6 +1900,7 @@ img {
 }
 
 /* Large Desktop (1400px+) */
+
 @media (max-width: 1400px) {
   .hero-content h1 {
     font-size: 42px;
@@ -1934,6 +1912,7 @@ img {
 }
 
 /* Desktop (1200px) */
+
 @media (max-width: 1200px) {
   .navbar {
     padding: 15px 30px;
@@ -1965,6 +1944,7 @@ img {
 }
 
 /* Tablet Landscape (1024px) */
+
 @media (max-width: 1024px) {
   .navbar {
     padding: 12px 20px;
@@ -2023,6 +2003,7 @@ img {
 }
 
 /* Tablet Portrait (768px) */
+
 @media (max-width: 768px) {
   /* Navbar */
   .navbar {
@@ -2246,6 +2227,7 @@ img {
 }
 
 /* Mobile (480px) */
+
 @media (max-width: 480px) {
   /* Navbar */
   .nav-logo {
@@ -2348,6 +2330,7 @@ img {
   }
 }
 /* Small Mobile (360px) */
+
 @media (max-width: 360px) {
   .hero-content h1 {
     font-size: 18px;
@@ -2363,6 +2346,7 @@ img {
   }
 }
 /* Action Buttons Fix */
+
 @media (max-width: 1050px) {
   .btn-edit,
   .btn-delete {
@@ -2419,9 +2403,7 @@ img {
     grid-template-columns: 1fr;
   }
 }
-/* ===========================
-   HERO BACKGROUND RESPONSIVE
-=========================== */
+/* -- HERO BACKGROUND RESPONSIVE -- */
 
 @media (max-width: 768px) {
   .hero {

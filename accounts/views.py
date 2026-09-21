@@ -211,7 +211,7 @@ def forgot_password(request):
 
         try:
             user = User.objects.get(email=email)
-            # Email sahi hai — session mein save karo
+            
             request.session['reset_email'] = email
             return redirect('/security-question/')
         except User.DoesNotExist:

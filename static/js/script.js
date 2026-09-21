@@ -1,5 +1,4 @@
-// GYMIFY - JavaScript File
-// --- LOGIN PAGE TAB SWITCH ---
+// LOGIN PAGE TAB SWITCH 
 function switchTab(role) {
     var tabs = document.querySelectorAll('.login-tab');
     tabs.forEach(function (tab) {
@@ -17,14 +16,14 @@ function switchTab(role) {
     }
 }
 
-// --- LOGIN PAGE AUTO TAB ---
+// LOGIN PAGE AUTO TAB 
 document.addEventListener('DOMContentLoaded', function () {
     var urlParams = new URLSearchParams(window.location.search);
     var role = urlParams.get('role');
     if (role) { switchTab(role); }
 });
 
-// --- LOGIN PAGE PASSWORD TOGGLE ---
+// LOGIN PAGE PASSWORD TOGGLE 
 function loginTogglePassword() {
     var field = document.getElementById('password-field');
     var icon = document.getElementById('eye-icon');
@@ -40,7 +39,7 @@ function loginTogglePassword() {
         icon.style.color = '#858685';
     }
 }
-// --- REGISTER PASSWORD TOGGLE ---
+// REGISTER PASSWORD TOGGLE 
 function toggleRegPassword() {
     var field = document.getElementById('reg-password-field');
     var icon = document.getElementById('reg-eye-icon');
@@ -56,7 +55,7 @@ function toggleRegPassword() {
         icon.style.color = '#858685';
     }
 }
-// --- CONTACT FORM ---
+// CONTACT FORM 
 function submitContact() {
     var name = document.getElementById('contact-name').value;
     var email = document.getElementById('contact-email').value;
@@ -68,7 +67,7 @@ function submitContact() {
     alert('Message sent! We will get back to you soon.');
 }
 
-// --- PAYMENT PROCESSING ---
+// PAYMENT PROCESSING 
 function processPayment(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -89,7 +88,7 @@ function processPayment(event) {
     }, 3000);
 }
 
-// --- PASSWORD SHOW/HIDE (Login) ---
+// PASSWORD SHOW/HIDE (Login) 
 function togglePassword() {
     var field = document.getElementById('password-field');
     var icon = document.getElementById('eye-icon');
@@ -106,7 +105,7 @@ function togglePassword() {
     }
 }
 
-// --- PASSWORD SHOW/HIDE (Register) ---
+// PASSWORD SHOW/HIDE (Register)
 function toggleRegPassword() {
     var field = document.getElementById('reg-password-field');
     var icon = document.getElementById('reg-eye-icon');
@@ -123,7 +122,7 @@ function toggleRegPassword() {
     }
 }
 
-// --- EDIT MEMBER MODAL ---
+// EDIT MEMBER MODAL
 function openEditModal(id, name, phone, age, weight, plan, trainerId) {
     document.getElementById('edit_member_id').value = id;
     document.getElementById('edit_name').value = name;
@@ -154,7 +153,7 @@ function closeEditModal() {
     document.getElementById('editModal').style.display = 'none';
 }
 
-// --- EDIT TRAINER MODAL ---
+// EDIT TRAINER MODAL
 function openTrainerModal(id, name, phone, spec, salary, security) {
     document.getElementById('edit_trainer_id').value = id;
     document.getElementById('edit_trainer_name').value = name;
@@ -176,7 +175,7 @@ function openTrainerModal(id, name, phone, spec, salary, security) {
 function closeTrainerModal() {
     document.getElementById('trainerModal').style.display = 'none';
 }
-// --- EDIT COURSE MODAL ---
+// EDIT COURSE MODAL
 function openCourseModal(id, title, trainerId, level, duration, desc) {
     document.getElementById('edit_course_id').value = id;
     document.getElementById('edit_course_title').value = title;
@@ -206,7 +205,7 @@ function closeCourseModal() {
     document.getElementById('courseModal').style.display = 'none';
 }
 
-// --- EDIT PRODUCT MODAL ---
+// EDIT PRODUCT MODAL
 function openProductModal(id, name, category, price, stock, desc) {
     document.getElementById('edit_product_id').value = id;
     document.getElementById('edit_product_name').value = name;
