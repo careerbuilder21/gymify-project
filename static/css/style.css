@@ -2456,3 +2456,48 @@ img {
     font-size: 18px;
   }
 }
+/* -- COURSES TABLE RESPONSIVE -- */
+@media (max-width: 1050px) {
+  .table-section table td,
+  .table-section table th {
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+
+  .table-section table {
+    min-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-section {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-section table {
+    min-width: 550px;
+    font-size: 11px;
+  }
+
+  .table-section table td,
+  .table-section table th {
+    padding: 6px 5px;
+    white-space: nowrap;
+  }
+
+  .btn-edit,
+  .btn-delete {
+    display: inline-block;
+    width: auto;
+    padding: 4px 8px;
+    font-size: 11px;
+    white-space: nowrap;
+    margin: 2px;
+  }
+  table td:first-child,
+  table th:first-child {
+    white-space: nowrap;
+    min-width: 50px;
+  }
+}
