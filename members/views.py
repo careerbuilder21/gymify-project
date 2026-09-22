@@ -528,8 +528,15 @@ def member_payments(request):
 def member_courses(request):
     if not member_check(request):
         return redirect('login')
-    member      = request.user.member
-    all_courses = Course.objects.select_related('trainer__user').all()
+    member = request.user.member
+    if member.assigned_trainer:
+        all_courses = Course.objects.filter(
+            trainer=member.assigned_trainer
+        ).select_related('trainer__user')
+    else:
+        all_courses = Course.objects.select_related(
+            'trainer__user'
+        ).all()
     return render(request, 'member/courses.html', {
         'courses': all_courses,
         'member':  member,
