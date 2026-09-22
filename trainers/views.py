@@ -163,7 +163,7 @@ def trainer_progress(request):
             member=member,
             date__month=this_month
         )
-        present = monthly.filter(status='present').count()
+        present = monthly.filter(status__in=['present', 'late']).count()
         total   = monthly.count()
         percent = int((present / total * 100)) \
                   if total > 0 else 0
