@@ -191,17 +191,37 @@ def register_view(request):
             role='member',
             security_answer=security_answer.lower()
         )
-        Member.objects.create(
-            user=user,
-            age=age,
-            weight=weight,
-            membership_plan=plan
-        )
-        return render(request, 'register.html', {
-            'success': 'Account created successfully! You can now login.'
-        })
+        from payments.models import Payment
+        from django.utils import timezone
 
-    return render(request, 'register.html')
+        member = Member.objects.create(
+        user=user,
+        age=age,
+        weight=weight,
+        membership_plan=plan
+        )
+
+# Plan ke hisaab se amount
+        plan_amounts = {
+       'basic': 2000,
+       'standard': 3500,
+       'premium': 5000
+       }
+        amount = plan_amounts.get(plan, 2000)
+
+     # Pending payment create karo
+        Payment.objects.create(
+        member=member,
+        amount=amount,
+        payment_date=timezone.now().date(),
+        due_date=timezone.now().date(),
+        method='bank_transfer',
+        status='pending'
+        )
+
+        return render(request, 'register.html', {
+        'success': 'Account created successfully!'
+        })
 def forgot_password(request):
     error   = None
     success = None
