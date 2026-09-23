@@ -69,7 +69,7 @@ def login_view(request):
         UserModel = get_user_model()
 
         try:
-            user_obj       = UserModel.objects.get(email=username)
+            user_obj = UserModel.objects.get(email=username)
             actual_username = user_obj.username
         except UserModel.DoesNotExist:
             actual_username = username

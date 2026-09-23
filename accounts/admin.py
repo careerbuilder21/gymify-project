@@ -13,3 +13,8 @@ class CustomUserAdmin(UserAdmin):
     )
 
 admin.site.register(User, CustomUserAdmin)
+
+from django.contrib import admin
+from .models import User, ContactMessage
+
+admin.site.register(ContactMessage)
