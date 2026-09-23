@@ -87,38 +87,31 @@ def mark_attendance(request):
             }
         )
         return redirect('mark_attendance')
+
+    today = timezone.now().date()
     selected_date = request.GET.get(
-        'date', str(timezone.now().date())
-        )
+        'date', str(today)
+    )
     today_records = Attendance.objects.filter(
         member__assigned_trainer=trainer,
-        date=selected_date
+        date=today
     ).select_related('member__user')
- 
-    selected_records = Attendance.objects.filter(
-        member__assigned_trainer=trainer,
-        date=selected_date
-    ).select_related('member__user')
+
+    if selected_date == str(today):
+        selected_records = []
+    else:
+        selected_records = Attendance.objects.filter(
+            member__assigned_trainer=trainer,
+            date=selected_date
+        ).select_related('member__user')
 
     return render(request, 'trainer/attendance.html', {
-        'my_members':    my_members,
-        'today_records': today_records,
-        'today':         timezone.now().date(),
-        'selected_date': selected_date,
+        'my_members':       my_members,
+        'today_records':    today_records,
+        'selected_records': selected_records,
+        'today':            today,
+        'selected_date':    selected_date,
     })
-
-
-def trainer_workout(request):
-    if not trainer_check(request):
-        return redirect('login')
-    trainer    = request.user.trainer
-    my_courses = Course.objects.filter(
-        trainer=trainer
-    ).select_related('trainer__user')
-    return render(request, 'trainer/workout.html', {
-        'my_courses': my_courses
-    })
-
 
 def upload_content(request):
     if not trainer_check(request):
