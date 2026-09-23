@@ -12,7 +12,7 @@ class Member(models.Model):
                            on_delete=models.CASCADE)
     age              = models.IntegerField(default=0)
     weight           = models.DecimalField(
-                           max_digits=5,
+                           max_digits=4,
                            decimal_places=2,
                            default=0)
     membership_plan  = models.CharField(
