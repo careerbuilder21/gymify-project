@@ -3,10 +3,9 @@ from trainers.models import Trainer
 
 class Course(models.Model):
     LEVEL_CHOICES = [
-        ('beginner',     'Beginner'),
-        ('intermediate', 'Intermediate'),
-        ('advanced',     'Advanced'),
-        ('all',          'All Levels'),
+        ('basic', 'Basic'),
+        ('standard', 'Standard'),
+        ('premium', 'Premium'),
     ]
     title       = models.CharField(max_length=200)
     description = models.TextField()
@@ -15,9 +14,9 @@ class Course(models.Model):
                       on_delete=models.SET_NULL,
                       null=True)
     level       = models.CharField(
-                      max_length=15,
+                      max_length=20,
                       choices=LEVEL_CHOICES,
-                      default='beginner')
+                      default='basic')
     duration    = models.CharField(max_length=50)
     image       = models.ImageField(
                       upload_to='courses/',

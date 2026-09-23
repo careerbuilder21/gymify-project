@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=200)),
                 ('description', models.TextField()),
-                ('level', models.CharField(choices=[('beginner', 'Beginner'), ('intermediate', 'Intermediate'), ('advanced', 'Advanced'), ('all', 'All Levels')], default='beginner', max_length=15)),
+                ('level', models.CharField(choices=[('basic', 'Basic'), ('standard', 'Standard'), ('premium', 'premium'),], default='beginner', max_length=15)),
                 ('duration', models.CharField(max_length=50)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('trainer', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='trainers.trainer')),
@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=200)),
-                ('content_type', models.CharField(choices=[('video', 'Video'), ('pdf', 'PDF'), ('routine', 'Routine')], max_length=10)),
+                ('content_type', models.CharField(choices=[ ('pdf', 'PDF'), ('routine', 'Routine')], max_length=10)),
                 ('file', models.FileField(upload_to='course_files/')),
                 ('uploaded_at', models.DateTimeField(auto_now_add=True)),
                 ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='courses.course')),
