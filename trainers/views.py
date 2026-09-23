@@ -113,6 +113,19 @@ def mark_attendance(request):
         'selected_date':    selected_date,
     })
 
+
+def trainer_workout(request):
+    if not trainer_check(request):
+        return redirect('login')
+    trainer    = request.user.trainer
+    my_courses = Course.objects.filter(
+        trainer=trainer
+    ).select_related('trainer__user')
+    return render(request, 'trainer/workout.html', {
+        'my_courses': my_courses
+    })
+
+
 def upload_content(request):
     if not trainer_check(request):
         return redirect('login')
