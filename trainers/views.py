@@ -87,15 +87,14 @@ def mark_attendance(request):
             }
         )
         return redirect('mark_attendance')
-
+    selected_date = request.GET.get(
+        'date', str(timezone.now().date())
+        )
     today_records = Attendance.objects.filter(
         member__assigned_trainer=trainer,
         date=selected_date
     ).select_related('member__user')
-    selected_date = request.GET.get(
-        'date', str(timezone.now().date())
-    )
-    
+ 
     selected_records = Attendance.objects.filter(
         member__assigned_trainer=trainer,
         date=selected_date
