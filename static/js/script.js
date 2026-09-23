@@ -243,3 +243,4 @@ if (searchInput) {
         });
     });
 }
+

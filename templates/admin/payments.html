@@ -93,7 +93,7 @@
                                 <option value="">Select Member</option>
                                 {% for member in members_with_pending %}
                                 <option value="{{ member.id }}">
-                                    {{ member.user.get_full_name }}
+                                    #{{ member.id }} — {{ member.user.get_full_name }}
                                     {% if member.order_set.filter %}
                                      has Orders
                                     {% endif %}
