@@ -259,6 +259,7 @@ def admin_payments(request):
         return redirect('login')
 
     from store.models import Order
+    from django.db.models import Sum
 
     if request.method == 'POST':
         member_id = request.POST.get('member_id')
@@ -266,6 +267,13 @@ def admin_payments(request):
         method    = request.POST.get('method', 'cash')
         member    = get_object_or_404(Member, id=member_id)
         today     = timezone.now().date()
+
+        try:
+            amount = float(amount)
+            if amount <= 0:
+                return redirect('admin_payments')
+        except (ValueError, TypeError):
+            return redirect('admin_payments')
 
         Payment.objects.create(
             member=member,
@@ -276,37 +284,47 @@ def admin_payments(request):
             status='paid'
         )
 
-        Order.objects.filter(
+        pending_order = Order.objects.filter(
             member=member,
             status='pending'
-        ).update(status='completed')
-        
+        ).order_by('order_date').first()
+
+        if pending_order:
+            pending_order.status = 'completed'
+            pending_order.save()
 
         return redirect('admin_payments')
 
-    from django.db.models import Sum
-    payments      = Payment.objects.select_related(
-                        'member__user'
-                    ).order_by('-payment_date')
+    payments = Payment.objects.select_related(
+        'member__user'
+    ).order_by('-payment_date')
+
     members = Member.objects.select_related('user').all()
+
     members_with_pending = Member.objects.filter(
-                    order__status='pending'
-                    ).select_related('user').distinct()
+        order__status='pending'
+    ).select_related('user').distinct()
+
     total_revenue = Payment.objects.filter(
-                        status='paid'
-                    ).aggregate(
-                        Sum('amount')
-                    )['amount__sum'] or 0
+        status='paid'
+    ).aggregate(Sum('amount'))['amount__sum'] or 0
+
+    orders = Order.objects.select_related(
+        'member__user'
+    ).prefetch_related(
+        'orderitem_set__product'
+    ).order_by('-order_date')
 
     return render(request, 'admin/payments.html', {
-    'payments':      payments,
-    'members':       members,
-    'members_with_pending': members_with_pending,
-    'paid_count':    payments.filter(status='paid').count(),
-    'pending_count': payments.filter(status='pending').count(),
-    'total_revenue': total_revenue,
-    'pending_orders': Order.objects.filter(status='pending').count(),
-})
+        'payments':             payments,
+        'members':              members,
+        'members_with_pending': members_with_pending,
+        'paid_count':           payments.filter(status='paid').count(),
+        'pending_count':        payments.filter(status='pending').count(),
+        'total_revenue':        total_revenue,
+        'pending_orders':       Order.objects.filter(status='pending').count(),
+        'orders':               orders,
+    })
 
 def admin_courses(request):
     if not admin_check(request):
@@ -633,6 +651,15 @@ def checkout(request):
             return redirect('member_store')
         if not transfer_amount:
             messages.error(request, 'Transfer amount did not empty!')
+            return redirect('member_store')
+        # value is not negative
+        try:
+            transfer_amount_float = float(transfer_amount)
+            if transfer_amount_float <= 0:
+                messages.error(request, 'Amount must be greater than 0!')
+                return redirect('member_store')
+        except ValueError:
+            messages.error(request, 'Enter valid amount!')
             return redirect('member_store')
         try:
             order = Order.objects.create(

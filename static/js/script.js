@@ -227,3 +227,19 @@ function openProductModal(id, name, category, price, stock, desc) {
 function closeProductModal() {
     document.getElementById('productModal').style.display = 'none';
 }
+// --- ORDER SEARCH ---
+var searchInput = document.getElementById('orderSearch');
+if (searchInput) {
+    searchInput.addEventListener('keyup', function() {
+        var filter = this.value.toLowerCase();
+        var rows = document.querySelectorAll('#ordersTable tr');
+        rows.forEach(function(row) {
+            var text = row.textContent.toLowerCase();
+            if (text.indexOf(filter) > -1) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+}
