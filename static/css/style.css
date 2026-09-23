@@ -2501,3 +2501,111 @@ img {
     min-width: 50px;
   }
 }
+/* --TABLES MOBILE COMPLETE FIX -- */
+
+/* Scrollable table container */
+.table-section {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+    width: 100%;
+}
+
+@media (max-width: 1024px) {
+
+    /* Table scroll */
+    .table-section {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 700px;
+        width: 100%;
+    }
+
+    /* ID column fix */
+    table td:first-child,
+    table th:first-child {
+        white-space: nowrap;
+        min-width: 60px;
+    }
+
+    /* All cells */
+    table td,
+    table th {
+        white-space: nowrap;
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    /* Buttons side by side */
+    table td .btn-edit,
+    table td .btn-delete {
+        display: inline-block !important;
+        width: auto !important;
+        margin: 2px;
+        padding: 5px 10px;
+        font-size: 11px;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    /* Action column */
+    table td:last-child {
+        white-space: nowrap;
+        min-width: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    table {
+        min-width: 650px;
+        font-size: 12px;
+    }
+
+    table td,
+    table th {
+        padding: 6px 8px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    /* Buttons fix */
+    table td .btn-edit,
+    table td .btn-delete {
+        display: inline-block !important;
+        width: auto !important;
+        padding: 4px 8px;
+        font-size: 11px;
+        margin: 1px 2px;
+        white-space: nowrap;
+    }
+
+    /* Status badge */
+    .status-badge {
+        white-space: nowrap;
+        font-size: 11px;
+        padding: 3px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    table {
+        min-width: 550px;
+        font-size: 11px;
+    }
+
+    table td,
+    table th {
+        padding: 5px 6px;
+        font-size: 11px;
+    }
+
+    table td .btn-edit,
+    table td .btn-delete {
+        padding: 3px 7px;
+        font-size: 10px;
+    }
+}
