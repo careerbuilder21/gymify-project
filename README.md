@@ -117,8 +117,8 @@ We used manual bank transfer verification instead of EasyPaisa or JazzCash API b
 
 ## Team
 
-**Ashar Waseem** — Roll No: 084543  
-**Samiullah Khalid** — Roll No: 084546  
+**Ashar Waseem**  Roll No: 084543  
+**Samiullah Khalid**  Roll No: 084546  
 
 **Supervisor:** Prof. Irfan Shabbir  
 **Institution:** Govt MAO Graduate College, Lahore  
