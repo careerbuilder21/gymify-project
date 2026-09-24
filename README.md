@@ -15,7 +15,6 @@ GYMIFY gives every gym three separate dashboards. One for the admin (gym owner),
  **Frontend:** HTML, CSS, JavaScript
  **Backend:** Python with Django framework
  **Database:** MySQL
- **Server (Live):** Nginx + Gunicorn on Namecheap VPS Spark (AlmaLinux 9)
  **Live URL:** [gymify.shop](https://gymify.shop)
  **SSL:** Let's Encrypt (HTTPS enabled)
 
