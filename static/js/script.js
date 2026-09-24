@@ -227,15 +227,17 @@ function openProductModal(id, name, category, price, stock, desc) {
 function closeProductModal() {
     document.getElementById('productModal').style.display = 'none';
 }
-// --- ORDER SEARCH ---
+// --- ORDER SEARCH BY NAME ONLY ---
 var searchInput = document.getElementById('orderSearch');
 if (searchInput) {
     searchInput.addEventListener('keyup', function() {
         var filter = this.value.toLowerCase();
         var rows = document.querySelectorAll('#ordersTable tr');
         rows.forEach(function(row) {
-            var text = row.textContent.toLowerCase();
-            if (text.indexOf(filter) > -1) {
+            var nameCell = row.querySelector('td:nth-child(2)');
+            if (!nameCell) return;
+            var name = nameCell.textContent.toLowerCase();
+            if (name.indexOf(filter) > -1) {
                 row.style.display = '';
             } else {
                 row.style.display = 'none';
