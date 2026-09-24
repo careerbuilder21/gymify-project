@@ -1,131 +1,128 @@
- ## GYMIFY "Gym Management System"
+# GYMIFY — Gym Management System
 
-GYMIFY is a web-based gym management system built as a Final Year Project for the Bachelor of Science in Information Technology (2022–2026) at Govt MAO Graduate College, Lahore.
-The idea behind this project came from a simple observation. Most gyms in Pakistan still run on paper registers and manual records. Attendance is written by hand, payments are tracked in notebooks and members have no way to check their own history. GYMIFY was built to fix that.
+This is my Final Year Project for BS Information Technology at Govt MAO Graduate College, Lahore. I built this with my partner Samiullah Khalid under the supervision of Prof. Irfan Shabbir.
 
-## What It Does
+The idea came from a real problem like most gyms in Pakistan still use paper registers to track members, payments and attendance. We wanted to build something practical that actually solves this.
 
-GYMIFY gives every gym three separate dashboards. One for the admin (gym owner), one for trainers and one for members. Each role sees only what they need to see.
-**Admin** can add and manage members and trainers, record payments, monitor attendance, upload workout courses, manage the products store, view reports and see feedbacks. Everything the gym owner needs is in one place.
-**Trainers** can mark daily attendance for their assigned members, create workout plans, upload course content (PDFs or videos) and keep an eye on member progress. They can also go back and mark attendance for a previous date if they missed it.
-**Members** can log in and check their own attendance history, payment records, access workout courses their trainer has uploaded and purchase gym products like protein supplements and energy drinks from the store.
+## What is GYMIFY?
+
+GYMIFY is a web-based gym management system. It has three types of users (Admin, Trainer, and Member) and each one gets their own dashboard with the tools they need.
+
+The admin (gym owner) manages everything: adding members and trainers, recording payments, uploading workout courses and managing the product store. Trainers can mark attendance, create workout plans, and upload course content. Members can check their attendance, view payment history, access workout courses and buy gym products from the store.
+
+
+## Features
+
+**For Admin:**
+- Add, edit, and delete members and trainers
+- Record and track payments
+- Monitor attendance
+- Manage workout courses and products
+- View reports and feedback messages
+- Pending orders count on payments page
+
+**For Trainer:**
+- Mark daily attendance with date picker 
+- Create and upload workout plans
+- Track member progress
+
+**For Member:**
+- View attendance history and percentage
+- Check payment status
+- Access workout courses from assigned trainer
+- Purchase gym products with bank transfer checkout
+- Update profile
+
+**Extra Features:**
+- Forgot password using favourite place verification
+- Password show/hide on login and register pages
+- Contact/feedback form
+- Live deployment at gymify.shop with SSL
+
+---
 
 ## Tech Stack
 
- **Frontend:** HTML, CSS, JavaScript
- **Backend:** Python with Django framework
- **Database:** MySQL
- **Live URL:** [gymify.shop](https://gymify.shop)
- **SSL:** Let's Encrypt (HTTPS enabled)
+| Part | Technology |
+|------|-----------|
+| Frontend | HTML, CSS, JavaScript |
+| Backend | Python, Django |
+| Database | MySQL |
+| Web Server | Nginx + Gunicorn |
+| Hosting | VPS Server (AlmaLinux 9) |
+| SSL | Let's Encrypt |
 
-## Key Features
+---
 
-- Role-based login system (Admin / Trainer / Member tabs on login page)
-- Edit records like members, trainers, products and courses directly without deleting 
-- Trainer attendance with date picker and mark today or go back to a previous date
-- Bank transfer payment system with admin verification
-- Pending orders counter on the payments page
-- Forgot password using date of birth verification
-- Password show/hide toggle on login and register pages
-- Contact/Feedback form and messages saved to database and visible to admin
-- Product store with cart, checkout and order tracking
-- Course content upload by trainers and they can share PDFs and videos
-- Report generation for attendance, payments and product sales
-- Fully deployed live with SSL certificate at gymify.shop
+## Live Website
+
+The project is live and working at:
+
+**https://gymify.shop**
+
+
+
+## How to Run Locally
+
+```bash
+# Clone the project
+git clone https://github.com/careerbuilder21/gymify-project
+cd gymify-project
+
+# Setup virtual environment
+python -m venv venv
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # Linux/Mac
+
+# Install requirements
+pip install -r requirements.txt
+
+# Run migrations
+python manage.py migrate
+
+# Create admin account
+python manage.py createsuperuser
+
+# Start server
+python manage.py runserver
+```
+
+Then open your browser and go to `http://127.0.0.1:8000`
 
 ## Project Structure
 
 ```
 gymify_project/
-│
-├── accounts/          # Login, register, forgot password, contact messages
-├── members/           # Admin and member views, all dashboard logic
-├── trainers/          # Trainer dashboard, attendance, workout, progress
-├── attendance/        # Attendance model
-├── payments/          # Payment model
-├── courses/           # Course and course content models
-├── store/             # Product, order and order item models
-├── templates/         # All HTML templates
-│   ├── admin/         # Admin dashboard pages
-│   ├── trainer/       # Trainer dashboard pages
-│   ├── member/        # Member dashboard pages
-│   └── ...            # Public pages (home, about, contact, store, courses)
-├── static/
-│   ├── css/style.css
-│   └── js/script.js
-└── gymify/            # Django settings, URLs, WSGI
+├── accounts/       — Login, register, forgot password, contact messages
+├── members/        — All admin and member views
+├── trainers/       — Trainer views and attendance
+├── attendance/     — Attendance model
+├── payments/       — Payment model
+├── courses/        — Workout courses and uploaded content
+├── store/          — Products, orders, cart, checkout
+├── templates/
+│   ├── admin/      — Admin dashboard pages
+│   ├── trainer/    — Trainer dashboard pages
+│   ├── member/     — Member dashboard pages
+│   └── (public)    — Home, about, store, contact, login, register
+└── static/
+    ├── css/        — Stylesheet
+    ├── js/         — JavaScript
+    └── images/     — Images
 ```
 
+## Payment System
 
-## How To Run Locally
+We used manual bank transfer verification instead of EasyPaisa or JazzCash API because those require a registered commercial merchant account. The way it works is simple. Member submits their bank transfer details at checkout and the admin verifies and confirms the payment manually. Once confirmed, the order is marked as completed.
 
-**1. Clone the repository**
-```bash
-git clone https://github.com/careerbuilder21/gymify-project.git
-cd gymify-project
-```
+## Team
 
-**2. Create and activate virtual environment**
-```bash
-python -m venv venv
-venv\Scripts\activate        # Windows
-source venv/bin/activate     # Linux/Mac
-```
+**Ashar Waseem** — Roll No: 084543  
+**Samiullah Khalid** — Roll No: 084546  
 
-**3. Install dependencies**
-```bash
-pip install -r requirements.txt
-```
-
-**4. Setup MySQL database**
-```sql
-CREATE DATABASE gymify_db;
-```
-
-**5. Run migrations**
-```bash
-python manage.py migrate
-```
-
-**6. Create admin account**
-```bash
-python manage.py createsuperuser
-```
-
-**7. Run the server**
-```bash
-python manage.py runserver
-```
-
-Open your browser and go to: `http://127.0.0.1:8000`
-
-## Live Deployment
-
-The system is live at **gymify.shop** running on:
-- Namecheap VPS Spark (AlmaLinux 9)
-- Nginx as web server
-- Gunicorn as WSGI server
-- MySQL database
-- SSL via Let's Encrypt (HTTPS)
-
-## Default Login Credentials (Local)
-
- Role     Email               Password       
-
- Admin    admin@gymify.pk     Gymify@2026!   
- Trainer  (set by admin)      trainer123     
- Member   (set by admin)      gymify123      
-
-Members can also self-register through the registration page.
-
-## Developed By
-
-Ashar Waseem            084543          
-Samiullah Khalid        084546          
-
-**Supervised by:** Prof. Irfan Shabbir  
+**Supervisor:** Prof. Irfan Shabbir  
 **Institution:** Govt MAO Graduate College, Lahore  
-**Department:** Information Technology (FCIT)  
+**Department:** Information Technology  
 **Degree:** BS Information Technology (2022–2026)
 
 
