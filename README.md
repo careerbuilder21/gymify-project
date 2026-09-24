@@ -1,4 +1,4 @@
-# GYMIFY — Gym Management System
+# GYMIFY  "Gym Management System"
 
 This is my Final Year Project for BS Information Technology at Govt MAO Graduate College, Lahore. I built this with my partner Samiullah Khalid under the supervision of Prof. Irfan Shabbir.
 
