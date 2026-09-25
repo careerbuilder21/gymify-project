@@ -2314,6 +2314,75 @@ img {
     font-size: 12px;
   }
 }
+/* -- ADMIN DASHBOARD RESPONSIVE -- */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .dash-recent-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 15px;
+    }
+
+    .stat-card .stat-number {
+        font-size: 22px;
+    }
+
+    .stat-card .stat-label {
+        font-size: 12px;
+    }
+
+    .dash-recent-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .main-content h1 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .stat-card {
+        padding: 12px;
+    }
+
+    .stat-card .stat-number {
+        font-size: 20px;
+    }
+
+    .stat-card .stat-icon {
+        font-size: 22px;
+    }
+
+    .stat-card .stat-label {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 360px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
 /* Responsive Login */
 @media (max-width: 768px) {
   .login-wrapper {
